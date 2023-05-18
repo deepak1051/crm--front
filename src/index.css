@@ -1,0 +1,225 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: whitesmoke;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.link {
+  color: black;
+  text-decoration: none;
+}
+button {
+  cursor: pointer;
+}
+
+.addNew {
+  display: flex;
+  justify-content: flex-end;
+  /* background-color: red; */
+  margin: 10px;
+}
+.addNew button {
+  background-color: white;
+  border: 1px solid teal;
+  color: teal;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+.addNew button:hover {
+  background-color: teal;
+  color: white;
+}
+
+.active {
+  background-color: teal;
+  color: white;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+.input-row {
+  display: flex;
+  align-items: center;
+}
+.task-btn {
+  background-color: teal;
+  border: 1px solid teal;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.active {
+  background-color: deepskyblue;
+}
+
+/* home page style */
+.hero {
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('/public/black-images/pexels-bob-price-764880.jpg'); */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('https://media.istockphoto.com/id/1219543826/photo/gray-and-red-speed-abstract-technology-background.jpg?b=1&s=170667a&w=0&k=20&c=yJBpFovGdmyoBaIdAu0rqTS3TTBPh5-Q9HI4yzufjyo=');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  color: white;
+}
+.hero h1 {
+  color: #ada6c4;
+  font-size: 2rem;
+}
+
+.hero p {
+  color: gray;
+}
+
+.hero img {
+  height: 100px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,500;1,100&family=Poppins:ital,wght@0,300;0,500;0,600;0,700;1,200;1,400;1,600&family=Shizuru&display=swap');
+
+.quote-container {
+  width: 500px;
+  max-width: 900px;
+  padding: 10px;
+
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 1px 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.quote-text {
+  font-size: 1rem;
+}
+.long-quote {
+  font-size: 0.8rem;
+}
+.fa-quote-left {
+  font-size: 4rem;
+}
+
+.button-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.button {
+  cursor: pointer;
+  font-size: 1rem;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.5rem 1.8rem;
+  /* box-shadow:0 0.3rem  rgba(121, 121, 121,0.65 ) */
+}
+.button:hover {
+  filter: brightness(110%);
+}
+
+.twitter-button:hover {
+  color: #38a1f3;
+}
+.quote-author {
+  margin-top: 15px;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: bold;
+  color: #dbf0ff;
+}
+
+/* media queries */
+@media screen and (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero h1 {
+    color: #ada6c4;
+    font-size: 1.6rem;
+  }
+  .hero img {
+    height: 42px;
+  }
+  .img-container {
+    display: flex;
+    margin-bottom: 1rem;
+    /* background-color: #38a1f3; */
+  }
+  .quote-container {
+    width: auto;
+  }
+}
+
+.login-btns {
+  display: inline-block;
+  margin-top: 2rem;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.4rem;
+  padding: 10px;
+  margin-right: 20px;
+  transition: all 0.3s ease-in-out;
+  width: 180px;
+}
+.login-btns:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.capital {
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.single-list__container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.single-list__container-item-key {
+  color: teal;
+  font-weight: 500;
+  margin-right: 10px;
+  display: inline-block;
+  width: 150px;
+}
+.single-list__container-item-value {
+  font-weight: 600;
+  /* text-transform: capitalize; */
+  font-size: 18px;
+  color: #333;
+}
