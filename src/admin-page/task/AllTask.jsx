@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 const AllTask = () => {
   const { tasks } = useSelector((state) => state.admin);
-  console.log(tasks);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllTask());
@@ -25,7 +25,6 @@ const AllTask = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {/* <TableCell className="tableCell x">Employee Name</TableCell> */}
               <TableCell className="tableCell x">Title</TableCell>
               <TableCell className="tableCell x">Status</TableCell>
               <TableCell className="tableCell x">Deadline</TableCell>
@@ -35,13 +34,8 @@ const AllTask = () => {
           </TableHead>
           <TableBody>
             {tasks.map((task) => {
-              console.log(task);
               return (
                 <TableRow key={task._id}>
-                  {/* <TableCell className="tableCell">
-                    {task?.task?.name}
-                  </TableCell> */}
-
                   <TableCell className="tableCell">{task.task.title}</TableCell>
                   <TableCell className="tableCell">{task.status}</TableCell>
                   <TableCell className="tableCell">

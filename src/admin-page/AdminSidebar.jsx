@@ -5,7 +5,11 @@ import {
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
 import { FiLogOut } from 'react-icons/fi';
-import { RiCustomerService2Line } from 'react-icons/ri';
+import { RxDashboard } from 'react-icons/rx';
+import { AiOutlineUsergroupAdd } from 'react-icons/ai';
+import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
+import { FcTodoList } from 'react-icons/fc';
+
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store';
@@ -34,7 +38,8 @@ const AdminSidebar = () => {
         <ul>
           <p className="title">MAIN</p>
           <NavLink to="/admin/dashboard" className="nav-container">
-            <DashboardIcon />
+            {/* <DashboardIcon /> */}
+            <RxDashboard />
             <span>Dashboard</span>
           </NavLink>
           <p className="title">LISTS</p>
@@ -45,7 +50,8 @@ const AdminSidebar = () => {
             }
           >
             {' '}
-            <SupervisedUserCircleOutlined />
+            {/* <SupervisedUserCircleOutlined /> */}
+            <AiOutlineUsergroupAdd />
             <span>Employees</span>
           </NavLink>
           <NavLink
@@ -64,7 +70,8 @@ const AdminSidebar = () => {
               isActive ? 'active nav-container' : 'inactive nav-container'
             }
           >
-            <MoneyOffCsredRounded />
+            {/* <MoneyOffCsredRounded /> */}
+            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
             <span>Projects</span>
           </NavLink>
 

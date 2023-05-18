@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminLogin } from '../../store';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -7,9 +7,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import './login.scss';
 
 const EmployeeLogin = () => {
-  const { isLoading, token, error } = useSelector((state) => state.auth);
-
-  console.log(token);
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,6 +44,10 @@ const EmployeeLogin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        <div>
+          <Link to="/employee/reset-password">Forgot Password</Link>
+        </div>
         <button disabled={isLoading}>
           {isLoading ? <ClipLoader color="#36d7b7" /> : 'Log In'}
         </button>

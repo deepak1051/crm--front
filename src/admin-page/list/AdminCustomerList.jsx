@@ -7,24 +7,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { deleteCustomer, fetchAllCustomers } from '../../store';
+import FilterViaName from '../../utils/filter/FilterViaName';
+import useFilter from '../../hooks/useFilter';
 
 const AdminCustomerList = () => {
   const { customerList } = useSelector((state) => state.admin);
-  const dispatch = useDispatch();
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    role: '',
-    country: '',
-  });
+  const { data, handleChange, name } = useFilter(customerList);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));
-  };
+  const dispatch = useDispatch();
+
   const handleDelete = (id) => {
     if (
       window.confirm('Do you really want to delete this customer permanently?')
@@ -49,30 +43,7 @@ const AdminCustomerList = () => {
 
       <TableContainer component={Paper} className="table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell className="tableCell x">
-                <label
-                  htmlFor="filter"
-                  style={{
-                    color: 'gray',
-                    fontWeight: 'bold',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Filter via name
-                </label>
-                <input
-                  id="filter"
-                  type="text"
-                  onChange={handleChange}
-                  name="name"
-                  value={user.name}
-                />
-              </TableCell>
-            </TableRow>
-          </TableHead>
+          <FilterViaName name={name} handleChange={handleChange} />
 
           <TableHead>
             <TableRow>
@@ -85,7 +56,7 @@ const AdminCustomerList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customerList.map((row) => {
+            {(name.trim().length === 0 ? customerList : data).map((row) => {
               return (
                 <TableRow key={row._id}>
                   <TableCell className="tableCell">

@@ -17,31 +17,46 @@ import '../styles/list.scss';
 const AddTeammate = ({ currentEmployeeId, taskId }) => {
   const { employeeList, singleTask } = useSelector((state) => state.admin);
   console.log(singleTask.teamMate);
+
+  console.log(employeeList);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllEmployees());
   }, [dispatch, currentEmployeeId, taskId]);
 
-  const filteredEmployee = employeeList?.filter((item) => {
-    return item._id !== currentEmployeeId;
-  });
+  const filteredEmployee = employeeList
+    ?.filter((item) => {
+      return item._id !== currentEmployeeId;
+    })
+    ?.filter((o) => !singleTask?.teamMate?.some(({ _id }) => o._id === _id));
 
-  // const x = filteredEmployee.filter((item) =>
-  //   singleTask.teamMate.some((teammate) => teammate._id !== item._id)
-  // );
-  // let x = [];
-  // const teammates = singleTask.teamMate;
-  // console.log(teammates);
+  // const thirdArray = [
+  //   ...new Set([...filteredEmployee, ...singleTask?.teamMate]),
+  // ];
 
-  // for (let i = 0; i < filteredEmployee.length; i++) {
-  //   for (let j = 0; j < teammates.length; j++) {
-  //     if (filteredEmployee[i]._id !== teammates[j]._id) {
-  //       x.find((t) => t.AddTeammate);
-  //       x.push(teammates[j]);
+  // let test = [];
+
+  // for (let el of filteredEmployee) {
+  //   console.log(el._id);
+  //   for (let elem2 of singleTask?.teamMate) {
+  //     console.log(elem2._id);
+  //     if (el._id !== elem2._id) {
+  //       console.log('not match');
+  //       test.push(el);
   //     }
   //   }
   // }
-  // console.log(x);
+
+  // console.log(test);
+
+  //   for(let el of arr){
+  //     for(elem2 of arr2){
+  //         if(el.id!==elem2.id){
+  //             console.log(el)
+  //         }
+  //     }
+  // }
 
   const handleTeammate = (employeeId) => {
     dispatch(addTeammate({ currentEmployeeId, employeeId, taskId }))

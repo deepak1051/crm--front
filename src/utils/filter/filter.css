@@ -1,0 +1,16 @@
+.input_container {
+  position: relative;
+
+  width: 400px;
+}
+.input_container-value {
+  outline: none;
+}
+
+.input_container-icon {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: #333;
+  font-size: 1rem;
+}

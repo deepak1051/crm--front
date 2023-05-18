@@ -13,26 +13,21 @@ import { fetchAllEmployees, deleteEmployee } from '../../store';
 import Skeleton from 'react-loading-skeleton';
 import Model from '../../utils/Model';
 import '../styles/list.scss';
+import FilterViaName from '../../utils/filter/FilterViaName';
+import useFilter from '../../hooks/useFilter';
 
 const AdminEmployeeList = () => {
   const [showModel, setShowModel] = useState(false);
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    role: '',
-    country: '',
-  });
   const { employeeList, isLoading } = useSelector((state) => state.admin);
+
+  const { data, handleChange, name } = useFilter(employeeList);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllEmployees());
   }, [dispatch]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));
-  };
   const handleDelete = (id) => {
     console.log(id);
     dispatch(deleteEmployee({ id }))
@@ -57,30 +52,7 @@ const AdminEmployeeList = () => {
       </div>
       <TableContainer component={Paper} className="table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell className="tableCell x">
-                <label
-                  htmlFor="filter"
-                  style={{
-                    color: 'gray',
-                    fontWeight: 'bold',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Filter via name
-                </label>
-                <input
-                  id="filter"
-                  type="text"
-                  onChange={handleChange}
-                  name="name"
-                  value={user.name}
-                />
-              </TableCell>
-            </TableRow>
-          </TableHead>
+          <FilterViaName name={name} handleChange={handleChange} />
 
           <TableHead>
             <TableRow>
@@ -96,7 +68,7 @@ const AdminEmployeeList = () => {
             {isLoading ? (
               <Skeleton count={5} />
             ) : (
-              employeeList.map((row) => {
+              (name.trim().length === 0 ? employeeList : data).map((row) => {
                 return (
                   <TableRow key={row._id}>
                     <TableCell className="tableCell">

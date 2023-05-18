@@ -32,7 +32,7 @@ const SingleWork = () => {
         <div className="left-side">
           <div>
             <Link to={`/admin/${employeeId}/daily-tasks/${id}/update`}>
-              <button className="editButton">Edit</button>
+              <button className="editButton button">Edit</button>
             </Link>
             <button onClick={handleDelete}>Delete</button>
           </div>

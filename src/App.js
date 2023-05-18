@@ -66,6 +66,8 @@ import SingleWork from './admin-page/employee-work/SingleWork';
 import EmployeeProfile from './employee-page/profile/EmployeeProfile';
 
 import AdminLogin from './auth/login/AdminLogin';
+import ResetPassword from './employee-page/password/ResetPassword';
+import PasswordRedirectPage from './employee-page/password/PasswordRedirectPage';
 
 function App() {
   const [role, setRole] = useState(null);
@@ -214,6 +216,9 @@ function App() {
               />
               {/* profile */}
               <Route element={<EmployeeProfile />} path="/employee/profile" />
+
+              {/* forgot password */}
+
               {/* <Route element={<Navigate to="/employee/dashboard" />} path="*" /> */}
             </Routes>
           </div>
@@ -251,7 +256,17 @@ function App() {
               }
               path="/employee-login"
             />
-            {/* <Route element={<Navigate to="/" />} path="*" /> */}
+
+            {/* forgot password */}
+            <Route
+              element={<ResetPassword />}
+              path="/employee/reset-password"
+            />
+            <Route
+              element={<PasswordRedirectPage />}
+              path="/employee/resetPassword/:token"
+            />
+            <Route element={<h2>Not Found</h2>} path="*" />
           </Routes>
         </Suspense>
       </BrowserRouter>
