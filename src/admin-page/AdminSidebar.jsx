@@ -70,7 +70,7 @@ const AdminSidebar = () => {
 
           <button
             onClick={logoutHandler}
-            className="logout"
+            className="logout remove"
             style={{
               position: 'fixed',
               bottom: '10px',
@@ -79,7 +79,7 @@ const AdminSidebar = () => {
               alignItems: 'center',
               gap: '5px',
               fontSize: '1.4rem',
-              color: 'red',
+              // color: 'red',
               border: '1px solid red',
               borderRadius: '5px',
               padding: '5px',

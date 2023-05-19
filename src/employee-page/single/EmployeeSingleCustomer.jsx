@@ -7,7 +7,6 @@ import '../styles/single.scss';
 
 const EmployeeSingleCustomer = () => {
   const { singleCustomer } = useSelector((state) => state.employee);
-  console.log(singleCustomer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -32,9 +31,13 @@ const EmployeeSingleCustomer = () => {
         <div className="left-side">
           <div>
             <Link to={`/employee/customers/${id}/update`}>
-              <button className="editButton">Edit</button>
+              <button className="edit" style={{ marginRight: '5px' }}>
+                Edit
+              </button>
             </Link>
-            <button onClick={() => handleDelete()}>Delete</button>
+            <button onClick={() => handleDelete()} className="remove">
+              Delete
+            </button>
           </div>
           <h1 className="title">Information</h1>
           <div className="item">

@@ -31,9 +31,13 @@ const SingleDailyTask = () => {
         <div className="left-side">
           <div>
             <Link to={`/employee/daily-tasks/${id}/update`}>
-              <button className="editButton">Edit</button>
+              <button className="edit" style={{ marginRight: '5px' }}>
+                Edit
+              </button>
             </Link>
-            <button onClick={handleDelete}>Delete</button>
+            <button onClick={handleDelete} className="remove">
+              Delete
+            </button>
           </div>
           <h1 className="title">Information</h1>
           <div className="item">

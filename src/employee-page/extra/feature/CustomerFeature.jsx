@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCustomersRelatedToEmployee } from '../../../store/thunks/employee';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Link } from 'react-router-dom';
 
 const CustomerFeature = () => {
   const { employeeCustomerList } = useSelector((state) => state.employee);
@@ -23,7 +24,9 @@ const CustomerFeature = () => {
           style={{ width: '100%', height: '100px', color: 'red' }}
         />
 
-        <p className="title">Total Active Customers</p>
+        <Link to="/employee/customers-list">
+          <p className="title">Total Active Customers</p>
+        </Link>
         <p className="amount">{employeeCustomerList?.length}</p>
       </div>
     </div>

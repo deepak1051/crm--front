@@ -38,7 +38,7 @@ const AdminSingleEmployee = () => {
         <div className="top">
           <div className="left">
             <Link to={`/admin/employees/${id}/update`}>
-              <div className="editButton">Edit</div>
+              <button className="edit">Edit</button>
             </Link>
             <h1 className="title">Information</h1>
             <div className="item">

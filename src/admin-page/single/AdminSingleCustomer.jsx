@@ -30,7 +30,7 @@ const AdminSingleCustomer = () => {
           <div className="top">
             <div className="left-side">
               <Link to={`/admin/customers/${id}/update`}>
-                <button className="editButton">Edit</button>
+                <button className="edit">Edit</button>
               </Link>
               <h1 className="title">Information</h1>
               <div className="item">

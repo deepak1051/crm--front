@@ -68,9 +68,17 @@ const SingleTask = () => {
           <div className="left-side">
             <div>
               <Link to={`/admin/${employeeId}/updateTask/${taskId}`}>
-                <button className="editButton">Edit</button>
+                <button className="edit " style={{ marginRight: '5px' }}>
+                  Edit
+                </button>
               </Link>
-              <button onClick={() => handleDelete(employeeId)}>Delete</button>
+
+              <button
+                onClick={() => handleDelete(employeeId)}
+                className="delete"
+              >
+                Delete
+              </button>
             </div>
             <h1 className="title" style={{ margin: '10px' }}>
               {singleEmployee.name}
@@ -162,7 +170,10 @@ const SingleTask = () => {
                             </TableCell>
 
                             <TableCell className="tableCell">
-                              <button onClick={() => handleRemove(item._id)}>
+                              <button
+                                onClick={() => handleRemove(item._id)}
+                                className="remove"
+                              >
                                 Remove
                               </button>
                             </TableCell>

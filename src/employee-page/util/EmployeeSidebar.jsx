@@ -87,7 +87,7 @@ const EmployeeSidebar = () => {
 
           <button
             onClick={logoutHandler}
-            className="logout"
+            className="logout remove"
             style={{
               position: 'fixed',
               bottom: '10px',
