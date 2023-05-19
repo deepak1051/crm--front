@@ -10,9 +10,10 @@ import Paper from '@mui/material/Paper';
 import { Link, useParams } from 'react-router-dom';
 import { getAllTaskByEmployee } from '../../store';
 import { format } from 'date-fns';
+import Skeleton from 'react-loading-skeleton';
 
 const AllTaskByEmployee = () => {
-  const { taskByEmployee } = useSelector((state) => state.admin);
+  const { taskByEmployee, isLoading } = useSelector((state) => state.admin);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -24,34 +25,40 @@ const AllTaskByEmployee = () => {
   return (
     <>
       <TableContainer component={Paper} className="table">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell className="tableCell x">Task Name</TableCell>
-              <TableCell className="tableCell x">Status</TableCell>
-              <TableCell className="tableCell x">Deadline</TableCell>
-              <TableCell className="tableCell x">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {taskByEmployee.map((item) => {
-              return (
-                <TableRow key={item._id}>
-                  <TableCell className="tableCell">{item.task.title}</TableCell>
-                  <TableCell className="tableCell">{item.status}</TableCell>
-                  <TableCell className="tableCell">
-                    {format(new Date(item.task.deadline), 'yyyy-MM-dd')}
-                  </TableCell>
-                  <TableCell className="tableCell">
-                    <Link to={`/admin/${id}/task/${item._id}`}>
-                      <button className="view">View More</button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        {isLoading ? (
+          <Skeleton height={40} count={4} />
+        ) : (
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell className="tableCell x">Task Name</TableCell>
+                <TableCell className="tableCell x">Status</TableCell>
+                <TableCell className="tableCell x">Deadline</TableCell>
+                <TableCell className="tableCell x">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {taskByEmployee.map((item) => {
+                return (
+                  <TableRow key={item._id}>
+                    <TableCell className="tableCell">
+                      {item.task.title}
+                    </TableCell>
+                    <TableCell className="tableCell">{item.status}</TableCell>
+                    <TableCell className="tableCell">
+                      {format(new Date(item.task.deadline), 'yyyy-MM-dd')}
+                    </TableCell>
+                    <TableCell className="tableCell">
+                      <Link to={`/admin/${id}/task/${item._id}`}>
+                        <button className="view">View More</button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
       </TableContainer>
     </>
   );

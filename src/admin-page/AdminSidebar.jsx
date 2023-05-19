@@ -1,14 +1,7 @@
-import {
-  MoneyOffCsredRounded,
-  SupervisedUserCircleOutlined,
-} from '@mui/icons-material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-
 import { FiLogOut } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
-import { FcTodoList } from 'react-icons/fc';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

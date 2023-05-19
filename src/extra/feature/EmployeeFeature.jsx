@@ -6,6 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllEmployees } from '../../store/thunks/admin';
+import { Link } from 'react-router-dom';
 
 const EmployeeFeature = () => {
   const { employeeList } = useSelector((state) => state.admin);
@@ -28,7 +29,9 @@ const EmployeeFeature = () => {
         {/* <div className="featuredChart">
           <CircularProgressbar value={70} text={'70%'} strokeWidth={5} />
         </div> */}
-        <p className="title">Total Active Employees</p>
+        <Link to="/admin/employees-list">
+          <p className="title">Total Active Employees</p>
+        </Link>
         <p className="amount">{employeeList?.length}</p>
       </div>
     </div>

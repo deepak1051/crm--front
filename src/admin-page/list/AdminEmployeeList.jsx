@@ -53,62 +53,63 @@ const AdminEmployeeList = () => {
       <TableContainer component={Paper} className="table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <FilterViaName name={name} handleChange={handleChange} />
+          {isLoading ? (
+            <Skeleton count={5} height={40} />
+          ) : (
+            <>
+              <TableHead>
+                <TableRow>
+                  <TableCell className="tableCell x">Employee Name</TableCell>
+                  <TableCell className="tableCell x">Email</TableCell>
+                  <TableCell className="tableCell x">Role</TableCell>
 
-          <TableHead>
-            <TableRow>
-              <TableCell className="tableCell x">Employee Name</TableCell>
-              <TableCell className="tableCell x">Email</TableCell>
-              <TableCell className="tableCell x">Role</TableCell>
+                  <TableCell className="tableCell x">Country</TableCell>
+                  <TableCell className="tableCell x">Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className="">
+                {(name.trim().length === 0 ? employeeList : data).map((row) => {
+                  return (
+                    <TableRow key={row._id}>
+                      <TableCell className="tableCell">
+                        <div className="cellWrapper capital">{row.name}</div>
+                      </TableCell>
+                      <TableCell className="tableCell">{row.email}</TableCell>
+                      <TableCell className="tableCell">{row.role}</TableCell>
 
-              <TableCell className="tableCell x">Country</TableCell>
-              <TableCell className="tableCell x">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <Skeleton count={5} />
-            ) : (
-              (name.trim().length === 0 ? employeeList : data).map((row) => {
-                return (
-                  <TableRow key={row._id}>
-                    <TableCell className="tableCell">
-                      <div className="cellWrapper capital">{row.name}</div>
-                    </TableCell>
-                    <TableCell className="tableCell">{row.email}</TableCell>
-                    <TableCell className="tableCell">{row.role}</TableCell>
+                      <TableCell className="tableCell">{row.country}</TableCell>
+                      <TableCell className="tableCell">
+                        <Link to={`/admin/employees/${row._id}`}>
+                          <button className="view">View</button>
+                        </Link>
 
-                    <TableCell className="tableCell">{row.country}</TableCell>
-                    <TableCell className="tableCell">
-                      <Link to={`/admin/employees/${row._id}`}>
-                        <button className="view">View</button>
-                      </Link>
-
-                      <Fragment>
-                        <button
-                          onClick={() => setShowModel(true)}
-                          className="delete"
-                        >
-                          Delete
-                        </button>
-                        {showModel && (
-                          <Model
-                            onClose={onClose}
-                            ActionBar={
-                              <button onClick={() => handleDelete(row._id)}>
-                                I Accept
-                              </button>
-                            }
+                        <Fragment>
+                          <button
+                            onClick={() => setShowModel(true)}
+                            className="delete"
                           >
-                            <p>Do You Really Want To Delete This Employee</p>
-                          </Model>
-                        )}
-                      </Fragment>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            )}
-          </TableBody>
+                            Delete
+                          </button>
+                          {showModel && (
+                            <Model
+                              onClose={onClose}
+                              ActionBar={
+                                <button onClick={() => handleDelete(row._id)}>
+                                  I Accept
+                                </button>
+                              }
+                            >
+                              <p>Do You Really Want To Delete This Employee</p>
+                            </Model>
+                          )}
+                        </Fragment>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </>
+          )}
         </Table>
       </TableContainer>
     </>

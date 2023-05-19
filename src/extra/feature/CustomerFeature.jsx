@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import './feature.scss';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCustomers } from '../../store/thunks/admin';
+import { Link } from 'react-router-dom';
 
 const CustomerFeature = () => {
   const { customerList } = useSelector((state) => state.admin);
@@ -25,10 +25,10 @@ const CustomerFeature = () => {
           alt=""
           style={{ width: '100%', height: '100px', color: 'red' }}
         />
-        {/* <div className="featuredChart">
-          <CircularProgressbar value={70} text={'70%'} strokeWidth={5} />
-        </div> */}
-        <p className="title">Total Active Customers</p>
+
+        <Link to="/admin/customers-list">
+          <p className="title">Total Active Customers</p>
+        </Link>
         <p className="amount">{customerList?.length}</p>
       </div>
     </div>

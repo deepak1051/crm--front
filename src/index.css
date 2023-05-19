@@ -135,15 +135,15 @@ select {
 button {
   cursor: pointer;
   font-size: 1rem;
-  border: 1px solid orangered;
+  border: 1px solid purple;
   /* background-color: #333; */
-  color: orangered;
+  color: purple;
   border-radius: 10px;
   padding: 0.5rem 1rem;
   /* box-shadow:0 0.3rem  rgba(121, 121, 121,0.65 ) */
 }
 button:hover {
-  background-color: orangered;
+  background-color: purple;
   color: #fff;
 }
 
@@ -227,4 +227,14 @@ button:hover {
   /* text-transform: capitalize; */
   font-size: 18px;
   color: #333;
+}
+
+.d-test1 {
+  background-color: teal !important;
+  max-width: 10px !important;
+  border: 4px solid green;
+}
+.d-test1 div {
+  background-color: pink;
+  width: 100%;
 }

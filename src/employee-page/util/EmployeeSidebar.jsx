@@ -1,17 +1,11 @@
-import {
-  MoneyOffCsredRounded,
-  SupervisedUserCircleOutlined,
-} from '@mui/icons-material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import {
-  AiOutlineHeart,
-  AiOutlineProfile,
-  AiOutlineUser,
-} from 'react-icons/ai';
+import { AiOutlineHeart, AiOutlineProfile } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
+import { MdPassword } from 'react-icons/md';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store';
+import { RxDashboard } from 'react-icons/rx';
+import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
 
 const EmployeeSidebar = () => {
   const { id } = useSelector((state) => state.auth);
@@ -34,7 +28,7 @@ const EmployeeSidebar = () => {
         <ul>
           <p className="title">MAIN</p>
           <NavLink to="/employee/dashboard" className="nav-container">
-            <DashboardIcon />
+            <RxDashboard />
             <span>Dashboard</span>
           </NavLink>
           <p className="title">LISTS</p>
@@ -46,7 +40,7 @@ const EmployeeSidebar = () => {
             }
           >
             {' '}
-            <SupervisedUserCircleOutlined />
+            <RiCustomerService2Line />
             <span>Customers</span>
           </NavLink>
           <NavLink
@@ -55,7 +49,7 @@ const EmployeeSidebar = () => {
               isActive ? 'active nav-container' : 'inactive nav-container'
             }
           >
-            <MoneyOffCsredRounded />
+            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
             <span>Projects</span>
           </NavLink>
 
@@ -77,7 +71,7 @@ const EmployeeSidebar = () => {
               isActive ? 'active nav-container' : 'inactive nav-container'
             }
           >
-            <AiOutlineUser />
+            <MdPassword />
             <span>Update Password</span>
           </NavLink>
 

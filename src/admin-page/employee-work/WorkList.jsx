@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 
 const WorkList = ({ employeeId, taskId }) => {
   const { workListByEmployee } = useSelector((state) => state.work);
+  console.log(workListByEmployee);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getWorkByEmployee({ id: employeeId }));
