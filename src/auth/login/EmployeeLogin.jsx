@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { adminLogin } from '../../store';
+import { adminLogin, authLogin } from '../../store';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import './login.scss';
@@ -17,7 +17,7 @@ const EmployeeLogin = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(adminLogin({ email, password }))
+    dispatch(authLogin({ email, password }))
       .unwrap()
       .then(() => navigate('/employee/dashboard'))
       .catch((err) => console.log(err));
