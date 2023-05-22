@@ -258,6 +258,7 @@ button.remove:hover {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: lightgray;
   color: inherit;
 }
