@@ -30,7 +30,7 @@ const authLogin = createAsyncThunk(
 
       console.log(data);
       localStorage.setItem('token', data.token);
-      return data;
+      return data.token;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
     }
