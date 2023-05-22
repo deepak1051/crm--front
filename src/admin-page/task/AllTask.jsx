@@ -40,7 +40,10 @@ const AllTask = () => {
               {tasks.map((task) => {
                 return (
                   <TableRow key={task._id}>
-                    <TableCell className="tableCell">
+                    <TableCell
+                      className="tableCell"
+                      style={{ fontSize: '16px', fontWeight: 'bold' }}
+                    >
                       {task.task.title}
                     </TableCell>
                     <TableCell className="tableCell">{task.status}</TableCell>

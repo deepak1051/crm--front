@@ -1,8 +1,11 @@
 import './navbar.scss';
 import { GiCrossMark } from 'react-icons/gi';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+  const { singleEmployee } = useSelector((state) => state.admin);
+
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -38,7 +41,10 @@ const Navbar = () => {
               Pacifence Solutions
             </div>{' '}
           </a>
-
+          <div style={{ margin: '0 10px' }}>
+            {/* <p>{singleEmployee.name}</p> */}
+            {/* <p>{singleEmployee.email}</p> */}
+          </div>
           <div className="item">
             <img
               src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"

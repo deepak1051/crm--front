@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addNewCustomer, getSingleTask, updateTask } from '../../store';
+import { getSingleTask, updateTask } from '../../store';
 import { format, parseISO } from 'date-fns';
 
 const statusOptions = [

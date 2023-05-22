@@ -45,7 +45,7 @@ const EmployeeLogin = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <div>
+        <div style={{ textAlign: 'end' }}>
           <Link to="/employee/reset-password">Forgot Password</Link>
         </div>
         <button disabled={isLoading}>

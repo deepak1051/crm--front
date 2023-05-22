@@ -82,7 +82,6 @@ function App() {
   }, [token, role, dispatch]);
 
   if (role === 'Admin') {
-    console.log(role);
     return (
       <BrowserRouter>
         <div className="home">

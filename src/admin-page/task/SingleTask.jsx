@@ -80,8 +80,11 @@ const SingleTask = () => {
                 Delete
               </button>
             </div>
-            <h1 className="title" style={{ margin: '10px' }}>
-              {singleEmployee.name}
+            <h1 style={{ margin: '10px', color: '#000' }}>
+              Employee Name:{' '}
+              <span style={{ textTransform: 'capitalize' }}>
+                {singleEmployee.name}
+              </span>
             </h1>
             <div className="item">
               <img

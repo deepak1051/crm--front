@@ -256,3 +256,8 @@ button.remove:hover {
   background-color: crimson;
   color: #fff;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

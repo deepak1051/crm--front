@@ -21,6 +21,8 @@ const DailyTasks = ({ employeeId }) => {
     dispatch(getWorkByEmployee(employeeId ? { id: employeeId } : { id }));
   }, [dispatch, id, employeeId]);
 
+  console.log(workListByEmployee);
+
   return (
     <TableContainer
       component={Paper}
@@ -31,7 +33,8 @@ const DailyTasks = ({ employeeId }) => {
         <TableHead>
           <TableRow>
             <TableCell className="tableCell x">Date </TableCell>
-            <TableCell className="tableCell x">Name</TableCell>
+            <TableCell className="tableCell x">Project Name </TableCell>
+            <TableCell className="tableCell x">Title</TableCell>
             <TableCell className="tableCell x">Status</TableCell>
             <TableCell className="tableCell x">Actions</TableCell>
           </TableRow>
@@ -44,6 +47,11 @@ const DailyTasks = ({ employeeId }) => {
                   {format(new Date(item.date), 'yyyy-MM-dd')}
                 </div>
               </TableCell>
+
+              <TableCell className="tableCell">
+                {item.task.task.title}
+              </TableCell>
+
               <TableCell className="tableCell">{item.name}</TableCell>
               <TableCell className="tableCell">{item.status}</TableCell>
               <TableCell className="tableCell">

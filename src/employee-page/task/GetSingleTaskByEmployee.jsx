@@ -7,6 +7,7 @@ import '../styles/single.scss';
 import { format } from 'date-fns';
 import Skeleton from 'react-loading-skeleton';
 import CalenderTask from '../calender-task/CalenderTask';
+import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 const GetSingleTaskByEmployee = () => {
   const { singleTask, isSingleTaskLoading } = useSelector(
@@ -37,20 +38,28 @@ const GetSingleTaskByEmployee = () => {
               className="itemImg"
               style={{ height: '200px', width: '100%' }}
             />
-            <div className="details">
+            <div className="single-list__container">
               <h1 className="itemTitle">{singleTask.employeeId?.name}</h1>
-              <div className="detailItem">
-                <span className="itemValue">Task Title: </span>
-                <span className="itemKey">{singleTask?.task?.title}</span>
+              <div>
+                <span className="single-list__container-item-key">
+                  Task Title:{' '}
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleTask?.task?.title}
+                </span>
               </div>
-              <div className="detailItem">
-                <span className="itemKey">Status:</span>
-                <span className="itemValue">{singleTask?.status}</span>
+              <div>
+                <span className="single-list__container-item-key">Status:</span>
+                <span className="single-list__container-item-value">
+                  {singleTask?.status}
+                </span>
               </div>
-              <div className="detailItem">
-                <span className="itemKey">Assigned Date:</span>
+              <div>
+                <span className="single-list__container-item-key">
+                  Assigned Date:
+                </span>
                 {singleTask?.task?.assignedDate && (
-                  <span className="itemValue">
+                  <span className="single-list__container-item-value">
                     {format(
                       new Date(singleTask?.task?.assignedDate),
                       'yyyy-MM-dd'
@@ -58,32 +67,52 @@ const GetSingleTaskByEmployee = () => {
                   </span>
                 )}
               </div>
-              <div className="detailItem">
-                <span className="itemKey">Deadline:</span>
+              <div>
+                <span className="single-list__container-item-key">
+                  Deadline:
+                </span>
                 {singleTask?.task?.deadline && (
-                  <span className="itemValue">
+                  <span className="single-list__container-item-value">
                     {format(new Date(singleTask?.task?.deadline), 'yyyy-MM-dd')}
                   </span>
                 )}
               </div>
-              <div className="detailItem">
-                <span className="itemKey">Description:</span>
-                <span className="itemValue">
+              <div>
+                <span className="single-list__container-item-key">
+                  Description:
+                </span>
+                <span className="single-list__container-item-value">
                   {singleTask?.task?.description}
                 </span>
               </div>
-              <div className="detailItem">
-                <span className="itemKey">Teammates:</span>
-                {/* <span className="itemValue">{singleTask?.teammates}</span> */}
+              <div>
+                <span className="single-list__container-item-key">
+                  Teammates:
+                </span>
                 <div>
-                  {singleTask?.teamMate?.map((item) => {
-                    return (
-                      <div key={item._id}>
-                        <h4>Name: {item.name}</h4>
-                        <p>Role: {item.role}</p>
-                      </div>
-                    );
-                  })}
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className="tableCell x">
+                        Employee Name
+                      </TableCell>
+                      <TableCell className="tableCell x">Role</TableCell>
+                    </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                    {singleTask?.teamMate?.map((item) => {
+                      return (
+                        <TableRow key={item._id}>
+                          <TableCell className="tableCell">
+                            <div className="cellWrapper">{item.name}</div>
+                          </TableCell>
+                          <TableCell className="tableCell">
+                            <div className="cellWrapper">{item.role}</div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
                 </div>
               </div>
             </div>

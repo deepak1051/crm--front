@@ -28,7 +28,7 @@ const ProjectFeature = () => {
         />
 
         <Link to="/admin/projects">
-          <p className="title">Total Active Projects</p>
+          <p className="title">All Projects</p>
         </Link>
         <p className="amount">{tasks?.length}</p>
       </div>

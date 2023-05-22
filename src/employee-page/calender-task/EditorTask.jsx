@@ -43,9 +43,17 @@ const EditorTask = ({ placeholder }) => {
         <label htmlFor="name">Title</label>
         <input type="text" name="name" onChange={handleChange} />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="status">Status</label>
         <input type="text" name="status" onChange={handleChange} />
+      </div> */}
+
+      <div style={{ marginBottom: '50px' }}>
+        <label htmlFor="status"></label>
+        <select name="status" id="status" onChange={handleChange}>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
       </div>
 
       <JoditEditor
