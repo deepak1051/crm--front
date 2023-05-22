@@ -35,7 +35,7 @@ const AdminSingleEmployee = () => {
           <Skeleton count={1} height={200} width={400} />
         </>
       ) : (
-        <div className="top">
+        <div className="top" style={{ marginRight: '20px' }}>
           <div className="left">
             <Link to={`/admin/employees/${id}/update`}>
               <button className="edit">Edit</button>
@@ -48,7 +48,9 @@ const AdminSingleEmployee = () => {
                 className="itemImg"
               />
               <div className="single-list__container">
-                <h1 className="itemTitle">{singleEmployee.name}</h1>
+                <h1 className="itemTitle">
+                  Employee Name: {singleEmployee.name}
+                </h1>
                 <div>
                   <span className="single-list__container-item-key">
                     Email:
