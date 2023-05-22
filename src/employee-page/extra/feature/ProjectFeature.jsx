@@ -23,7 +23,7 @@ const ProjectFeature = () => {
           alt=""
           style={{ width: '100%', height: '100px', color: 'red' }}
         />
-        <Link to="/employee/daily-tasks">
+        <Link to={`/employee/${id}/tasks`}>
           <p className="title">Total Active Projects</p>
         </Link>
         <p className="amount">{taskByEmployee?.length}</p>
