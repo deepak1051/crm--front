@@ -1,6 +1,7 @@
 import React from 'react';
 import instance from '../../utils/instance';
 import { useState } from 'react';
+import '../confirm-email/confirm-email.css';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -27,18 +28,24 @@ const ResetPassword = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Enter your Email</h2>
-      <input
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button>Submit</button>
+    <div className="confirmEmail-container">
+      <form onSubmit={handleSubmit} className="confirmEmail-wrapper">
+        <h2>Reset Your Password</h2>
+        <div>
+          <label htmlFor="email">Enter Your Email</label>
+          <input
+            name="email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+        </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button>Submit</button>
 
-      {info && <h2>{info}</h2>}
-    </form>
+        {info && <h2>{info}</h2>}
+      </form>
+    </div>
   );
 };
 
