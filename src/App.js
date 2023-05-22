@@ -68,6 +68,7 @@ import EmployeeProfile from './employee-page/profile/EmployeeProfile';
 import AdminLogin from './auth/login/AdminLogin';
 import ResetPassword from './employee-page/password/ResetPassword';
 import PasswordRedirectPage from './employee-page/password/PasswordRedirectPage';
+import ConfirmEmail from './employee-page/confirm-email/ConfirmEmail';
 
 function App() {
   const [role, setRole] = useState(null);
@@ -219,6 +220,8 @@ function App() {
               {/* forgot password */}
 
               {/* <Route element={<Navigate to="/employee/dashboard" />} path="*" /> */}
+
+              {/* confirm email */}
             </Routes>
           </div>
         </div>
@@ -265,6 +268,12 @@ function App() {
               element={<PasswordRedirectPage />}
               path="/employee/resetPassword/:token"
             />
+
+            <Route
+              element={<ConfirmEmail />}
+              path="/employee/confirmEmail/:id"
+            />
+
             <Route element={<h2>Not Found</h2>} path="*" />
           </Routes>
         </Suspense>
