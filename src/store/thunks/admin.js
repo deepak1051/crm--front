@@ -2,6 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import instance from '../../utils/instance';
 
+const pause = (timer) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), timer);
+  });
+};
+
 const fetchAllEmployees = createAsyncThunk(
   'fetch/employees',
   async (userData, { rejectWithValue, getState }) => {
@@ -12,6 +18,8 @@ const fetchAllEmployees = createAsyncThunk(
           authorization: `Bearer ${state.auth.token}`,
         },
       });
+
+      await pause(2000);
 
       return data;
     } catch (err) {
@@ -31,6 +39,7 @@ const fetchAllCustomers = createAsyncThunk(
         },
       });
 
+      await pause(1000);
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
@@ -103,6 +112,8 @@ const fetchSingleEmployee = createAsyncThunk(
           },
         }
       );
+
+      await pause(2000);
 
       return data?.data;
     } catch (err) {
@@ -287,6 +298,8 @@ const getAllTaskByEmployee = createAsyncThunk(
           },
         }
       );
+
+      await pause(2000);
 
       return data?.data;
     } catch (err) {

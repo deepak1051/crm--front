@@ -12,61 +12,68 @@ import { getAllTask } from '../../store/thunks/admin';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
+import useThunk from '../../hooks/useThunk';
 
 const AllTask = () => {
-  const { tasks, isLoading } = useSelector((state) => state.admin);
+  const { tasks } = useSelector((state) => state.admin);
 
-  const dispatch = useDispatch();
+  const [fetchTasks, isLoading, error] = useThunk(getAllTask);
+
   useEffect(() => {
-    dispatch(getAllTask());
-  }, [dispatch]);
+    fetchTasks();
+  }, [fetchTasks]);
+
+  let content;
+  if (isLoading) {
+    content = <Skeleton count={5} height={40} />;
+  } else if (error) {
+    content = <div>Error Fetching Tasks...</div>;
+  } else {
+    content = (
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell className="tableCell x">Title</TableCell>
+            <TableCell className="tableCell x">Status</TableCell>
+            <TableCell className="tableCell x">Deadline</TableCell>
+            <TableCell className="tableCell x">Total Members</TableCell>
+            <TableCell className="tableCell x">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {tasks.map((task) => {
+            return (
+              <TableRow key={task._id}>
+                <TableCell
+                  className="tableCell"
+                  style={{ fontSize: '16px', fontWeight: 'bold' }}
+                >
+                  {task.task.title}
+                </TableCell>
+                <TableCell className="tableCell">{task.status}</TableCell>
+                <TableCell className="tableCell">
+                  {format(new Date(task.task.deadline), 'yyyy-MM-dd')}
+                </TableCell>
+
+                <TableCell className="tableCell">
+                  {task.teamMate?.length}
+                </TableCell>
+                <TableCell className="tableCell">
+                  <Link to={`/admin/${task.teamMate[0]._id}/task/${task._id}`}>
+                    <button className="view">View More</button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    );
+  }
   return (
     <>
       <TableContainer component={Paper} className="table">
-        {isLoading ? (
-          <Skeleton count={5} height={40} />
-        ) : (
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell className="tableCell x">Title</TableCell>
-                <TableCell className="tableCell x">Status</TableCell>
-                <TableCell className="tableCell x">Deadline</TableCell>
-                <TableCell className="tableCell x">Total Members</TableCell>
-                <TableCell className="tableCell x">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tasks.map((task) => {
-                return (
-                  <TableRow key={task._id}>
-                    <TableCell
-                      className="tableCell"
-                      style={{ fontSize: '16px', fontWeight: 'bold' }}
-                    >
-                      {task.task.title}
-                    </TableCell>
-                    <TableCell className="tableCell">{task.status}</TableCell>
-                    <TableCell className="tableCell">
-                      {format(new Date(task.task.deadline), 'yyyy-MM-dd')}
-                    </TableCell>
-
-                    <TableCell className="tableCell">
-                      {task.teamMate?.length}
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <Link
-                        to={`/admin/${task.teamMate[0]._id}/task/${task._id}`}
-                      >
-                        <button className="view">View More</button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        )}
+        {content}
       </TableContainer>
     </>
   );

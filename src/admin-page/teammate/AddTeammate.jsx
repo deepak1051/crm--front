@@ -13,50 +13,23 @@ import {
   getSingleTask,
 } from '../../store/thunks/admin';
 import '../styles/list.scss';
+import useThunk from '../../hooks/useThunk';
+import Skeleton from 'react-loading-skeleton';
 
 const AddTeammate = ({ currentEmployeeId, taskId }) => {
   const { employeeList, singleTask } = useSelector((state) => state.admin);
-  console.log(singleTask.teamMate);
-
-  console.log(employeeList);
+  const [fetchEmployees, isLoading, error] = useThunk(fetchAllEmployees);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllEmployees());
-  }, [dispatch, currentEmployeeId, taskId]);
+    fetchEmployees();
+  }, [fetchEmployees]);
 
   const filteredEmployee = employeeList
     ?.filter((item) => {
       return item._id !== currentEmployeeId;
     })
     ?.filter((o) => !singleTask?.teamMate?.some(({ _id }) => o._id === _id));
-
-  // const thirdArray = [
-  //   ...new Set([...filteredEmployee, ...singleTask?.teamMate]),
-  // ];
-
-  // let test = [];
-
-  // for (let el of filteredEmployee) {
-  //   console.log(el._id);
-  //   for (let elem2 of singleTask?.teamMate) {
-  //     console.log(elem2._id);
-  //     if (el._id !== elem2._id) {
-  //       console.log('not match');
-  //       test.push(el);
-  //     }
-  //   }
-  // }
-
-  // console.log(test);
-
-  //   for(let el of arr){
-  //     for(elem2 of arr2){
-  //         if(el.id!==elem2.id){
-  //             console.log(el)
-  //         }
-  //     }
-  // }
 
   const handleTeammate = (employeeId) => {
     dispatch(addTeammate({ currentEmployeeId, employeeId, taskId }))
@@ -66,16 +39,14 @@ const AddTeammate = ({ currentEmployeeId, taskId }) => {
       )
       .catch((err) => console.log(err));
   };
-  return (
-    <div>
-      <h2>AddTeammate</h2>
-      <TableHead>
-        <TableRow>
-          <TableCell className="tableCell x">Employee Name</TableCell>
-          <TableCell className="tableCell x">Action</TableCell>
-        </TableRow>
-      </TableHead>
 
+  let content;
+  if (isLoading) {
+    content = <Skeleton count={4} height={40} />;
+  } else if (error) {
+    content = 'Feching Teammates Error';
+  } else {
+    content = (
       <TableBody>
         {filteredEmployee?.map((item) => {
           return (
@@ -93,6 +64,20 @@ const AddTeammate = ({ currentEmployeeId, taskId }) => {
           );
         })}
       </TableBody>
+    );
+  }
+
+  return (
+    <div>
+      <h2>AddTeammate</h2>
+      <TableHead>
+        <TableRow>
+          <TableCell className="tableCell x">Employee Name</TableCell>
+          <TableCell className="tableCell x">Action</TableCell>
+        </TableRow>
+      </TableHead>
+
+      {content}
     </div>
   );
 };
