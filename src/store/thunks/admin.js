@@ -19,7 +19,7 @@ const fetchAllEmployees = createAsyncThunk(
         },
       });
 
-      await pause(2000);
+      // await pause(2000);
 
       return data;
     } catch (err) {
@@ -39,7 +39,7 @@ const fetchAllCustomers = createAsyncThunk(
         },
       });
 
-      await pause(1000);
+      // await pause(1000);
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
@@ -113,7 +113,7 @@ const fetchSingleEmployee = createAsyncThunk(
         }
       );
 
-      await pause(2000);
+      // await pause(2000);
 
       return data?.data;
     } catch (err) {
@@ -299,7 +299,7 @@ const getAllTaskByEmployee = createAsyncThunk(
         }
       );
 
-      await pause(2000);
+      // await pause(2000);
 
       return data?.data;
     } catch (err) {
