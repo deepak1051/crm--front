@@ -68,6 +68,18 @@ const AdminSidebar = () => {
             <span>Projects</span>
           </NavLink>
 
+          {/* chat page */}
+          <NavLink
+            to={`/admin/chat`}
+            className={({ isActive }) =>
+              isActive ? 'active nav-container' : 'inactive nav-container'
+            }
+          >
+            {/* <MoneyOffCsredRounded /> */}
+            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
+            <span>Chat</span>
+          </NavLink>
+
           <button
             onClick={logoutHandler}
             className="logout remove"

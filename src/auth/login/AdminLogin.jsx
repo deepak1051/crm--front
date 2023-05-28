@@ -43,8 +43,8 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        <label htmlFor="password">Password</label>
         <div style={{ position: 'relative' }}>
-          <label htmlFor="password">Password</label>
           <input
             id="password"
             type={passwordType}
@@ -53,10 +53,13 @@ const Login = () => {
           />
           <BsEye
             style={{
+              fontSize: '1.4rem',
               cursor: 'pointer',
               position: 'absolute',
               right: '20px',
-              top: '60%',
+              top: 0,
+              bottom: 0,
+              height: '100%',
             }}
             onClick={handlePasswordChange}
           />

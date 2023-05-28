@@ -69,6 +69,8 @@ import AdminLogin from './auth/login/AdminLogin';
 import ResetPassword from './employee-page/password/ResetPassword';
 import PasswordRedirectPage from './employee-page/password/PasswordRedirectPage';
 import ConfirmEmail from './employee-page/confirm-email/ConfirmEmail';
+import EmployeeChatPage from './employee-page/chat/EmployeeChatPage';
+import AdminChatPage from './admin-page/chat/AdminChatPage';
 
 function App() {
   const [role, setRole] = useState(null);
@@ -150,6 +152,8 @@ function App() {
                 path="/admin/:employeeId/daily-tasks/:id"
               />
 
+              {/* chat page */}
+              <Route element={<AdminChatPage />} path="/admin/chat" />
               {/* task route end */}
               <Route element={<Navigate to="/admin/dashboard" />} path="*" />
               {/* <Route element={<h1>not found</h1>} path="*" /> */}
@@ -222,6 +226,10 @@ function App() {
               {/* <Route element={<Navigate to="/employee/dashboard" />} path="*" /> */}
 
               {/* confirm email */}
+
+              {/* chat page */}
+
+              <Route path="/employee/chat" element={<EmployeeChatPage />} />
             </Routes>
           </div>
         </div>

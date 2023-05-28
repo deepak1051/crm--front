@@ -3,6 +3,7 @@ import { authReducer } from './slices/authSlice';
 import { adminReducer } from './slices/adminSlice';
 import { employeeReducer } from './slices/employeeSlice';
 import { workReducer } from './slices/workSlice';
+import { chatReducer } from './slices/chatSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     admin: adminReducer,
     employee: employeeReducer,
     work: workReducer,
+    chat: chatReducer,
   },
 });
 
@@ -21,3 +23,5 @@ export * from './thunks/admin';
 export * from './thunks/employee';
 export * from './slices/employeeSlice';
 export * from './thunks/work';
+export * from './slices/chatSlice';
+export * from './thunks/chat';

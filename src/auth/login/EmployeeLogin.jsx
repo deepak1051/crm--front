@@ -5,6 +5,7 @@ import { authLogin } from '../../store';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import './login.scss';
+import Password from '../../utils/Password';
 
 const EmployeeLogin = () => {
   const { isLoading, error } = useSelector((state) => state.auth);
@@ -38,11 +39,16 @@ const EmployeeLogin = () => {
         />
 
         <label htmlFor="password">Password</label>
-        <input
+        {/* <input
           id="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        /> */}
+        <Password
+          id="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
 
         <div style={{ textAlign: 'end' }}>

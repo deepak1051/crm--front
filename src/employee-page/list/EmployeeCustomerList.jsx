@@ -15,16 +15,20 @@ import {
 } from '../../store';
 import Skeleton from 'react-loading-skeleton';
 import '../styles/list.scss';
+import useThunk from '../../hooks/useThunk';
 
 const EmployeeCustomerList = () => {
-  const { employeeCustomerList, isLoading } = useSelector(
-    (state) => state.employee
+  const { employeeCustomerList } = useSelector((state) => state.employee);
+
+  const [fetchCustomers, isLoading, error] = useThunk(
+    fetchAllCustomersRelatedToEmployee
   );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllCustomersRelatedToEmployee());
-  }, [dispatch]);
+    fetchCustomers();
+  }, [fetchCustomers]);
 
   const handleDelete = (id) => {
     if (window.confirm('Do you really want to remove this customer.')) {
@@ -35,6 +39,57 @@ const EmployeeCustomerList = () => {
     }
   };
 
+  let content;
+  if (isLoading) {
+    content = <Skeleton count={5} height={40} />;
+  } else if (error) {
+    content = <div>Error Fetching Customers...</div>;
+  } else {
+    content = (
+      <>
+        <TableHead>
+          <TableRow>
+            <TableCell className="tableCell x">Employee Name</TableCell>
+            <TableCell className="tableCell x">Email</TableCell>
+            <TableCell className="tableCell x">Status</TableCell>
+
+            <TableCell className="tableCell x">Country</TableCell>
+            <TableCell className="tableCell x">Action</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {employeeCustomerList.map((row) => {
+            return (
+              <TableRow key={row._id}>
+                <TableCell className="tableCell">
+                  <div className="cellWrapper capital">{row.name}</div>
+                </TableCell>
+                <TableCell className="tableCell">{row.email}</TableCell>
+                <TableCell className="tableCell">{row.status}</TableCell>
+
+                <TableCell className="tableCell">{row.country}</TableCell>
+                <TableCell className="tableCell">
+                  <Link to={`/employee/customer/${row._id}`}>
+                    <button className="view">View</button>
+                  </Link>
+
+                  <Fragment>
+                    <button
+                      onClick={() => handleDelete(row._id)}
+                      className="delete"
+                    >
+                      Delete
+                    </button>
+                  </Fragment>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="addNew">
@@ -44,49 +99,7 @@ const EmployeeCustomerList = () => {
       </div>
       <TableContainer component={Paper} className="table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell className="tableCell x">Employee Name</TableCell>
-              <TableCell className="tableCell x">Email</TableCell>
-              <TableCell className="tableCell x">Status</TableCell>
-
-              <TableCell className="tableCell x">Country</TableCell>
-              <TableCell className="tableCell x">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <Skeleton count={5} />
-            ) : (
-              employeeCustomerList.map((row) => {
-                return (
-                  <TableRow key={row._id}>
-                    <TableCell className="tableCell">
-                      <div className="cellWrapper capital">{row.name}</div>
-                    </TableCell>
-                    <TableCell className="tableCell">{row.email}</TableCell>
-                    <TableCell className="tableCell">{row.status}</TableCell>
-
-                    <TableCell className="tableCell">{row.country}</TableCell>
-                    <TableCell className="tableCell">
-                      <Link to={`/employee/customer/${row._id}`}>
-                        <button className="view">View</button>
-                      </Link>
-
-                      <Fragment>
-                        <button
-                          onClick={() => handleDelete(row._id)}
-                          className="delete"
-                        >
-                          Delete
-                        </button>
-                      </Fragment>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            )}
-          </TableBody>
+          {content}
         </Table>
       </TableContainer>
     </>

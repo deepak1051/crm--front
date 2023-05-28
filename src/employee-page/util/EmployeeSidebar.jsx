@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store';
 import { RxDashboard } from 'react-icons/rx';
 import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
+import { BsChatDots } from 'react-icons/bs';
 
 const EmployeeSidebar = () => {
   const { id } = useSelector((state) => state.auth);
@@ -51,6 +52,16 @@ const EmployeeSidebar = () => {
           >
             <RiTodoLine style={{ color: '#000', fill: 'black' }} />
             <span>Projects</span>
+          </NavLink>
+
+          <NavLink
+            to={`/employee/chat`}
+            className={({ isActive }) =>
+              isActive ? 'active nav-container' : 'inactive nav-container'
+            }
+          >
+            <BsChatDots style={{ color: '#000', fill: 'black' }} />
+            <span>Chats</span>
           </NavLink>
 
           <p className="title">Profile</p>
