@@ -97,4 +97,27 @@ const sendMessage = createAsyncThunk(
   }
 );
 
-export { getRoom, addUserToRoom, sendMessage, getAllMessages };
+const deleteMessage = createAsyncThunk(
+  'message/delete',
+  async (userData, { rejectWithValue, getState }) => {
+    const state = getState();
+
+    try {
+      const { data } = await instance.patch(
+        `/chat/deleteMessage`,
+        { ...userData },
+        {
+          headers: {
+            authorization: `Bearer ${state.auth.token}`,
+          },
+        }
+      );
+
+      return data?.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+export { getRoom, addUserToRoom, sendMessage, getAllMessages, deleteMessage };

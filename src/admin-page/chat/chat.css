@@ -3,7 +3,8 @@
   --msger-bg: #fff;
   --border: 2px solid #ddd;
   --left-msg-bg: #ececec;
-  --right-msg-bg: #579ffb;
+  /* --right-msg-bg: #579ffb; */
+  --right-msg-bg: #005c4b;
 }
 
 html {
@@ -120,6 +121,7 @@ html {
 
 .msger-inputarea {
   display: flex;
+  align-items: center;
   padding: 10px;
   border-top: var(--border);
   background: #eee;
@@ -141,6 +143,7 @@ html {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.23s;
+  height: 50px;
 }
 .msger-send-btn:hover {
   background: rgb(0, 180, 50);

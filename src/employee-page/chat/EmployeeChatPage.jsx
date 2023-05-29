@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { formatDistanceToNow } from 'date-fns';
 import './chat.css';
-import { io } from 'socket.io-client';
+
 import {
-  fetchSingleEmployee,
   getRoom,
   addUserToRoom,
   sendMessage,
   getAllMessages,
+  deleteMessage,
 } from '../../store';
-import { nanoid } from 'nanoid';
+
 import { useRef } from 'react';
+import { AiFillDelete } from 'react-icons/ai';
 
 const EmployeeChatPage = () => {
   const [message, setMessage] = useState('');
@@ -50,9 +51,14 @@ const EmployeeChatPage = () => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   });
 
-  // useEffect(() => {
-  //   dispatch(addUserToRoom({ roomId }));
-  // }, [dispatch, roomId]);
+  const handleRemove = (id) => {
+    dispatch(deleteMessage({ messageId: id }))
+      .unwrap()
+      .then(() => {
+        dispatch(getAllMessages({ roomId }));
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <div className="msger-container">
@@ -69,27 +75,6 @@ const EmployeeChatPage = () => {
         </header>
 
         <main class="msger-chat">
-          {/* <div class="msg left-msg">
-            <div
-              class="msg-img"
-              style={{
-                backgroundImage:
-                  'url(https://image.flaticon.com/icons/svg/327/327779.svg)',
-              }}
-            ></div>
-
-            <div class="msg-bubble">
-              <div class="msg-info">
-                <div class="msg-info-name">BOT</div>
-                <div class="msg-info-time">12:45</div>
-              </div>
-
-              <div class="msg-text">
-                Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
-              </div>
-            </div>
-          </div> */}
-
           {messages.map((item) => (
             <div
               class={
@@ -108,14 +93,27 @@ const EmployeeChatPage = () => {
               <div class="msg-bubble">
                 <div class="msg-info">
                   <div class="msg-info-name">{item.senderId?.name}</div>
-                  {/* <div class="msg-info-time">{item.createdAt}</div> */}
-                  {item.createdAt && (
-                    <div class="msg-info-time">
-                      {formatDistanceToNow(new Date(item.createdAt), {
-                        addSuffix: true,
-                      })}
-                    </div>
-                  )}
+
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {item.createdAt && (
+                      <div class="msg-info-time">
+                        {formatDistanceToNow(new Date(item.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </div>
+                    )}
+
+                    {item.senderId._id === id && (
+                      <AiFillDelete
+                        onClick={() => handleRemove(item._id)}
+                        style={{
+                          marginLeft: '10px',
+                          color: 'red',
+                          cursor: 'pointer',
+                        }}
+                      />
+                    )}
+                  </div>
                 </div>
 
                 <div class="msg-text">{item.message}</div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -29,46 +29,67 @@ const AllTask = () => {
   } else if (error) {
     content = <div>Error Fetching Tasks...</div>;
   } else {
-    content = (
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell className="tableCell x">Title</TableCell>
-            <TableCell className="tableCell x">Status</TableCell>
-            <TableCell className="tableCell x">Deadline</TableCell>
-            <TableCell className="tableCell x">Total Members</TableCell>
-            <TableCell className="tableCell x">Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tasks.map((task) => {
-            return (
-              <TableRow key={task._id}>
-                <TableCell
-                  className="tableCell"
-                  style={{ fontSize: '16px', fontWeight: 'bold' }}
-                >
-                  {task.task.title}
-                </TableCell>
-                <TableCell className="tableCell">{task.status}</TableCell>
-                <TableCell className="tableCell">
-                  {format(new Date(task.task.deadline), 'yyyy-MM-dd')}
-                </TableCell>
+    content =
+      tasks.length === 0 ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src="/project.jpg"
+            alt="empty customer"
+            style={{ height: '300px' }}
+          />
+          <h2 style={{ color: 'gray', margin: '15px' }}>
+            There is no Project Currently
+          </h2>
+        </div>
+      ) : (
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className="tableCell x">Title</TableCell>
+              <TableCell className="tableCell x">Status</TableCell>
+              <TableCell className="tableCell x">Deadline</TableCell>
+              <TableCell className="tableCell x">Total Members</TableCell>
+              <TableCell className="tableCell x">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tasks.map((task) => {
+              return (
+                <TableRow key={task._id}>
+                  <TableCell
+                    className="tableCell"
+                    style={{ fontSize: '16px', fontWeight: 'bold' }}
+                  >
+                    {task.task.title}
+                  </TableCell>
+                  <TableCell className="tableCell">{task.status}</TableCell>
+                  <TableCell className="tableCell">
+                    {format(new Date(task.task.deadline), 'yyyy-MM-dd')}
+                  </TableCell>
 
-                <TableCell className="tableCell">
-                  {task.teamMate?.length}
-                </TableCell>
-                <TableCell className="tableCell">
-                  <Link to={`/admin/${task.teamMate[0]._id}/task/${task._id}`}>
-                    <button className="view">View More</button>
-                  </Link>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    );
+                  <TableCell className="tableCell">
+                    {task.teamMate?.length}
+                  </TableCell>
+                  <TableCell className="tableCell">
+                    <Link
+                      to={`/admin/${task.teamMate[0]._id}/task/${task._id}`}
+                    >
+                      <button className="view">View More</button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      );
   }
   return (
     <>

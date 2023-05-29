@@ -42,46 +42,65 @@ const AdminCustomerList = () => {
   } else if (error) {
     content = <div>Error Fetching Customers...</div>;
   } else {
-    content = (
-      <>
-        <TableHead>
-          <TableRow>
-            <TableCell className="tableCell x">Customer Name</TableCell>
-            <TableCell className="tableCell x">Email</TableCell>
-            <TableCell className="tableCell x">Status</TableCell>
+    content =
+      customerList.length === 0 ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src="/customer.jpg"
+            alt="empty customer"
+            style={{ height: '300px' }}
+          />
+          <h2 style={{ color: 'gray', margin: '15px' }}>
+            There is no Customer
+          </h2>
+        </div>
+      ) : (
+        <>
+          <TableHead>
+            <TableRow>
+              <TableCell className="tableCell x">Customer Name</TableCell>
+              <TableCell className="tableCell x">Email</TableCell>
+              <TableCell className="tableCell x">Status</TableCell>
 
-            <TableCell className="tableCell x">Country</TableCell>
-            <TableCell className="tableCell x">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(name.trim().length === 0 ? customerList : data).map((row) => {
-            return (
-              <TableRow key={row._id}>
-                <TableCell className="tableCell">
-                  <div className="cellWrapper capital">{row.name}</div>
-                </TableCell>
-                <TableCell className="tableCell">{row.email}</TableCell>
-                <TableCell className="tableCell">{row.status}</TableCell>
+              <TableCell className="tableCell x">Country</TableCell>
+              <TableCell className="tableCell x">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(name.trim().length === 0 ? customerList : data).map((row) => {
+              return (
+                <TableRow key={row._id}>
+                  <TableCell className="tableCell">
+                    <div className="cellWrapper capital">{row.name}</div>
+                  </TableCell>
+                  <TableCell className="tableCell">{row.email}</TableCell>
+                  <TableCell className="tableCell">{row.status}</TableCell>
 
-                <TableCell className="tableCell">{row.country}</TableCell>
-                <TableCell className="tableCell">
-                  <Link to={`/admin/customers/${row._id}`}>
-                    <button className="view">View</button>
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(row._id)}
-                    className="delete"
-                  >
-                    Delete
-                  </button>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </>
-    );
+                  <TableCell className="tableCell">{row.country}</TableCell>
+                  <TableCell className="tableCell">
+                    <Link to={`/admin/customers/${row._id}`}>
+                      <button className="view">View</button>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(row._id)}
+                      className="delete"
+                    >
+                      Delete
+                    </button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </>
+      );
   }
 
   return (
