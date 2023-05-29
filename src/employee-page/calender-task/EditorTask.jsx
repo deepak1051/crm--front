@@ -7,7 +7,7 @@ import { createWork } from '../../store';
 const EditorTask = ({ placeholder }) => {
   const [taskDetail, setTaskDetail] = useState({
     name: '',
-    status: '',
+    status: 'pending',
     description: '',
   });
   const [error, setError] = useState(null);
@@ -50,7 +50,12 @@ const EditorTask = ({ placeholder }) => {
 
       <div style={{ marginBottom: '50px' }}>
         <label htmlFor="status"></label>
-        <select name="status" id="status" onChange={handleChange}>
+        <select
+          name="status"
+          id="status"
+          onChange={handleChange}
+          value={taskDetail.status}
+        >
           <option value="pending">Pending</option>
           <option value="completed">Completed</option>
         </select>

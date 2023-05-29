@@ -38,9 +38,7 @@ const SingleTask = () => {
   }, [fetchEmployee, employeeId]);
 
   const handleDelete = () => {
-    if (
-      window.confirm('Do you really want to delete this customer permanently?')
-    ) {
+    if (window.confirm('Do you really want to delete this Task permanently?')) {
       dispatch(deleteTask({ employeeId, taskId }))
         .unwrap()
         .then(() => navigate(`/admin/employees/${employeeId}`))
@@ -78,12 +76,12 @@ const SingleTask = () => {
         <div>
           <Link to={`/admin/${employeeId}/updateTask/${taskId}`}>
             <button className="edit " style={{ marginRight: '5px' }}>
-              Edit
+              Edit Task
             </button>
           </Link>
 
           <button onClick={() => handleDelete(employeeId)} className="delete">
-            Delete
+            Delete Task
           </button>
         </div>
         <h1 style={{ margin: '10px', color: '#000' }}>
@@ -189,18 +187,6 @@ const SingleTask = () => {
     );
   }
 
-  // if (isFetchTaskLoading) {
-  //   taskContent = <Skeleton count={5} height={40} width={600} />;
-  // } else if (fetchTaskError) {
-  //   taskContent = <div>Fetching Task Error</div>;
-  // } else {
-  //   taskContent = (
-  //     <div style={{ flex: 1 }} className="top">
-  //       <AddTeammate currentEmployeeId={employeeId} taskId={taskId} />
-  //     </div>
-  //   );
-  // }
-
   if (isSingleTaskLoading) return <Skeleton count={5} />;
   return (
     <div>
@@ -210,7 +196,8 @@ const SingleTask = () => {
         </div>
 
         <div style={{ flex: 1 }} className="top">
-         {isFetchTaskLoading} <AddTeammate currentEmployeeId={employeeId} taskId={taskId} />
+          {isFetchTaskLoading}{' '}
+          <AddTeammate currentEmployeeId={employeeId} taskId={taskId} />
         </div>
       </div>
 

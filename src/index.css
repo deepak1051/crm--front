@@ -54,6 +54,7 @@ select {
   border-radius: 5px;
   border: 1px solid gray;
 }
+
 .input-row {
   display: flex;
   align-items: center;

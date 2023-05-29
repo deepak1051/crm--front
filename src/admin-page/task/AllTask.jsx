@@ -13,6 +13,7 @@ import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import useThunk from '../../hooks/useThunk';
+import ProjectIllustration from '../../utils/ProjectIllustration';
 
 const AllTask = () => {
   const { tasks } = useSelector((state) => state.admin);
@@ -31,23 +32,7 @@ const AllTask = () => {
   } else {
     content =
       tasks.length === 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <img
-            src="/project.jpg"
-            alt="empty customer"
-            style={{ height: '300px' }}
-          />
-          <h2 style={{ color: 'gray', margin: '15px' }}>
-            There is no Project Currently
-          </h2>
-        </div>
+        <ProjectIllustration />
       ) : (
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

@@ -14,6 +14,7 @@ import FilterViaName from '../../utils/filter/FilterViaName';
 import useFilter from '../../hooks/useFilter';
 import Skeleton from 'react-loading-skeleton';
 import useThunk from '../../hooks/useThunk';
+import CustomerIllustration from '../../utils/CustomerIllustration';
 
 const AdminCustomerList = () => {
   const { customerList } = useSelector((state) => state.admin);
@@ -44,23 +45,7 @@ const AdminCustomerList = () => {
   } else {
     content =
       customerList.length === 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <img
-            src="/customer.jpg"
-            alt="empty customer"
-            style={{ height: '300px' }}
-          />
-          <h2 style={{ color: 'gray', margin: '15px' }}>
-            There is no Customer
-          </h2>
-        </div>
+        <CustomerIllustration />
       ) : (
         <>
           <TableHead>

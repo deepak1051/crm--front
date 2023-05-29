@@ -11,20 +11,30 @@ import { Link, useParams } from 'react-router-dom';
 
 import { format } from 'date-fns';
 import { getAllTaskByEmployee } from '../../store';
+import useThunk from '../../hooks/useThunk';
+import Skeleton from 'react-loading-skeleton';
+import ProjectIllustration from '../../utils/ProjectIllustration';
 
 const GetAllTaskByEmployee = () => {
   const { taskByEmployee } = useSelector((state) => state.admin);
+  const [fetchTasks, isLoading, error] = useThunk(getAllTaskByEmployee);
 
-  const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {
-    dispatch(getAllTaskByEmployee({ id }));
-  }, [dispatch, id]);
+    fetchTasks({ id });
+  }, [fetchTasks, id]);
 
-  return (
-    <>
-      <TableContainer component={Paper} className="table">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+  let content;
+  if (isLoading) {
+    content = <Skeleton height={40} count={4} />;
+  } else if (error) {
+    content = <div>Fetching Task Details Error...</div>;
+  } else {
+    content =
+      taskByEmployee.length === 0 ? (
+        <ProjectIllustration />
+      ) : (
+        <>
           <TableHead>
             <TableRow>
               <TableCell className="tableCell x">Task Name</TableCell>
@@ -51,6 +61,15 @@ const GetAllTaskByEmployee = () => {
               );
             })}
           </TableBody>
+        </>
+      );
+  }
+
+  return (
+    <>
+      <TableContainer component={Paper} className="table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          {content}
         </Table>
       </TableContainer>
     </>

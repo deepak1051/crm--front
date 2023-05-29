@@ -16,6 +16,7 @@ import {
 import Skeleton from 'react-loading-skeleton';
 import '../styles/list.scss';
 import useThunk from '../../hooks/useThunk';
+import CustomerIllustration from '../../utils/CustomerIllustration';
 
 const EmployeeCustomerList = () => {
   const { employeeCustomerList } = useSelector((state) => state.employee);
@@ -45,49 +46,52 @@ const EmployeeCustomerList = () => {
   } else if (error) {
     content = <div>Error Fetching Customers...</div>;
   } else {
-    content = (
-      <>
-        <TableHead>
-          <TableRow>
-            <TableCell className="tableCell x">Employee Name</TableCell>
-            <TableCell className="tableCell x">Email</TableCell>
-            <TableCell className="tableCell x">Status</TableCell>
+    content =
+      employeeCustomerList.length === 0 ? (
+        <CustomerIllustration />
+      ) : (
+        <>
+          <TableHead>
+            <TableRow>
+              <TableCell className="tableCell x">Employee Name</TableCell>
+              <TableCell className="tableCell x">Email</TableCell>
+              <TableCell className="tableCell x">Status</TableCell>
 
-            <TableCell className="tableCell x">Country</TableCell>
-            <TableCell className="tableCell x">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {employeeCustomerList.map((row) => {
-            return (
-              <TableRow key={row._id}>
-                <TableCell className="tableCell">
-                  <div className="cellWrapper capital">{row.name}</div>
-                </TableCell>
-                <TableCell className="tableCell">{row.email}</TableCell>
-                <TableCell className="tableCell">{row.status}</TableCell>
+              <TableCell className="tableCell x">Country</TableCell>
+              <TableCell className="tableCell x">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employeeCustomerList.map((row) => {
+              return (
+                <TableRow key={row._id}>
+                  <TableCell className="tableCell">
+                    <div className="cellWrapper capital">{row.name}</div>
+                  </TableCell>
+                  <TableCell className="tableCell">{row.email}</TableCell>
+                  <TableCell className="tableCell">{row.status}</TableCell>
 
-                <TableCell className="tableCell">{row.country}</TableCell>
-                <TableCell className="tableCell">
-                  <Link to={`/employee/customer/${row._id}`}>
-                    <button className="view">View</button>
-                  </Link>
+                  <TableCell className="tableCell">{row.country}</TableCell>
+                  <TableCell className="tableCell">
+                    <Link to={`/employee/customer/${row._id}`}>
+                      <button className="view">View</button>
+                    </Link>
 
-                  <Fragment>
-                    <button
-                      onClick={() => handleDelete(row._id)}
-                      className="delete"
-                    >
-                      Delete
-                    </button>
-                  </Fragment>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </>
-    );
+                    <Fragment>
+                      <button
+                        onClick={() => handleDelete(row._id)}
+                        className="delete"
+                      >
+                        Delete
+                      </button>
+                    </Fragment>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </>
+      );
   }
 
   return (
