@@ -93,9 +93,6 @@ const AdminSingleEmployee = () => {
         </div>
         <div className="right">
           <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          <Link to={`/admin/${id}/addTask`}>
-            <button className="task-btn">Add Task</button>
-          </Link>
         </div>
       </div>
     );
