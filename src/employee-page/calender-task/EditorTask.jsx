@@ -22,7 +22,7 @@ const EditorTask = ({ placeholder }) => {
     e.preventDefault();
     dispatch(createWork({ ...taskDetail, id }))
       .unwrap()
-      .then(() => navigate('/employee/daily-tasks'))
+      .then(() => navigate(`/employee/daily-tasks/${id}`))
       .catch((err) => setError(err));
   };
 

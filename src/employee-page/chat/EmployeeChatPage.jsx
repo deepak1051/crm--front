@@ -83,12 +83,10 @@ const EmployeeChatPage = () => {
       <section class="msger">
         <header class="msger-header">
           <div class="msger-header-title">
-            <i class="fas fa-comment-alt"></i> SimpleChat
+            <i class="fas fa-comment-alt"></i> Chat
           </div>
           <div class="msger-header-options">
-            <span>
-              <i class="fas fa-cog"></i>
-            </span>
+            <span>{/* <i class="fas fa-cog"></i> */}</span>
           </div>
         </header>
 

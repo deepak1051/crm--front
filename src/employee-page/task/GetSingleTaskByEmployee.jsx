@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { deleteTask, getSingleTask, removeTeammate } from '../../store';
+import { getSingleTask } from '../../store';
 import '../styles/single.scss';
 import { format } from 'date-fns';
 import Skeleton from 'react-loading-skeleton';
-import CalenderTask from '../calender-task/CalenderTask';
+
 import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 const GetSingleTaskByEmployee = () => {
@@ -15,7 +15,7 @@ const GetSingleTaskByEmployee = () => {
   );
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const { employeeId, taskId } = useParams();
 
   useEffect(() => {
@@ -31,7 +31,16 @@ const GetSingleTaskByEmployee = () => {
       <div className="top">
         <div className="left-side">
           <h1 className="title">Information</h1>
-          <div className="item" style={{ display: 'flex', gap: '20px' }}>
+          <div
+            className="item"
+            style={{
+              display: 'flex',
+              gap: '200px',
+              justifyContent: 'space-between',
+
+              width: '100%',
+            }}
+          >
             <div>
               <img
                 src={`https://images.unsplash.com/photo-1578852612716-854e527abf2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8dGFza3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60`}
@@ -120,12 +129,14 @@ const GetSingleTaskByEmployee = () => {
                   })}
                 </TableBody>
               </div>
+
+              <button className="edit" style={{ marginTop: '30px' }}>
+                <Link to={`/employee/add-work/${taskId}`}>Add Today Task</Link>
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      <CalenderTask taskId={taskId} />
     </div>
   );
 };

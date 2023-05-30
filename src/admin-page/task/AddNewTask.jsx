@@ -32,10 +32,10 @@ const AddNewTask = () => {
 
     console.log(user);
 
-    dispatch(addNewTask(user));
-    // .unwrap()
-    // .then(() => navigate(`/admin/employees/${id}`))
-    // .catch((err) => console.log(err));
+    dispatch(addNewTask(user))
+      .unwrap()
+      .then(() => navigate(`/admin/projects`))
+      .catch((err) => console.log(err));
   };
 
   return (
