@@ -23,7 +23,7 @@ const roleOptions = [
   { value: 'Account' },
 ];
 
-const AddTeammate = ({ currentEmployeeId, taskId }) => {
+const AddTeammate = ({ taskId }) => {
   const [role, setRole] = useState('All');
 
   const { employeeList, singleTask } = useSelector((state) => state.admin);
@@ -35,11 +35,9 @@ const AddTeammate = ({ currentEmployeeId, taskId }) => {
     fetchEmployees();
   }, [fetchEmployees]);
 
-  const filteredEmployee = employeeList
-    ?.filter((item) => {
-      return item._id !== currentEmployeeId;
-    })
-    ?.filter((o) => !singleTask?.teamMate?.some(({ _id }) => o._id === _id));
+  const filteredEmployee = employeeList?.filter(
+    (o) => !singleTask?.teamMate?.some(({ _id }) => o._id === _id)
+  );
 
   const deepFilteredEmployee = filteredEmployee?.filter((c) => {
     if (role === 'All') return true;
@@ -47,11 +45,9 @@ const AddTeammate = ({ currentEmployeeId, taskId }) => {
   });
 
   const handleTeammate = (employeeId) => {
-    dispatch(addTeammate({ currentEmployeeId, employeeId, taskId }))
+    dispatch(addTeammate({ employeeId, taskId }))
       .unwrap()
-      .then(() =>
-        dispatch(getSingleTask({ employeeId: currentEmployeeId, taskId }))
-      )
+      .then(() => dispatch(getSingleTask({ taskId })))
       .catch((err) => console.log(err));
   };
 

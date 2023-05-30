@@ -14,18 +14,18 @@ const EditWork = ({ placeholder }) => {
 
   const editor = useRef(null);
 
-  const { id } = useParams();
+  const { taskId, workId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSingleWork({ id }))
+    dispatch(getSingleWork({ id: workId }))
       .unwrap()
       .then(({ name, status, description }) =>
         setTaskDetail({ name, status, description })
       )
       .catch((err) => setError(err));
-  }, [dispatch, id]);
+  }, [dispatch, workId]);
 
   const config = useMemo(
     () => ({
@@ -40,9 +40,9 @@ const EditWork = ({ placeholder }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateSingleWork({ ...taskDetail, id }))
+    dispatch(updateSingleWork({ ...taskDetail, id: workId }))
       .unwrap()
-      .then(() => navigate(`/employee/daily-tasks/${id}`))
+      .then(() => navigate(`/employee/daily-tasks/${taskId}/work/${workId}`))
       .catch((err) => setError(err));
   };
   return (

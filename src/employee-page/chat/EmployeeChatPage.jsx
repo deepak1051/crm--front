@@ -14,12 +14,15 @@ import {
 import { useRef } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 
+// import { io } from 'socket.io-client';
+
 const EmployeeChatPage = () => {
   const [message, setMessage] = useState('');
+  const [chats, setChats] = useState([]);
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
   const divRef = useRef(null);
-
+  const socket = useRef();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -31,6 +34,8 @@ const EmployeeChatPage = () => {
         setMessage('');
       })
       .catch((err) => console.log(err.message));
+
+    // socket.current.emit('send_message', { message });
   };
 
   useEffect(() => {
@@ -42,7 +47,6 @@ const EmployeeChatPage = () => {
 
   useEffect(() => {
     if (roomId) {
-      console.log('first');
       dispatch(getAllMessages({ roomId }));
     }
   }, [dispatch, roomId]);
@@ -50,6 +54,14 @@ const EmployeeChatPage = () => {
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' });
   });
+
+  // useEffect(() => {
+  //   socket.current.on('send_message', (payload) => {
+  //     console.log(payload);
+  //     setChats((prev) => [...prev, payload]);
+  //   });
+  // }, [chats]);
+  // console.log(chats);
 
   const handleRemove = (id) => {
     dispatch(deleteMessage({ messageId: id }))
@@ -59,6 +71,12 @@ const EmployeeChatPage = () => {
       })
       .catch((err) => console.log(err.message));
   };
+
+  // useEffect(() => {
+  //   socket.current = io.connect('http://localhost:3001');
+  // }, []);
+
+  // console.log(chats);
 
   return (
     <div className="msger-container">

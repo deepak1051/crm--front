@@ -14,6 +14,7 @@ import { getAllTaskByEmployee } from '../../store';
 import useThunk from '../../hooks/useThunk';
 import Skeleton from 'react-loading-skeleton';
 import ProjectIllustration from '../../utils/ProjectIllustration';
+import ErrorPage from '../../utils/ErrorPage';
 
 const GetAllTaskByEmployee = () => {
   const { taskByEmployee } = useSelector((state) => state.admin);
@@ -21,14 +22,19 @@ const GetAllTaskByEmployee = () => {
 
   const { id } = useParams();
   useEffect(() => {
-    fetchTasks({ id });
+    fetchTasks({ employeeId: id });
   }, [fetchTasks, id]);
 
   let content;
   if (isLoading) {
     content = <Skeleton height={40} count={4} />;
   } else if (error) {
-    content = <div>Fetching Task Details Error...</div>;
+    content = (
+      <>
+        Fetching Task Details Error...
+        <ErrorPage />
+      </>
+    );
   } else {
     content =
       taskByEmployee.length === 0 ? (
@@ -55,6 +61,9 @@ const GetAllTaskByEmployee = () => {
                   <TableCell className="tableCell">
                     <Link to={`/employee/${id}/task/${item._id}`}>
                       <button className="view">View More</button>
+                    </Link>
+                    <Link to={`/employee/daily-tasks/${item._id}`}>
+                      <button className="edit">Task Detail</button>
                     </Link>
                   </TableCell>
                 </TableRow>

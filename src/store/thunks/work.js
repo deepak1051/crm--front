@@ -28,9 +28,9 @@ const createWork = createAsyncThunk(
 
 const getWorkByEmployee = createAsyncThunk(
   'byEmployee/getWork',
-  async (userData, { rejectWithValue, getState, signal }) => {
+  async (userData, { rejectWithValue, getState }) => {
     const state = getState();
-    console.log(`/work/${userData.id}`);
+
     try {
       const { data } = await instance.get(
         `/work/employee/${userData.id}`,
@@ -39,7 +39,6 @@ const getWorkByEmployee = createAsyncThunk(
           headers: {
             authorization: `Bearer ${state.auth.token}`,
           },
-          signal,
         }
       );
 
@@ -53,7 +52,7 @@ const getWorkByEmployee = createAsyncThunk(
 
 const getSingleWork = createAsyncThunk(
   'work/getSingle',
-  async (userData, { rejectWithValue, getState, signal }) => {
+  async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
     try {
@@ -64,7 +63,6 @@ const getSingleWork = createAsyncThunk(
           headers: {
             authorization: `Bearer ${state.auth.token}`,
           },
-          signal,
         }
       );
 
@@ -103,17 +101,17 @@ const updateSingleWork = createAsyncThunk(
 
 const deleteSingleWork = createAsyncThunk(
   'work/deleteSingle',
-  async (userData, { rejectWithValue, getState, signal }) => {
+  async (userData, { rejectWithValue, getState }) => {
     const state = getState();
     try {
       const { data } = await instance.delete(
-        `/work/${userData.id}`,
+        `/work/${userData.workId}`,
 
         {
           headers: {
             authorization: `Bearer ${state.auth.token}`,
           },
-          signal,
+         
         }
       );
 

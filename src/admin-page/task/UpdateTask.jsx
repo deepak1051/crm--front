@@ -9,7 +9,6 @@ import { getSingleTask, updateTask } from '../../store';
 import { format, parseISO } from 'date-fns';
 
 const statusOptions = [
-  //"comming", "completed", "running"
   { value: 'comming' },
   { value: 'completed' },
   { value: 'running' },
@@ -35,7 +34,7 @@ const UpdateTask = () => {
     e.preventDefault();
     dispatch(updateTask({ ...user, employeeId, taskId }))
       .unwrap()
-      .then(() => navigate(`/admin/${employeeId}/task/${taskId}`))
+      .then(() => navigate(`/admin/task/${taskId}`))
       .catch((err) => setError(err));
   };
 
@@ -43,7 +42,6 @@ const UpdateTask = () => {
     dispatch(getSingleTask({ employeeId, taskId }))
       .unwrap()
       .then((user) => {
-        console.log(user);
         setUser({
           ...user.task,
           assignedDate: format(parseISO(user.task.assignedDate), 'yyyy-MM-dd'),

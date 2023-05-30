@@ -30,10 +30,12 @@ const AddNewTask = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(addNewTask({ ...user, id }))
-      .unwrap()
-      .then(() => navigate(`/admin/employees/${id}`))
-      .catch((err) => console.log(err));
+    console.log(user);
+
+    dispatch(addNewTask(user));
+    // .unwrap()
+    // .then(() => navigate(`/admin/employees/${id}`))
+    // .catch((err) => console.log(err));
   };
 
   return (

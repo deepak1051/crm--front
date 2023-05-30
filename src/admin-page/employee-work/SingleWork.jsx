@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 const SingleWork = () => {
   const { singleWorkDetailByEmployee } = useSelector((state) => state.work);
   const dispatch = useDispatch();
-  const { employeeId, id } = useParams();
+  const { id } = useParams();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -15,10 +15,14 @@ const SingleWork = () => {
   }, [dispatch, id]);
 
   const handleDelete = () => {
-    if (window.confirm('Do you really want to delete this work permanently?')) {
+    if (
+      window.confirm(
+        'Do you really want to delete this work detail permanently?'
+      )
+    ) {
       dispatch(deleteSingleWork({ id }))
         .unwrap()
-        .then(() => navigate(`/admin/${employeeId}/task/${id}`))
+        .then(() => navigate(`/admin/work-list/${id}`))
         .catch((err) => console.log(err));
     }
   };
@@ -31,7 +35,7 @@ const SingleWork = () => {
       <div className="top">
         <div className="left-side">
           <div>
-            <Link to={`/admin/${employeeId}/daily-tasks/${id}/update`}>
+            <Link to={`/admin/daily-tasks/${id}/update`}>
               <button className="editButton button">Edit</button>
             </Link>
             <button onClick={handleDelete}>Delete</button>

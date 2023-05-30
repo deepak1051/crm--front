@@ -7,17 +7,17 @@ import { format } from 'date-fns';
 const SingleDailyTask = () => {
   const { singleWorkDetailByEmployee } = useSelector((state) => state.work);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { taskId, workId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getSingleWork({ id }));
-  }, [dispatch, id]);
+    dispatch(getSingleWork({ id: workId }));
+  }, [dispatch, workId]);
 
   const handleDelete = () => {
     if (window.confirm('Do you really want to delete this work permanently?')) {
-      dispatch(deleteSingleWork({ id }))
+      dispatch(deleteSingleWork({ workId }))
         .unwrap()
-        .then(() => navigate('/employee/daily-tasks'))
+        .then(() => navigate(`/employee/daily-tasks/${taskId}`))
         .catch((err) => console.log(err));
     }
   };
@@ -30,7 +30,7 @@ const SingleDailyTask = () => {
       <div className="top">
         <div className="left-side">
           <div>
-            <Link to={`/employee/daily-tasks/${id}/update`}>
+            <Link to={`/employee/daily-tasks/${taskId}/update/${workId}`}>
               <button className="edit" style={{ marginRight: '5px' }}>
                 Edit
               </button>
@@ -42,7 +42,7 @@ const SingleDailyTask = () => {
           <h1 className="title">Information</h1>
           <div className="item">
             <img
-              src={`https://picsum.photos/seed/${id}/300/200`}
+              src={`https://picsum.photos/seed/${taskId}/300/200`}
               alt=""
               className="itemImg"
             />

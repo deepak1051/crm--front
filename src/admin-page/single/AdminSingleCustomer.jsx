@@ -46,26 +46,38 @@ const AdminSingleCustomer = () => {
                 className="itemImg"
               />
               <div className="details">
-                <h1 className="itemTitle">{singleCustomer.name}</h1>
-                <div className="detailItem">
-                  <span className="itemKey">Email:</span>
-                  <span className="itemValue">{singleCustomer.email}</span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Phone:</span>
-                  <span className="itemValue">{singleCustomer.phone}</span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Address:</span>
-                  <span className="itemValue">{singleCustomer.address}</span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Country:</span>
-                  <span className="itemValue">{singleCustomer.country}</span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Status:</span>
-                  <span className="itemValue">{singleCustomer.status}</span>
+                <h1 className="itemTitle" style={{ color: 'teal' }}>
+                  {singleCustomer.name}
+                </h1>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    marginTop: '10px',
+                    fontSize: '18px',
+                  }}
+                >
+                  <div>
+                    <span>Email:</span>
+                    <span>{singleCustomer.email}</span>
+                  </div>
+                  <div>
+                    <span>Phone:</span>
+                    <span>{singleCustomer.phone}</span>
+                  </div>
+                  <div>
+                    <span>Address:</span>
+                    <span>{singleCustomer.address}</span>
+                  </div>
+                  <div>
+                    <span>Country:</span>
+                    <span>{singleCustomer.country}</span>
+                  </div>
+                  <div>
+                    <span>Status:</span>
+                    <span>{singleCustomer.status}</span>
+                  </div>
                 </div>
               </div>
             </div>

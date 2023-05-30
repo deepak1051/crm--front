@@ -241,13 +241,15 @@ const deleteCustomer = createAsyncThunk(
   }
 );
 
+// task thunks....
+
 const getAllTask = createAsyncThunk(
   'task/getAll',
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
     try {
-      const { data } = await instance.get(`/admin/getalltask`, {
+      const { data } = await instance.get(`/task/getalltask`, {
         headers: {
           authorization: `Bearer ${state.auth.token}`,
         },
@@ -260,6 +262,7 @@ const getAllTask = createAsyncThunk(
   }
 );
 
+//Add New Task
 const addNewTask = createAsyncThunk(
   'newTask/add',
   async (userData, { rejectWithValue, getState }) => {
@@ -267,7 +270,7 @@ const addNewTask = createAsyncThunk(
 
     try {
       const { data } = await instance.post(
-        `/employee/${userData.id}/addTask`,
+        `/task/addTask`,
         { ...userData },
         {
           headers: {
@@ -275,7 +278,7 @@ const addNewTask = createAsyncThunk(
           },
         }
       );
-
+      console.log(data);
       return data?.data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
@@ -283,6 +286,7 @@ const addNewTask = createAsyncThunk(
   }
 );
 
+//All Task By Employee
 const getAllTaskByEmployee = createAsyncThunk(
   'taskByEmployee/getAll',
   async (userData, { rejectWithValue, getState }) => {
@@ -290,8 +294,8 @@ const getAllTaskByEmployee = createAsyncThunk(
 
     try {
       const { data } = await instance.get(
-        `/employee/${userData.id}/getTask`,
-
+        `/task/getTask/${userData.employeeId}`,
+        ///getTask/:employeeId
         {
           headers: {
             authorization: `Bearer ${state.auth.token}`,
@@ -308,6 +312,7 @@ const getAllTaskByEmployee = createAsyncThunk(
   }
 );
 
+// get single task
 const getSingleTask = createAsyncThunk(
   'task/getSingle',
   async (userData, { rejectWithValue, getState }) => {
@@ -315,7 +320,7 @@ const getSingleTask = createAsyncThunk(
 
     try {
       const { data } = await instance.get(
-        `/employee/${userData.employeeId}/getSingleTask/${userData.taskId}`, ///:employeeId/getSingleTask/:taskId
+        `/task/getSingleTask/${userData.taskId}`,
 
         {
           headers: {
@@ -331,6 +336,8 @@ const getSingleTask = createAsyncThunk(
   }
 );
 
+// Update Task
+
 const updateTask = createAsyncThunk(
   'task/update',
   async (userData, { rejectWithValue, getState }) => {
@@ -338,7 +345,7 @@ const updateTask = createAsyncThunk(
 
     try {
       const { data } = await instance.patch(
-        `/employee/${userData.employeeId}/updateTask/${userData.taskId}`, ///:employeeId/getSingleTask/:taskId
+        `/task/updateTask/${userData.taskId}`,
         { ...userData },
         {
           headers: {
@@ -354,6 +361,8 @@ const updateTask = createAsyncThunk(
   }
 );
 
+// Delete Task
+
 const deleteTask = createAsyncThunk(
   'task/update',
   async (userData, { rejectWithValue, getState }) => {
@@ -361,8 +370,7 @@ const deleteTask = createAsyncThunk(
 
     try {
       const { data } = await instance.delete(
-        `/employee/${userData.employeeId}/updateTask/${userData.taskId}`, ///:employeeId/getSingleTask/:taskId
-
+        `/task/updateTask/${userData.taskId}`,
         {
           headers: {
             authorization: `Bearer ${state.auth.token}`,
@@ -377,6 +385,7 @@ const deleteTask = createAsyncThunk(
   }
 );
 
+// Add Teammates
 const addTeammate = createAsyncThunk(
   'teammate/add',
   async (userData, { rejectWithValue, getState }) => {
@@ -384,7 +393,7 @@ const addTeammate = createAsyncThunk(
 
     try {
       const { data } = await instance.patch(
-        `/employee/${userData.currentEmployeeId}/addTeamMate/${userData.taskId}`, //:employeeId/getSingleTask/:taskId
+        `task/addTeamMate/${userData.taskId}`,
         { employeeId: userData.employeeId },
         {
           headers: {
@@ -400,6 +409,7 @@ const addTeammate = createAsyncThunk(
   }
 );
 
+// Remove Teammates
 const removeTeammate = createAsyncThunk(
   'teammate/remove',
   async (userData, { rejectWithValue, getState }) => {
@@ -407,7 +417,8 @@ const removeTeammate = createAsyncThunk(
 
     try {
       const { data } = await instance.patch(
-        `/employee/${userData.currentEmployeeId}/removeTeamMate/${userData.taskId}`, //:employeeId/getSingleTask/:taskId
+        `/task/removeTeamMate/${userData.taskId}`,
+
         { employeeId: userData.employeeId },
         {
           headers: {

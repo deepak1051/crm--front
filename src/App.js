@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeId } from './store';
@@ -71,6 +71,9 @@ import PasswordRedirectPage from './employee-page/password/PasswordRedirectPage'
 import ConfirmEmail from './employee-page/confirm-email/ConfirmEmail';
 import EmployeeChatPage from './employee-page/chat/EmployeeChatPage';
 import AdminChatPage from './admin-page/chat/AdminChatPage';
+import NotFound from './utils/NotFound';
+import SingleTaskWorkList from './admin-page/employee-work/SingleTaskWorkList';
+import AllWorkList from './admin-page/employee-work/AllWorkList';
 
 function App() {
   const [role, setRole] = useState(null);
@@ -103,14 +106,11 @@ function App() {
               />
 
               <Route element={<AllTask />} path="/admin/projects" />
-              <Route
-                element={<SingleTask />}
-                path="/admin/:employeeId/task/:taskId"
-              />
-              <Route element={<AddNewTask />} path="/admin/:id/addTask" />
+              <Route element={<SingleTask />} path="/admin/task/:taskId" />
+              <Route element={<AddNewTask />} path="/admin/addTask" />
               <Route
                 element={<UpdateTask />}
-                path="/admin/:employeeId/updateTask/:taskId"
+                path="/admin/updateTask/:taskId"
               />
               <Route
                 element={<AdminAddEmployee />}
@@ -144,13 +144,17 @@ function App() {
               {/* task route */}
               <Route
                 element={<UpdateSingleWork />}
-                path="/admin/:employeeId/daily-tasks/:id/update"
+                path="/admin/daily-tasks/:id/update"
               />
 
+              <Route element={<SingleWork />} path="/admin/daily-tasks/:id" />
+
+              {/*employee worklist  */}
               <Route
-                element={<SingleWork />}
-                path="/admin/:employeeId/daily-tasks/:id"
+                element={<SingleTaskWorkList />}
+                path="/admin/work-list/:taskId"
               />
+              <Route element={<AllWorkList />} path="/admin/work-list/" />
 
               {/* chat page */}
               <Route element={<AdminChatPage />} path="/admin/chat" />
@@ -207,12 +211,15 @@ function App() {
               <Route element={<EditorTask />} path="/employee/add-work/:id" />
               <Route
                 element={<EditWork />}
-                path="/employee/daily-tasks/:id/update"
+                path="/employee/daily-tasks/:taskId/update/:workId"
               />
-              <Route element={<DailyTasks />} path="/employee/daily-tasks" />
+              <Route
+                element={<DailyTasks />}
+                path="/employee/daily-tasks/:taskId"
+              />
               <Route
                 element={<SingleDailyTask />}
-                path="/employee/daily-tasks/:id"
+                path="/employee/daily-tasks/:taskId/work/:workId"
               />
               <Route
                 element={<UpdatePassword />}
@@ -282,7 +289,7 @@ function App() {
               path="/employee/confirmEmail/:id"
             />
 
-            <Route element={<h2>Not Found</h2>} path="*" />
+            <Route element={<NotFound />} path="*" />
           </Routes>
         </Suspense>
       </BrowserRouter>

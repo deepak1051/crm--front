@@ -20,6 +20,8 @@ const AllTask = () => {
 
   const [fetchTasks, isLoading, error] = useThunk(getAllTask);
 
+  console.log(tasks);
+
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
@@ -63,10 +65,14 @@ const AllTask = () => {
                     {task.teamMate?.length}
                   </TableCell>
                   <TableCell className="tableCell">
+                    <Link to={`/admin/task/${task._id}`}>
+                      <button className="view">Project Setting</button>
+                    </Link>
                     <Link
-                      to={`/admin/${task.teamMate[0]._id}/task/${task._id}`}
+                      to={`/admin/work-list/${task._id}`}
+                      state={{ taskTitle: task.task.title }}
                     >
-                      <button className="view">View More</button>
+                      <button className="delete">Project Work</button>
                     </Link>
                   </TableCell>
                 </TableRow>
@@ -78,6 +84,11 @@ const AllTask = () => {
   }
   return (
     <>
+      <div className="addNew">
+        <Link to="/admin/addTask">
+          <button>Add New</button>
+        </Link>
+      </div>
       <TableContainer component={Paper} className="table">
         {content}
       </TableContainer>

@@ -21,7 +21,7 @@ const AllTaskByEmployee = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetchTask({ id });
+    fetchTask({ employeeId: id });
   }, [fetchTask, id]);
 
   let content;
@@ -50,7 +50,7 @@ const AllTaskByEmployee = () => {
                   {format(new Date(item.task.deadline), 'yyyy-MM-dd')}
                 </TableCell>
                 <TableCell className="tableCell">
-                  <Link to={`/admin/${id}/task/${item._id}`}>
+                  <Link to={`/admin/task/${item._id}`}>
                     <button className="view">View More</button>
                   </Link>
                 </TableCell>

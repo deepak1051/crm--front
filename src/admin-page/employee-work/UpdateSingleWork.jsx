@@ -27,8 +27,6 @@ const UpdateSingleWork = ({ placeholder }) => {
       .catch((err) => setError(err));
   }, [dispatch, id]);
 
-  console.log(taskDetail);
-
   const config = useMemo(
     () => ({
       readonly: false, // all options from https://xdsoft.net/jodit/docs/,
@@ -44,7 +42,7 @@ const UpdateSingleWork = ({ placeholder }) => {
     e.preventDefault();
     dispatch(updateSingleWork({ ...taskDetail, id }))
       .unwrap()
-      .then(() => navigate(`/admin/${employeeId}/daily-tasks/${id}`))
+      .then(() => navigate(`/admin/daily-tasks/${id}`))
       .catch((err) => setError(err));
   };
   return (
@@ -58,14 +56,19 @@ const UpdateSingleWork = ({ placeholder }) => {
           value={taskDetail.name}
         />
       </div>
-      <div>
-        <label htmlFor="status">Status</label>
-        <input
-          type="text"
+      <div style={{ marginBottom: '50px' }}>
+        <label htmlFor="status"></label>
+        <select
           name="status"
+          id="status"
           onChange={handleChange}
           value={taskDetail.status}
-        />
+        >
+          <option value="pending" style={{ padding: '10px' }}>
+            Pending
+          </option>
+          <option value="completed">Completed</option>
+        </select>
       </div>
 
       <JoditEditor
