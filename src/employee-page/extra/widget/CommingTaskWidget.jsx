@@ -20,7 +20,7 @@ const CommingTaskWidget = () => {
       className="widget"
       style={{ display: 'flex', flexDirection: 'column' }}
     >
-      <p style={{ color: 'gray', fontWeight: '500' }}>Completed Projects</p>
+      <p style={{ color: 'gray', fontWeight: '500' }}>Comming Projects</p>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <GiEvilComet style={{ color: 'teal', fontSize: '2rem' }} />
         <p>{commingTask}</p>
