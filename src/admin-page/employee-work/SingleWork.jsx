@@ -9,6 +9,8 @@ const SingleWork = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  console.log(singleWorkDetailByEmployee);
+
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getSingleWork({ id }));
@@ -48,6 +50,33 @@ const SingleWork = () => {
               className="itemImg"
             />
             <div className="single-list__container">
+              <div>
+                <span className="single-list__container-item-key">
+                  Project Name:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleWorkDetailByEmployee.task.task.title}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Employee Name:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleWorkDetailByEmployee.employee.name}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Teammates:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleWorkDetailByEmployee.task.teamMate.length}
+                </span>
+              </div>
+
               <div>
                 <span className="single-list__container-item-key">
                   Work done tagline:

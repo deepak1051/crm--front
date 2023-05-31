@@ -39,7 +39,7 @@ const EmployeeSingleCustomer = () => {
               Delete
             </button>
           </div>
-          <h1 className="title">Information</h1>
+          <h1 className="title">Customer Information</h1>
           <div className="item">
             <img
               src={`https://picsum.photos/seed/${id}/300/200`}
@@ -80,6 +80,24 @@ const EmployeeSingleCustomer = () => {
                 <span className="single-list__container-item-key">Status:</span>
                 <span className="single-list__container-item-value">
                   {singleCustomer.status}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Business Name:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleCustomer?.businessName}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Business Description:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleCustomer?.businessDescription}
                 </span>
               </div>
             </div>

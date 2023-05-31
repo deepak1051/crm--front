@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store';
 import './styles/sidebar.scss';
+import { MoneyOffCsredRounded } from '@mui/icons-material';
 
 const AdminSidebar = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,16 @@ const AdminSidebar = () => {
             {/* <MoneyOffCsredRounded /> */}
             <RiTodoLine style={{ color: '#000', fill: 'black' }} />
             <span>Chat</span>
+          </NavLink>
+
+          <NavLink
+            to={`/admin/daily-work-list`}
+            className={({ isActive }) =>
+              isActive ? 'active nav-container' : 'inactive nav-container'
+            }
+          >
+            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
+            <span>Employee Work List </span>
           </NavLink>
 
           <button

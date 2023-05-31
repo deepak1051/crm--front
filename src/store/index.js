@@ -4,6 +4,7 @@ import { adminReducer } from './slices/adminSlice';
 import { employeeReducer } from './slices/employeeSlice';
 import { workReducer } from './slices/workSlice';
 import { chatReducer } from './slices/chatSlice';
+import { projectReducer } from './slices/projectSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     employee: employeeReducer,
     work: workReducer,
     chat: chatReducer,
+    project: projectReducer,
   },
 });
 
@@ -25,3 +27,4 @@ export * from './slices/employeeSlice';
 export * from './thunks/work';
 export * from './slices/chatSlice';
 export * from './thunks/chat';
+export * from './thunks/project';

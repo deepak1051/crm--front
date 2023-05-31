@@ -20,6 +20,8 @@ const SingleTaskWorkList = () => {
   const { taskId } = useParams();
   const { state } = useLocation();
 
+  console.log(workListByEmployee);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getWorkByEmployee({ id: taskId }));

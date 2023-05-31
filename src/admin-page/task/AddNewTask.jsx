@@ -11,7 +11,6 @@ import Spinner from '../../utils/Spinner';
 const AddNewTask = () => {
   const { isLoading, error } = useSelector((state) => state.admin);
 
-  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -33,6 +33,7 @@ const statusOptions = [
   { value: 'Success' },
   { value: 'Pending' },
   { value: 'Rejected' },
+  { value: 'Unreachable' },
 ];
 
 const EmployeeAddCustomer = () => {
@@ -48,6 +49,9 @@ const EmployeeAddCustomer = () => {
     country: 'India',
     address: '',
     status: 'Success',
+    businessName: '',
+    businessDescription: '',
+    // businessRequirement:''
   });
   const dispatch = useDispatch();
 
@@ -150,6 +154,28 @@ const EmployeeAddCustomer = () => {
               </select>
             </div>
 
+            {/* business Name */}
+            <div className="formInput">
+              <label htmlFor="businessName">Business Name</label>
+              <input
+                id="businessName"
+                value={user.businessName}
+                onChange={handleChange}
+                name="businessName"
+                required
+              />
+            </div>
+            {/* business description */}
+            <div className="formInput">
+              <label htmlFor="businessDescription">Business Description</label>
+              <textarea
+                id="businessDescription"
+                value={user.businessDescription}
+                onChange={handleChange}
+                name="businessDescription"
+                required
+              />
+            </div>
             <br />
             <button disabled={isLoading}>
               {isLoading ? <Spinner /> : 'Save'}

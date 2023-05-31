@@ -86,15 +86,15 @@ const EmployeeSidebar = () => {
             <span>Update Password</span>
           </NavLink>
 
-          {/* <NavLink
-            to={`/employee/daily-tasks`}
+          <NavLink
+            to={`/employee/projects`}
             className={({ isActive }) =>
               isActive ? 'active nav-container' : 'inactive nav-container'
             }
           >
             <AiOutlineHeart />
             <span>Daily Tasks </span>
-          </NavLink> */}
+          </NavLink>
 
           <button
             onClick={logoutHandler}

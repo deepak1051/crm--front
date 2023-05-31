@@ -73,7 +73,13 @@ import EmployeeChatPage from './employee-page/chat/EmployeeChatPage';
 import AdminChatPage from './admin-page/chat/AdminChatPage';
 import NotFound from './utils/NotFound';
 import SingleTaskWorkList from './admin-page/employee-work/SingleTaskWorkList';
-import AllWorkList from './admin-page/employee-work/AllWorkList';
+
+import CreateProject from './employee-page/project/CreateProject';
+import ShowAllProjects from './employee-page/project/ShowAllProjects';
+import WorkSingleProject from './employee-page/project/WorkSingleProject';
+import UpdateProject from './employee-page/project/UpdateProject';
+import AllDailyWorkList from './admin-page/project/AllDailyWorkList';
+import SingleDailyWork from './admin-page/project/SingleDailyWork';
 
 function App() {
   const [role, setRole] = useState(null);
@@ -154,7 +160,16 @@ function App() {
                 element={<SingleTaskWorkList />}
                 path="/admin/work-list/:taskId"
               />
-              <Route element={<AllWorkList />} path="/admin/work-list/" />
+              {/* <Route element={<AllWorkList />} path="/admin/work-list/" /> */}
+              {/* employee project*/}
+              <Route
+                element={<AllDailyWorkList />}
+                path="/admin/daily-work-list"
+              />
+              <Route
+                path="/admin/daily-work-list/:id"
+                element={<SingleDailyWork />}
+              />
 
               {/* chat page */}
               <Route element={<AdminChatPage />} path="/admin/chat" />
@@ -237,6 +252,21 @@ function App() {
               {/* chat page */}
 
               <Route path="/employee/chat" element={<EmployeeChatPage />} />
+
+              {/* project */}
+              <Route element={<ShowAllProjects />} path="/employee/projects" />
+              <Route
+                element={<WorkSingleProject />}
+                path="/employee/projects/:id"
+              />
+              <Route
+                element={<CreateProject />}
+                path="/employee/create-project"
+              />
+              <Route
+                element={<UpdateProject />}
+                path="/employee/update-project/:id"
+              />
             </Routes>
           </div>
         </div>
