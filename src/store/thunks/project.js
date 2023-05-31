@@ -1,20 +1,19 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import instance from "../../utils/instance";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import instance from '../../utils/instance';
 
-const createWork = createAsyncThunk(
-  "work/create",
-  async (userData, { rejectWithValue, getState, signal }) => {
+const createProject = createAsyncThunk(
+  'project/create',
+  async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
     try {
       const { data } = await instance.post(
-        `/work/${userData.id}`,
+        `/project`,
         { ...userData },
         {
           headers: {
             authorization: `Bearer ${state.auth.token}`,
           },
-          signal,
         }
       );
 
@@ -26,14 +25,14 @@ const createWork = createAsyncThunk(
   }
 );
 
-const getWorkByEmployee = createAsyncThunk(
-  "byEmployee/getWork",
+const getAllProjectByEmployee = createAsyncThunk(
+  'projectByEmployee/getAll',
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
     try {
       const { data } = await instance.get(
-        `/work/employee/${userData.id}`,
+        `/project/employee`,
 
         {
           headers: {
@@ -50,14 +49,14 @@ const getWorkByEmployee = createAsyncThunk(
   }
 );
 
-const getSingleWork = createAsyncThunk(
-  "work/getSingle",
+const getSingleProject = createAsyncThunk(
+  'project/getSingle',
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
     try {
       const { data } = await instance.get(
-        `/work/${userData.id}`,
+        `/project/${userData.id}`,
 
         {
           headers: {
@@ -74,14 +73,14 @@ const getSingleWork = createAsyncThunk(
   }
 );
 
-const updateSingleWork = createAsyncThunk(
-  "work/updateSingle",
+const updateSingleProject = createAsyncThunk(
+  'project/updateSingle',
   async (userData, { rejectWithValue, getState, signal }) => {
     const state = getState();
 
     try {
       const { data } = await instance.patch(
-        `/work/${userData.id}`,
+        `/project/${userData.id}`,
         { ...userData },
         {
           headers: {
@@ -99,13 +98,13 @@ const updateSingleWork = createAsyncThunk(
   }
 );
 
-const deleteSingleWork = createAsyncThunk(
-  "work/deleteSingle",
+const deleteSingleProject = createAsyncThunk(
+  'project/deleteSingle',
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
     try {
       const { data } = await instance.delete(
-        `/work/${userData.workId}`,
+        `/project/${userData.id}`,
 
         {
           headers: {
@@ -124,12 +123,12 @@ const deleteSingleWork = createAsyncThunk(
 );
 
 // get all work
-const allWork = createAsyncThunk(
-  "work/all",
+const getAllProject = createAsyncThunk(
+  'allProject/get',
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
     try {
-      const { data } = await instance.get(`/work`, {
+      const { data } = await instance.get(`/project`, {
         headers: {
           authorization: `Bearer ${state.auth.token}`,
         },
@@ -145,10 +144,10 @@ const allWork = createAsyncThunk(
 );
 
 export {
-  createWork,
-  getWorkByEmployee,
-  getSingleWork,
-  updateSingleWork,
-  deleteSingleWork,
-  allWork,
+  createProject,
+  getAllProjectByEmployee,
+  getSingleProject,
+  updateSingleProject,
+  deleteSingleProject,
+  getAllProject,
 };

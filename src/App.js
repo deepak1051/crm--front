@@ -1,79 +1,85 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeId } from './store';
-import { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode';
+import React, { Suspense } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeId } from "./store";
+import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
 
-import AdminDashboard from './admin-page/AdminDashboard';
+import AdminDashboard from "./admin-page/AdminDashboard";
 
-import EmployeeLogin from './auth/login/EmployeeLogin';
+import EmployeeLogin from "./auth/login/EmployeeLogin";
 
-import WebsiteHomepage from './admin-page/WebsiteHomepage';
+import WebsiteHomepage from "./admin-page/WebsiteHomepage";
 
-import AdminAddEmployee from './admin-page/add/AdminAddEmployee';
+import AdminAddEmployee from "./admin-page/add/AdminAddEmployee";
 
-import AdminAddCustomer from './admin-page/add/AdminAddCustomer';
+import AdminAddCustomer from "./admin-page/add/AdminAddCustomer";
 
-import AdminEmployeeList from './admin-page/list/AdminEmployeeList';
+import AdminEmployeeList from "./admin-page/list/AdminEmployeeList";
 
-import AdminCustomerList from './admin-page/list/AdminCustomerList';
+import AdminCustomerList from "./admin-page/list/AdminCustomerList";
 
-import AdminSingleCustomer from './admin-page/single/AdminSingleCustomer';
+import AdminSingleCustomer from "./admin-page/single/AdminSingleCustomer";
 
-import AdminSingleCustomerUpdate from './admin-page/update/AdminSingleCustomerUpdate';
+import AdminSingleCustomerUpdate from "./admin-page/update/AdminSingleCustomerUpdate";
 
-import AdminSingleEmployee from './admin-page/single/AdminSingleEmployee';
+import AdminSingleEmployee from "./admin-page/single/AdminSingleEmployee";
 
-import AdminSingleEmployeeUpdate from './admin-page/update/AdminSingleEmployeeUpdate';
+import AdminSingleEmployeeUpdate from "./admin-page/update/AdminSingleEmployeeUpdate";
 
-import Navbar from './components/navbar/Navbar';
-import EmployeeDashboard from './employee-page/EmployeeDashboard';
+import Navbar from "./components/navbar/Navbar";
+import EmployeeDashboard from "./employee-page/EmployeeDashboard";
 
-import EmployeeSidebar from './employee-page/util/EmployeeSidebar';
+import EmployeeSidebar from "./employee-page/util/EmployeeSidebar";
 
-import EmployeeCustomerList from './employee-page/list/EmployeeCustomerList';
+import EmployeeCustomerList from "./employee-page/list/EmployeeCustomerList";
 
-import EmployeeAddCustomer from './employee-page/add/EmployeeAddCustomer';
+import EmployeeAddCustomer from "./employee-page/add/EmployeeAddCustomer";
 
-import EmployeeSingleCustomer from './employee-page/single/EmployeeSingleCustomer';
+import EmployeeSingleCustomer from "./employee-page/single/EmployeeSingleCustomer";
 
-import AllTask from './admin-page/task/AllTask';
-import SingleTask from './admin-page/task/SingleTask';
-import AddNewTask from './admin-page/task/AddNewTask';
+import AllTask from "./admin-page/task/AllTask";
+import SingleTask from "./admin-page/task/SingleTask";
+import AddNewTask from "./admin-page/task/AddNewTask";
 
-import UpdateTask from './admin-page/task/UpdateTask';
-import UpdateSingleCustomer from './employee-page/update/UpdateSingleCustomer';
+import UpdateTask from "./admin-page/task/UpdateTask";
+import UpdateSingleCustomer from "./employee-page/update/UpdateSingleCustomer";
 
-import GetAllTaskByEmployee from './employee-page/task/GetAllTaskByEmployee';
+import GetAllTaskByEmployee from "./employee-page/task/GetAllTaskByEmployee";
 
-import GetSingleTaskByEmployee from './employee-page/task/GetSingleTaskByEmployee';
+import GetSingleTaskByEmployee from "./employee-page/task/GetSingleTaskByEmployee";
 
-import UpdatePassword from './employee-page/profile/UpdatePassword';
+import UpdatePassword from "./employee-page/profile/UpdatePassword";
 
-import AdminSidebar from './admin-page/AdminSidebar';
-import EditorTask from './employee-page/calender-task/EditorTask';
+import AdminSidebar from "./admin-page/AdminSidebar";
+import EditorTask from "./employee-page/calender-task/EditorTask";
 
-import DailyTasks from './employee-page/calender-task/DailyTasks';
+import DailyTasks from "./employee-page/calender-task/DailyTasks";
 
-import SingleDailyTask from './employee-page/calender-task/SingleDailyTask';
+import SingleDailyTask from "./employee-page/calender-task/SingleDailyTask";
 
-import EditWork from './employee-page/calender-task/EditWork';
-import UpdateSingleWork from './admin-page/employee-work/UpdateSingleWork';
+import EditWork from "./employee-page/calender-task/EditWork";
+import UpdateSingleWork from "./admin-page/employee-work/UpdateSingleWork";
 
-import SingleWork from './admin-page/employee-work/SingleWork';
+import SingleWork from "./admin-page/employee-work/SingleWork";
 
-import EmployeeProfile from './employee-page/profile/EmployeeProfile';
+import EmployeeProfile from "./employee-page/profile/EmployeeProfile";
 
-import AdminLogin from './auth/login/AdminLogin';
-import ResetPassword from './employee-page/password/ResetPassword';
-import PasswordRedirectPage from './employee-page/password/PasswordRedirectPage';
-import ConfirmEmail from './employee-page/confirm-email/ConfirmEmail';
-import EmployeeChatPage from './employee-page/chat/EmployeeChatPage';
-import AdminChatPage from './admin-page/chat/AdminChatPage';
-import NotFound from './utils/NotFound';
-import SingleTaskWorkList from './admin-page/employee-work/SingleTaskWorkList';
-import AllWorkList from './admin-page/employee-work/AllWorkList';
+import AdminLogin from "./auth/login/AdminLogin";
+import ResetPassword from "./employee-page/password/ResetPassword";
+import PasswordRedirectPage from "./employee-page/password/PasswordRedirectPage";
+import ConfirmEmail from "./employee-page/confirm-email/ConfirmEmail";
+import EmployeeChatPage from "./employee-page/chat/EmployeeChatPage";
+import AdminChatPage from "./admin-page/chat/AdminChatPage";
+import NotFound from "./utils/NotFound";
+import SingleTaskWorkList from "./admin-page/employee-work/SingleTaskWorkList";
+
+import CreateProject from "./employee-page/project/CreateProject";
+import ShowAllProjects from "./employee-page/project/ShowAllProjects";
+import WorkSingleProject from "./employee-page/project/WorkSingleProject";
+import UpdateProject from "./employee-page/project/UpdateProject";
+import AllDailyWorkList from "./admin-page/project/AllDailyWorkList";
+import SingleDailyWork from "./admin-page/project/SingleDailyWork";
 
 function App() {
   const [role, setRole] = useState(null);
@@ -87,7 +93,7 @@ function App() {
     }
   }, [token, role, dispatch]);
 
-  if (role === 'Admin') {
+  if (role === "Admin") {
     return (
       <BrowserRouter>
         <div className="home">
@@ -154,7 +160,16 @@ function App() {
                 element={<SingleTaskWorkList />}
                 path="/admin/work-list/:taskId"
               />
-              <Route element={<AllWorkList />} path="/admin/work-list/" />
+              {/* <Route element={<AllWorkList />} path="/admin/work-list/" /> */}
+              {/* employee project*/}
+              <Route
+                element={<AllDailyWorkList />}
+                path="/admin/daily-work-list"
+              />
+              <Route
+                path="/admin/daily-work-list/:id"
+                element={<SingleDailyWork />}
+              />
 
               {/* chat page */}
               <Route element={<AdminChatPage />} path="/admin/chat" />
@@ -168,7 +183,7 @@ function App() {
     );
   }
 
-  if (role === 'Operation' || role === 'Sales' || role === 'Account') {
+  if (role === "Operation" || role === "Sales" || role === "Account") {
     return (
       <BrowserRouter>
         <div className="home">
@@ -237,6 +252,21 @@ function App() {
               {/* chat page */}
 
               <Route path="/employee/chat" element={<EmployeeChatPage />} />
+
+              {/* project */}
+              <Route element={<ShowAllProjects />} path="/employee/projects" />
+              <Route
+                element={<WorkSingleProject />}
+                path="/employee/projects/:id"
+              />
+              <Route
+                element={<CreateProject />}
+                path="/employee/create-project"
+              />
+              <Route
+                element={<UpdateProject />}
+                path="/employee/update-project/:id"
+              />
             </Routes>
           </div>
         </div>

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { getSingleCustomer, deleteSingleCustomer } from '../../store';
-import '../styles/single.scss';
+import { getSingleCustomer, deleteSingleCustomer } from "../../store";
+import "../styles/single.scss";
 
 const EmployeeSingleCustomer = () => {
   const { singleCustomer } = useSelector((state) => state.employee);
@@ -15,23 +15,23 @@ const EmployeeSingleCustomer = () => {
     dispatch(getSingleCustomer({ id }));
   }, [dispatch, id]);
   const handleDelete = () => {
-    if (window.confirm('Do you really want to remove this customer.')) {
+    if (window.confirm("Do you really want to remove this customer.")) {
       dispatch(deleteSingleCustomer({ id }))
         .unwrap()
-        .then(() => navigate('/employee/customers-list'))
+        .then(() => navigate("/employee/customers-list"))
         .catch((err) => console.log(err));
     }
   };
   return (
     <div
       className="single"
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{ display: "flex", flexDirection: "column" }}
     >
       <div className="top">
         <div className="left-side">
           <div>
             <Link to={`/employee/customers/${id}/update`}>
-              <button className="edit" style={{ marginRight: '5px' }}>
+              <button className="edit" style={{ marginRight: "5px" }}>
                 Edit
               </button>
             </Link>
@@ -39,7 +39,7 @@ const EmployeeSingleCustomer = () => {
               Delete
             </button>
           </div>
-          <h1 className="title">Information</h1>
+          <h1 className="title">Customer Information</h1>
           <div className="item">
             <img
               src={`https://picsum.photos/seed/${id}/300/200`}
@@ -80,6 +80,24 @@ const EmployeeSingleCustomer = () => {
                 <span className="single-list__container-item-key">Status:</span>
                 <span className="single-list__container-item-value">
                   {singleCustomer.status}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Business Name:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleCustomer?.businessName}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Business Description:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleCustomer?.businessDescription}
                 </span>
               </div>
             </div>

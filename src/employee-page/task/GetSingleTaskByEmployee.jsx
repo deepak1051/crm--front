@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 
-import { getSingleTask } from '../../store';
-import '../styles/single.scss';
-import { format } from 'date-fns';
-import Skeleton from 'react-loading-skeleton';
+import { getSingleTask } from "../../store";
+import "../styles/single.scss";
+import { format } from "date-fns";
+import Skeleton from "react-loading-skeleton";
 
-import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 const GetSingleTaskByEmployee = () => {
   const { singleTask, isSingleTaskLoading } = useSelector(
@@ -26,7 +26,7 @@ const GetSingleTaskByEmployee = () => {
   return (
     <div
       className="single"
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{ display: "flex", flexDirection: "column" }}
     >
       <div className="top">
         <div className="left-side">
@@ -34,11 +34,11 @@ const GetSingleTaskByEmployee = () => {
           <div
             className="item"
             style={{
-              display: 'flex',
-              gap: '200px',
-              justifyContent: 'space-between',
+              display: "flex",
+              gap: "200px",
+              justifyContent: "space-between",
 
-              width: '100%',
+              width: "100%",
             }}
           >
             <div>
@@ -46,13 +46,13 @@ const GetSingleTaskByEmployee = () => {
                 src={`https://images.unsplash.com/photo-1578852612716-854e527abf2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8dGFza3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60`}
                 alt=""
                 className="itemImg"
-                style={{ height: '200px', width: '100%' }}
+                style={{ height: "200px", width: "100%" }}
               />
               <div className="single-list__container">
                 <h1 className="itemTitle">{singleTask.employeeId?.name}</h1>
                 <div>
                   <span className="single-list__container-item-key">
-                    Task Title:{' '}
+                    Task Title:{" "}
                   </span>
                   <span className="single-list__container-item-value">
                     {singleTask?.task?.title}
@@ -74,7 +74,7 @@ const GetSingleTaskByEmployee = () => {
                     <span className="single-list__container-item-value">
                       {format(
                         new Date(singleTask?.task?.assignedDate),
-                        'yyyy-MM-dd'
+                        "yyyy-MM-dd"
                       )}
                     </span>
                   )}
@@ -87,7 +87,7 @@ const GetSingleTaskByEmployee = () => {
                     <span className="single-list__container-item-value">
                       {format(
                         new Date(singleTask?.task?.deadline),
-                        'yyyy-MM-dd'
+                        "yyyy-MM-dd"
                       )}
                     </span>
                   )}
@@ -109,8 +109,18 @@ const GetSingleTaskByEmployee = () => {
               <div>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="tableCell x">Employee Name</TableCell>
-                    <TableCell className="tableCell x">Role</TableCell>
+                    <TableCell
+                      className="tableCell x"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Employee Name
+                    </TableCell>
+                    <TableCell
+                      className="tableCell x"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Role
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -118,10 +128,16 @@ const GetSingleTaskByEmployee = () => {
                   {singleTask?.teamMate?.map((item) => {
                     return (
                       <TableRow key={item._id}>
-                        <TableCell className="tableCell">
+                        <TableCell
+                          className="tableCell"
+                          style={{ fontSize: "18px" }}
+                        >
                           <div className="cellWrapper">{item.name}</div>
                         </TableCell>
-                        <TableCell className="tableCell">
+                        <TableCell
+                          className="tableCell"
+                          style={{ fontSize: "18px" }}
+                        >
                           <div className="cellWrapper">{item.role}</div>
                         </TableCell>
                       </TableRow>
@@ -130,7 +146,7 @@ const GetSingleTaskByEmployee = () => {
                 </TableBody>
               </div>
 
-              <button className="edit" style={{ marginTop: '30px' }}>
+              <button className="edit" style={{ marginTop: "30px" }}>
                 <Link to={`/employee/add-work/${taskId}`}>Add Today Task</Link>
               </button>
             </div>

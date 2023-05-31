@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { authReducer } from './slices/authSlice';
-import { adminReducer } from './slices/adminSlice';
-import { employeeReducer } from './slices/employeeSlice';
-import { workReducer } from './slices/workSlice';
-import { chatReducer } from './slices/chatSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { authReducer } from "./slices/authSlice";
+import { adminReducer } from "./slices/adminSlice";
+import { employeeReducer } from "./slices/employeeSlice";
+import { workReducer } from "./slices/workSlice";
+import { chatReducer } from "./slices/chatSlice";
+import { projectReducer } from "./slices/projectSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,16 +13,18 @@ const store = configureStore({
     employee: employeeReducer,
     work: workReducer,
     chat: chatReducer,
+    project: projectReducer,
   },
 });
 
 export { store };
-export * from './slices/authSlice';
-export * from './slices/adminSlice';
-export * from './thunks/authDetails';
-export * from './thunks/admin';
-export * from './thunks/employee';
-export * from './slices/employeeSlice';
-export * from './thunks/work';
-export * from './slices/chatSlice';
-export * from './thunks/chat';
+export * from "./slices/authSlice";
+export * from "./slices/adminSlice";
+export * from "./thunks/authDetails";
+export * from "./thunks/admin";
+export * from "./thunks/employee";
+export * from "./slices/employeeSlice";
+export * from "./thunks/work";
+export * from "./slices/chatSlice";
+export * from "./thunks/chat";
+export * from "./thunks/project";

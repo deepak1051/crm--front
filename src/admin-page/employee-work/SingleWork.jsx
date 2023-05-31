@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { deleteSingleWork, getSingleWork } from '../../store';
-import { format } from 'date-fns';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deleteSingleWork, getSingleWork } from "../../store";
+import { format } from "date-fns";
 
 const SingleWork = () => {
   const { singleWorkDetailByEmployee } = useSelector((state) => state.work);
   const dispatch = useDispatch();
   const { id } = useParams();
+
+  console.log(singleWorkDetailByEmployee);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -17,7 +19,7 @@ const SingleWork = () => {
   const handleDelete = () => {
     if (
       window.confirm(
-        'Do you really want to delete this work detail permanently?'
+        "Do you really want to delete this work detail permanently?"
       )
     ) {
       dispatch(deleteSingleWork({ id }))
@@ -30,7 +32,7 @@ const SingleWork = () => {
   return (
     <div
       className="single"
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{ display: "flex", flexDirection: "column" }}
     >
       <div className="top">
         <div className="left-side">
@@ -48,6 +50,33 @@ const SingleWork = () => {
               className="itemImg"
             />
             <div className="single-list__container">
+              <div>
+                <span className="single-list__container-item-key">
+                  Project Name:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleWorkDetailByEmployee.task.task.title}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Employee Name:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleWorkDetailByEmployee.employee.name}
+                </span>
+              </div>
+
+              <div>
+                <span className="single-list__container-item-key">
+                  Teammates:
+                </span>
+                <span className="single-list__container-item-value">
+                  {singleWorkDetailByEmployee.task.teamMate.length}
+                </span>
+              </div>
+
               <div>
                 <span className="single-list__container-item-key">
                   Work done tagline:
@@ -68,7 +97,7 @@ const SingleWork = () => {
                   {singleWorkDetailByEmployee?.date &&
                     format(
                       new Date(singleWorkDetailByEmployee?.date),
-                      'yyyy-MM-dd'
+                      "yyyy-MM-dd"
                     )}
                 </span>
               </div>
