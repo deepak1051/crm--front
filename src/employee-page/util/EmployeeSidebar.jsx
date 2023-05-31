@@ -1,12 +1,12 @@
-import { AiOutlineHeart, AiOutlineProfile } from 'react-icons/ai';
-import { FiLogOut } from 'react-icons/fi';
-import { MdPassword } from 'react-icons/md';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../store';
-import { RxDashboard } from 'react-icons/rx';
-import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
-import { BsChatDots } from 'react-icons/bs';
+import { AiOutlineHeart, AiOutlineProfile } from "react-icons/ai";
+import { FiLogOut } from "react-icons/fi";
+import { MdPassword } from "react-icons/md";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store";
+import { RxDashboard } from "react-icons/rx";
+import { RiCustomerService2Line, RiTodoLine } from "react-icons/ri";
+import { BsChatDots } from "react-icons/bs";
 
 const EmployeeSidebar = () => {
   const { id } = useSelector((state) => state.auth);
@@ -14,7 +14,7 @@ const EmployeeSidebar = () => {
   const navigate = useNavigate();
   const logoutHandler = () => {
     dispatch(logout());
-    navigate('/');
+    navigate("/");
     window.location.reload();
   };
 
@@ -37,30 +37,30 @@ const EmployeeSidebar = () => {
           <NavLink
             to="employee/customers-list"
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
-            {' '}
+            {" "}
             <RiCustomerService2Line />
             <span>Customers</span>
           </NavLink>
           <NavLink
             to={`/employee/${id}/tasks`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
-            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
+            <RiTodoLine style={{ color: "#000", fill: "black" }} />
             <span>Projects</span>
           </NavLink>
 
           <NavLink
             to={`/employee/chat`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
-            <BsChatDots style={{ color: '#000', fill: 'black' }} />
+            <BsChatDots style={{ color: "#000", fill: "black" }} />
             <span>Chats</span>
           </NavLink>
 
@@ -69,7 +69,7 @@ const EmployeeSidebar = () => {
           <NavLink
             to={`/employee/profile`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
             <AiOutlineProfile />
@@ -79,7 +79,7 @@ const EmployeeSidebar = () => {
           <NavLink
             to={`/employee/update-password`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
             <MdPassword />
@@ -89,7 +89,7 @@ const EmployeeSidebar = () => {
           <NavLink
             to={`/employee/projects`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
             <AiOutlineHeart />
@@ -100,13 +100,13 @@ const EmployeeSidebar = () => {
             onClick={logoutHandler}
             className="logout remove"
             style={{
-              position: 'fixed',
-              bottom: '10px',
-              left: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              fontSize: '1.6rem',
+              position: "fixed",
+              bottom: "10px",
+              left: "10px",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+              fontSize: "1.6rem",
             }}
           >
             <FiLogOut />

@@ -1,12 +1,12 @@
-import React from 'react';
-import '../styles/add.scss';
+import React from "react";
+import "../styles/add.scss";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { addNewTask } from '../../store';
-import Spinner from '../../utils/Spinner';
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addNewTask } from "../../store";
+import Spinner from "../../utils/Spinner";
 
 const AddNewTask = () => {
   const { isLoading, error } = useSelector((state) => state.admin);
@@ -15,10 +15,10 @@ const AddNewTask = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    title: '',
-    description: '',
-    assignedDate: '',
-    deadline: '',
+    title: "",
+    description: "",
+    assignedDate: "",
+    deadline: "",
   });
 
   const handleChange = (e) => {
@@ -89,8 +89,8 @@ const AddNewTask = () => {
 
             <br />
             <button disabled={isLoading}>
-              {' '}
-              {isLoading ? <Spinner /> : 'Save'}
+              {" "}
+              {isLoading ? <Spinner /> : "Save"}
             </button>
             {error && <div className="error">{error}</div>}
           </form>

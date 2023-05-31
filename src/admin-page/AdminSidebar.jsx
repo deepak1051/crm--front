@@ -1,26 +1,26 @@
-import { FiLogOut } from 'react-icons/fi';
-import { RxDashboard } from 'react-icons/rx';
-import { AiOutlineUsergroupAdd } from 'react-icons/ai';
-import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
-import { GrWorkshop } from 'react-icons/gr';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../store';
-import './styles/sidebar.scss';
+import { FiLogOut } from "react-icons/fi";
+import { RxDashboard } from "react-icons/rx";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { RiCustomerService2Line, RiTodoLine } from "react-icons/ri";
+import { GrWorkshop } from "react-icons/gr";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../store";
+import "./styles/sidebar.scss";
 
 const AdminSidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutHandler = () => {
     dispatch(logout());
-    navigate('/');
+    navigate("/");
     window.location.reload();
   };
 
   return (
     <div
       className="sidebar"
-      style={{ position: 'sticky', top: 0, left: 0, height: '100%' }}
+      style={{ position: "sticky", top: 0, left: 0, height: "100%" }}
     >
       <div className="top">
         <span className="logo">Admin CRM</span>
@@ -39,10 +39,10 @@ const AdminSidebar = () => {
           <NavLink
             to="admin/employees-list"
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
-            {' '}
+            {" "}
             {/* <SupervisedUserCircleOutlined /> */}
             <AiOutlineUsergroupAdd />
             <span>Employees</span>
@@ -50,21 +50,21 @@ const AdminSidebar = () => {
           <NavLink
             to="admin/customers-list"
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
-            {' '}
+            {" "}
             <RiCustomerService2Line />
             <span>Customers</span>
           </NavLink>
           <NavLink
             to={`/admin/projects`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
             {/* <MoneyOffCsredRounded /> */}
-            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
+            <RiTodoLine style={{ color: "#000", fill: "black" }} />
             <span>Projects</span>
           </NavLink>
 
@@ -72,21 +72,21 @@ const AdminSidebar = () => {
           <NavLink
             to={`/admin/chat`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
             {/* <MoneyOffCsredRounded /> */}
-            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
+            <RiTodoLine style={{ color: "#000", fill: "black" }} />
             <span>Chat</span>
           </NavLink>
 
           <NavLink
             to={`/admin/daily-work-list`}
             className={({ isActive }) =>
-              isActive ? 'active nav-container' : 'inactive nav-container'
+              isActive ? "active nav-container" : "inactive nav-container"
             }
           >
-            <GrWorkshop style={{ color: '#000', fill: 'black' }} />
+            <GrWorkshop style={{ color: "#000", fill: "black" }} />
             <span>Employee Work List </span>
           </NavLink>
 
@@ -94,17 +94,17 @@ const AdminSidebar = () => {
             onClick={logoutHandler}
             className="logout remove"
             style={{
-              position: 'fixed',
-              bottom: '10px',
-              left: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              fontSize: '1.4rem',
+              position: "fixed",
+              bottom: "10px",
+              left: "10px",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+              fontSize: "1.4rem",
               // color: 'red',
-              border: '1px solid red',
-              borderRadius: '5px',
-              padding: '5px',
+              border: "1px solid red",
+              borderRadius: "5px",
+              padding: "5px",
             }}
           >
             <FiLogOut />

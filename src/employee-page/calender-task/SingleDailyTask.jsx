@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { deleteSingleWork, getSingleWork } from '../../store';
-import { format } from 'date-fns';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deleteSingleWork, getSingleWork } from "../../store";
+import { format } from "date-fns";
 
 const SingleDailyTask = () => {
   const { singleWorkDetailByEmployee } = useSelector((state) => state.work);
@@ -14,7 +14,7 @@ const SingleDailyTask = () => {
   }, [dispatch, workId]);
 
   const handleDelete = () => {
-    if (window.confirm('Do you really want to delete this work permanently?')) {
+    if (window.confirm("Do you really want to delete this work permanently?")) {
       dispatch(deleteSingleWork({ workId }))
         .unwrap()
         .then(() => navigate(`/employee/daily-tasks/${taskId}`))
@@ -27,13 +27,13 @@ const SingleDailyTask = () => {
   return (
     <div
       className="single"
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{ display: "flex", flexDirection: "column" }}
     >
       <div className="top">
         <div className="left-side">
           <div>
             <Link to={`/employee/daily-tasks/${taskId}/update/${workId}`}>
-              <button className="edit" style={{ marginRight: '5px' }}>
+              <button className="edit" style={{ marginRight: "5px" }}>
                 Edit
               </button>
             </Link>
@@ -72,7 +72,7 @@ const SingleDailyTask = () => {
                   {singleWorkDetailByEmployee?.date &&
                     format(
                       new Date(singleWorkDetailByEmployee?.date),
-                      'yyyy-MM-dd'
+                      "yyyy-MM-dd"
                     )}
                 </span>
               </div>

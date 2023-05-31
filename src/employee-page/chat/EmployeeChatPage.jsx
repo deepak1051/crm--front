@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { formatDistanceToNow } from 'date-fns';
-import './chat.css';
+import React, { useEffect, useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { formatDistanceToNow } from "date-fns";
+import { io } from "socket.io-client";
+import { format } from "timeago.js";
+import "./chat.css";
 
 import {
   getRoom,
@@ -9,35 +11,68 @@ import {
   sendMessage,
   getAllMessages,
   deleteMessage,
-} from '../../store';
+  fetchSingleEmployee,
+} from "../../store";
 
-import { useRef } from 'react';
-import { AiFillDelete } from 'react-icons/ai';
+import { AiFillDelete } from "react-icons/ai";
 
 // import { io } from 'socket.io-client';
 
 const EmployeeChatPage = () => {
-  const [message, setMessage] = useState('');
+  const { singleEmployee } = useSelector((state) => state.admin);
+  const [message, setMessage] = useState("");
   const [chats, setChats] = useState([]);
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
+  const [onlineUser, setOnlineUser] = useState([]);
   const divRef = useRef(null);
   const socket = useRef();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchSingleEmployee({ id }));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    socket.current = io("https://chat.pacifencesolutions.com/");
+    socket.current.on("connect", () => {
+      console.log("socket connected done");
+    });
+  }, []);
+  // console.log("helo");
+  // console.log(dispatch(getAllMessages({ roomId })));
+  // console.log(...messages);
+  useEffect(() => {
+    socket.current.emit("addUser", singleEmployee._id);
+    socket.current.on("getUser", (users) => {
+      setOnlineUser(users);
+      console.log(onlineUser);
+    });
+  }, [singleEmployee]);
+
+  useEffect(() => {
+    setChats((pre) => [...pre, ...messages]);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    socket.current.emit("chat", {
+      message,
+      createdAt: Date.now(),
+      name: singleEmployee.name,
+      senderId: singleEmployee._id,
+    });
+
     dispatch(sendMessage({ roomId, message }))
       .unwrap()
       .then(() => {
         dispatch(getAllMessages({ roomId }));
-        setMessage('');
       })
       .catch((err) => console.log(err.message));
+    setMessage("");
 
     // socket.current.emit('send_message', { message });
   };
-
   useEffect(() => {
     dispatch(getRoom())
       .unwrap()
@@ -52,16 +87,20 @@ const EmployeeChatPage = () => {
   }, [dispatch, roomId]);
 
   useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
+    divRef.current.scrollIntoView({ behavior: "smooth" });
   });
 
-  // useEffect(() => {
-  //   socket.current.on('send_message', (payload) => {
-  //     console.log(payload);
-  //     setChats((prev) => [...prev, payload]);
-  //   });
-  // }, [chats]);
-  // console.log(chats);
+  useEffect(() => {
+    socket.current.off("chat").on("chat", (payload) => {
+      console.log(payload);
+      setChats((prev) => [...prev, payload]);
+    });
+    // return () => {
+    //   socket.current.off("chat", (payload) => {
+    //     console.log(payload);
+    //   });
+    // };
+  }, [chats]);
 
   const handleRemove = (id) => {
     dispatch(deleteMessage({ messageId: id }))
@@ -71,12 +110,6 @@ const EmployeeChatPage = () => {
       })
       .catch((err) => console.log(err.message));
   };
-
-  // useEffect(() => {
-  //   socket.current = io.connect('http://localhost:3001');
-  // }, []);
-
-  // console.log(chats);
 
   return (
     <div className="msger-container">
@@ -89,14 +122,16 @@ const EmployeeChatPage = () => {
             <span>{/* <i class="fas fa-cog"></i> */}</span>
           </div>
         </header>
-
         <main class="msger-chat">
-          {messages.map((item) => (
+          {chats.map((item) => (
             <div
               class={
-                item.senderId._id === id ? 'msg right-msg' : 'msg left-msg'
+                `${item.senderId._id ? item.senderId._id : item.senderId}` ===
+                id
+                  ? "msg right-msg"
+                  : "msg left-msg"
               }
-              key={item._id}
+              key={item.createdAt}
             >
               <div
                 class="msg-img"
@@ -108,24 +143,26 @@ const EmployeeChatPage = () => {
 
               <div class="msg-bubble">
                 <div class="msg-info">
-                  <div class="msg-info-name">{item.senderId?.name}</div>
+                  <div class="msg-info-name">
+                    {item.senderId.name ? item.senderId.name : item.name}
+                  </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     {item.createdAt && (
                       <div class="msg-info-time">
-                        {formatDistanceToNow(new Date(item.createdAt), {
-                          addSuffix: true,
-                        })}
+                        {format(new Date(item.createdAt))}
                       </div>
                     )}
 
-                    {item.senderId._id === id && (
+                    {`${
+                      item.senderId._id ? item.senderId._id : item.senderId
+                    }` === id && (
                       <AiFillDelete
                         onClick={() => handleRemove(item._id)}
                         style={{
-                          marginLeft: '10px',
-                          color: 'red',
-                          cursor: 'pointer',
+                          marginLeft: "10px",
+                          color: "red",
+                          cursor: "pointer",
                         }}
                       />
                     )}
@@ -139,7 +176,6 @@ const EmployeeChatPage = () => {
 
           <div ref={divRef} />
         </main>
-
         <form class="msger-inputarea" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -158,8 +194,6 @@ const EmployeeChatPage = () => {
 };
 
 export default EmployeeChatPage;
-
-// const socket = io('https://chat.pacifencesolutions.com');
 
 // const [chat, setChat] = useState([]);
 

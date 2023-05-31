@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { formatDistanceToNow } from 'date-fns';
-import { AiFillDelete } from 'react-icons/ai';
-import './chat.css';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { formatDistanceToNow } from "date-fns";
+import { AiFillDelete } from "react-icons/ai";
+import { format } from "timeago.js";
+import { io } from "socket.io-client";
+import "./chat.css";
 
 import {
   getRoom,
@@ -10,28 +12,54 @@ import {
   sendMessage,
   getAllMessages,
   deleteMessage,
-} from '../../store';
+} from "../../store";
 
-import { useRef } from 'react';
+import { useRef } from "react";
 
 const AdminChatPage = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [chats, setChats] = useState([]);
+  const socket = useRef();
+  const [onlineUser, setOnlineUser] = useState([]);
+
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
   const divRef = useRef(null);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    socket.current = io("https://chat.pacifencesolutions.com/");
+  }, []);
+
+  useEffect(() => {
+    setChats((pre) => [...pre, ...messages]);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    socket.current.emit("chat", {
+      message,
+      name: "Admin",
+      createdAt: Date.now(),
+      senderId: id,
+    });
     dispatch(sendMessage({ roomId, message }))
       .unwrap()
       .then(() => {
         dispatch(getAllMessages({ roomId }));
-        setMessage('');
       })
       .catch((err) => console.log(err.message));
+    setMessage("");
   };
+  useEffect(() => {
+    socket.current.emit("addUser", id);
+
+    socket.current.on("getUser", (users) => {
+      setOnlineUser(users);
+      console.log(onlineUser);
+    });
+  }, [chats]);
 
   useEffect(() => {
     dispatch(getRoom())
@@ -47,7 +75,14 @@ const AdminChatPage = () => {
   }, [dispatch, roomId]);
 
   useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
+    socket.current.off("chat").on("chat", (payload) => {
+      console.log(payload);
+      setChats((prev) => [...prev, payload]);
+    });
+  }, [chats]);
+
+  useEffect(() => {
+    divRef.current.scrollIntoView({ behavior: "smooth" });
   });
 
   const handleRemove = (id) => {
@@ -72,12 +107,15 @@ const AdminChatPage = () => {
         </header>
 
         <main class="msger-chat">
-          {messages.map((item) => (
+          {chats.map((item) => (
             <div
               class={
-                item.senderId._id === id ? 'msg right-msg' : 'msg left-msg'
+                `${item.senderId._id ? item.senderId._id : item.senderId}` ===
+                id
+                  ? "msg right-msg"
+                  : "msg left-msg"
               }
-              key={item._id}
+              key={item.createdAt}
             >
               <div
                 class="msg-img"
@@ -89,30 +127,30 @@ const AdminChatPage = () => {
 
               <div class="msg-bubble">
                 <div class="msg-info">
-                  <div class="msg-info-name">{item.senderId?.name}</div>
+                  <div class="msg-info-name">
+                    {item.senderId.name ? item.senderId.name : item.name}
+                  </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     {item.createdAt && (
                       <div class="msg-info-time">
-                        {formatDistanceToNow(new Date(item.createdAt), {
-                          addSuffix: true,
-                        })}
+                        {format(new Date(item.createdAt))}
                       </div>
                     )}
-
-                    {item.senderId._id === id && (
+                    {`${
+                      item.senderId._id ? item.senderId._id : item.senderId
+                    }` === id && (
                       <AiFillDelete
                         onClick={() => handleRemove(item._id)}
                         style={{
-                          marginLeft: '10px',
-                          color: 'red',
-                          cursor: 'pointer',
+                          marginLeft: "10px",
+                          color: "red",
+                          cursor: "pointer",
                         }}
                       />
                     )}
                   </div>
                 </div>
-
                 <div class="msg-text">{item.message}</div>
               </div>
             </div>

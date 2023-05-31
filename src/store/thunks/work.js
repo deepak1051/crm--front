@@ -1,8 +1,8 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import instance from '../../utils/instance';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import instance from "../../utils/instance";
 
 const createWork = createAsyncThunk(
-  'work/create',
+  "work/create",
   async (userData, { rejectWithValue, getState, signal }) => {
     const state = getState();
 
@@ -27,7 +27,7 @@ const createWork = createAsyncThunk(
 );
 
 const getWorkByEmployee = createAsyncThunk(
-  'byEmployee/getWork',
+  "byEmployee/getWork",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
@@ -51,7 +51,7 @@ const getWorkByEmployee = createAsyncThunk(
 );
 
 const getSingleWork = createAsyncThunk(
-  'work/getSingle',
+  "work/getSingle",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
@@ -75,7 +75,7 @@ const getSingleWork = createAsyncThunk(
 );
 
 const updateSingleWork = createAsyncThunk(
-  'work/updateSingle',
+  "work/updateSingle",
   async (userData, { rejectWithValue, getState, signal }) => {
     const state = getState();
 
@@ -100,7 +100,7 @@ const updateSingleWork = createAsyncThunk(
 );
 
 const deleteSingleWork = createAsyncThunk(
-  'work/deleteSingle',
+  "work/deleteSingle",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
     try {
@@ -125,7 +125,7 @@ const deleteSingleWork = createAsyncThunk(
 
 // get all work
 const allWork = createAsyncThunk(
-  'work/all',
+  "work/all",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
     try {
