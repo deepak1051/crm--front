@@ -12,7 +12,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import CustomerIllustration from '../../utils/CustomerIllustration';
+import TaskIllustration from '../../utils/CustomerIllustration';
 
 const ShowAllProjects = () => {
   const { allWorkByEmployee } = useSelector((state) => state.project);
@@ -41,7 +41,7 @@ const ShowAllProjects = () => {
       <TableContainer component={Paper} className="table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           {allWorkByEmployee.length === 0 ? (
-            <CustomerIllustration />
+            <TaskIllustration title="work" />
           ) : (
             <>
               <TableHead>

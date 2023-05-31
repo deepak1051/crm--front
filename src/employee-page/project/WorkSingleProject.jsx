@@ -15,8 +15,6 @@ const WorkSingleProject = () => {
     dispatch(getSingleProject({ id }));
   }, [dispatch, id]);
 
- 
-
   return (
     <div
       className="single"
@@ -33,7 +31,7 @@ const WorkSingleProject = () => {
           </div>
           <h1 className="title">Daily Work Information</h1>
           <h2 style={{ margin: '20px 0', fontWeight: 500, color: 'gray' }}>
-            Employee Name: {singleProject.employee.name}
+            Employee Name: {singleProject?.employee?.name}
           </h2>
           <div className="item">
             <img
@@ -47,7 +45,7 @@ const WorkSingleProject = () => {
                   Work Name:
                 </span>
                 <span className="single-list__container-item-value">
-                  {singleProject.name}
+                  {singleProject?.name}
                 </span>
               </div>
               <div>
