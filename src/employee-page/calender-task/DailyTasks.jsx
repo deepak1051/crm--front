@@ -43,7 +43,7 @@ const DailyTasks = () => {
               <TableCell className="tableCell x">Date </TableCell>
               {/* <TableCell className="tableCell x">Project Name </TableCell> */}
               <TableCell className="tableCell x">Title</TableCell>
-              <TableCell className="tableCell x">Status</TableCell>
+              <TableCell className="tableCell x">Employee Name</TableCell>
               <TableCell className="tableCell x">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -61,7 +61,9 @@ const DailyTasks = () => {
                 </TableCell> */}
 
                 <TableCell className="tableCell">{item.name}</TableCell>
-                <TableCell className="tableCell">{item.status}</TableCell>
+                <TableCell className="tableCell">
+                  {item.employee.name}
+                </TableCell>
                 <TableCell className="tableCell">
                   <Link to={`/employee/daily-tasks/${taskId}/work/${item._id}`}>
                     <button>View</button>

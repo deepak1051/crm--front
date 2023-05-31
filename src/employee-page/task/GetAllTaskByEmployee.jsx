@@ -60,10 +60,15 @@ const GetAllTaskByEmployee = () => {
                   </TableCell>
                   <TableCell className="tableCell">
                     <Link to={`/employee/${id}/task/${item._id}`}>
-                      <button className="view">View More</button>
+                      <button
+                        className="primary"
+                        style={{ marginRight: '20px' }}
+                      >
+                        Project Details
+                      </button>
                     </Link>
                     <Link to={`/employee/daily-tasks/${item._id}`}>
-                      <button className="edit">Task Detail</button>
+                      <button className="edit">Project Work</button>
                     </Link>
                   </TableCell>
                 </TableRow>

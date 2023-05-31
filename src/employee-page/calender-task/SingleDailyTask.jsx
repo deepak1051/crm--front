@@ -22,6 +22,8 @@ const SingleDailyTask = () => {
     }
   };
 
+  console.log(singleWorkDetailByEmployee);
+
   return (
     <div
       className="single"
@@ -47,7 +49,9 @@ const SingleDailyTask = () => {
               className="itemImg"
             />
             <div className="single-list__container">
-              {/* <h1 className="itemTitle">{singleWorkDetailByEmployee.name}</h1> */}
+              <h1 className="itemTitle">
+                Employee Name: {singleWorkDetailByEmployee?.employee?.name}
+              </h1>
               <div>
                 <span className="single-list__container-item-key">
                   Work done tagline:

@@ -2,12 +2,11 @@ import { FiLogOut } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { RiCustomerService2Line, RiTodoLine } from 'react-icons/ri';
-
+import { GrWorkshop } from 'react-icons/gr';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store';
 import './styles/sidebar.scss';
-import { MoneyOffCsredRounded } from '@mui/icons-material';
 
 const AdminSidebar = () => {
   const dispatch = useDispatch();
@@ -87,7 +86,7 @@ const AdminSidebar = () => {
               isActive ? 'active nav-container' : 'inactive nav-container'
             }
           >
-            <RiTodoLine style={{ color: '#000', fill: 'black' }} />
+            <GrWorkshop style={{ color: '#000', fill: 'black' }} />
             <span>Employee Work List </span>
           </NavLink>
 

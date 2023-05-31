@@ -230,6 +230,14 @@ button:hover {
   background-color: purple;
   color: #fff;
 }
+button.primary {
+  color: royalblue;
+  border: 1px solid royalblue;
+}
+button.primary:hover {
+  background-color: royalblue;
+  color: #fff;
+}
 
 button.edit {
   color: green;

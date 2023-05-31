@@ -109,8 +109,18 @@ const GetSingleTaskByEmployee = () => {
               <div>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="tableCell x">Employee Name</TableCell>
-                    <TableCell className="tableCell x">Role</TableCell>
+                    <TableCell
+                      className="tableCell x"
+                      style={{ fontSize: '18px' }}
+                    >
+                      Employee Name
+                    </TableCell>
+                    <TableCell
+                      className="tableCell x"
+                      style={{ fontSize: '18px' }}
+                    >
+                      Role
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -118,10 +128,16 @@ const GetSingleTaskByEmployee = () => {
                   {singleTask?.teamMate?.map((item) => {
                     return (
                       <TableRow key={item._id}>
-                        <TableCell className="tableCell">
+                        <TableCell
+                          className="tableCell"
+                          style={{ fontSize: '18px' }}
+                        >
                           <div className="cellWrapper">{item.name}</div>
                         </TableCell>
-                        <TableCell className="tableCell">
+                        <TableCell
+                          className="tableCell"
+                          style={{ fontSize: '18px' }}
+                        >
                           <div className="cellWrapper">{item.role}</div>
                         </TableCell>
                       </TableRow>
