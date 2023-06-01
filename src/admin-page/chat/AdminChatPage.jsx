@@ -38,7 +38,7 @@ const AdminChatPage = () => {
     console.log(messageData);
     // Prepare the payload data for the push notification
     const payload = {
-      title: "Admin,
+      title: "Admin",
       message: messageData,
       // Include any additional data you want to send
     };
