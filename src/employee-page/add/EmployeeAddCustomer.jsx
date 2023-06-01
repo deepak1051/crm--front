@@ -1,39 +1,39 @@
-import React from 'react';
+import React from "react";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { AddNewCustomerByEmployee, addNewCustomer } from '../../store';
-import Spinner from '../../utils/Spinner';
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { AddNewCustomerByEmployee, addNewCustomer } from "../../store";
+import Spinner from "../../utils/Spinner";
 
 const countryOptions = [
   {
-    label: 'India',
-    value: 'India',
+    label: "India",
+    value: "India",
   },
   {
-    label: 'USA',
-    value: 'USA',
+    label: "USA",
+    value: "USA",
   },
   {
-    label: 'UK',
-    value: 'UK',
+    label: "UK",
+    value: "UK",
   },
   {
-    label: 'Dubai',
-    value: 'Dubai',
+    label: "Dubai",
+    value: "Dubai",
   },
   {
-    label: 'Germany',
-    value: 'Germany',
+    label: "Germany",
+    value: "Germany",
   },
 ];
 const statusOptions = [
-  { value: 'Success' },
-  { value: 'Pending' },
-  { value: 'Rejected' },
-  { value: 'Unreachable' },
+  { value: "Success" },
+  { value: "Pending" },
+  { value: "Rejected" },
+  { value: "Unreachable" },
 ];
 
 const EmployeeAddCustomer = () => {
@@ -43,14 +43,14 @@ const EmployeeAddCustomer = () => {
 
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    country: 'India',
-    address: '',
-    status: 'Success',
-    businessName: '',
-    businessDescription: '',
+    name: "",
+    email: "",
+    phone: "",
+    country: "India",
+    address: "",
+    status: "Success",
+    businessName: "",
+    businessDescription: "",
     // businessRequirement:''
   });
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ const EmployeeAddCustomer = () => {
     e.preventDefault();
     dispatch(AddNewCustomerByEmployee(user))
       .unwrap()
-      .then(() => navigate('/employee/customers-list'))
+      .then(() => navigate("/employee/customers-list"))
       .catch((err) => console.log(err));
   };
 
@@ -178,7 +178,7 @@ const EmployeeAddCustomer = () => {
             </div>
             <br />
             <button disabled={isLoading}>
-              {isLoading ? <Spinner /> : 'Save'}
+              {isLoading ? <Spinner /> : "Save"}
             </button>
             {error && <div className="error">error</div>}
           </form>
