@@ -44,13 +44,16 @@ const EmployeeChatPage = () => {
     };
 
     // Make an HTTP request to the backend API endpoint
-    await fetch("http://localhost:5000/subscribe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ subscription, payload }),
-    });
+    await fetch(
+      "https://api.pacifencesolutions.com/api/chat/messageSubscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ subscription, payload }),
+      }
+    );
     console.log("push sent...");
   }
 
@@ -138,7 +141,7 @@ const EmployeeChatPage = () => {
     <div className="msger-container">
       <Helmet>
         <script
-          src="http://localhost:5000/client.js"
+          src="https://api.pacifencesolutions.com/client.js"
           type="application/javascript"
         ></script>
       </Helmet>

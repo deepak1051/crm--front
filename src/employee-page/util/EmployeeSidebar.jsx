@@ -61,7 +61,7 @@ const EmployeeSidebar = () => {
             }
           >
             <BsChatDots style={{ color: "#000", fill: "black" }} />
-            <span>Chats</span>
+            <span>Chat(beta*)</span>
           </NavLink>
 
           <p className="title">Profile</p>

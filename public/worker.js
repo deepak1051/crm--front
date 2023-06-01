@@ -6,10 +6,9 @@ self.addEventListener("push", function (e) {
     self.clients
       .matchAll({ type: "window", includeUncontrolled: true })
       .then((clients) => {
-        console.log(data);
         console.log(clients);
         clients.map((client) => {
-          if (client.visibilityState === "visible") {
+          if (client.visibilityState !== "visible") {
             // Do not show notification if page is visible
             return;
           }
