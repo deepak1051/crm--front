@@ -42,7 +42,7 @@ const DailyTasks = () => {
             <TableRow>
               <TableCell className="tableCell x">Date </TableCell>
               {/* <TableCell className="tableCell x">Project Name </TableCell> */}
-              <TableCell className="tableCell x">Title</TableCell>
+              <TableCell className="tableCell x">Work Title</TableCell>
               <TableCell className="tableCell x">Employee Name</TableCell>
               <TableCell className="tableCell x">Actions</TableCell>
             </TableRow>
