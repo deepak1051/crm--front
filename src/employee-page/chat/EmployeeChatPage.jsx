@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { formatDistanceToNow } from "date-fns";
 import { io } from "socket.io-client";
 import { format } from "timeago.js";
+import { Helmet } from "react-helmet";
 import "./chat.css";
 
 import {
@@ -29,6 +29,34 @@ const EmployeeChatPage = () => {
   const socket = useRef();
   const dispatch = useDispatch();
 
+  async function fetchData(messageData) {
+    const subscription = await navigator.serviceWorker.ready.then(
+      (registration) => {
+        return registration.pushManager.getSubscription();
+      }
+    );
+    console.log(messageData);
+    // Prepare the payload data for the push notification
+    const payload = {
+      title: singleEmployee.name,
+      message: messageData,
+      // Include any additional data you want to send
+    };
+
+    // Make an HTTP request to the backend API endpoint
+    await fetch(
+      "https://api.pacifencesolutions.com/api/chat/messageSubscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ subscription, payload }),
+      }
+    );
+    console.log("push sent...");
+  }
+
   useEffect(() => {
     dispatch(fetchSingleEmployee({ id }));
   }, [dispatch, id]);
@@ -46,16 +74,15 @@ const EmployeeChatPage = () => {
     socket.current.emit("addUser", singleEmployee._id);
     socket.current.on("getUser", (users) => {
       setOnlineUser(users);
-      console.log(onlineUser);
     });
   }, [singleEmployee]);
 
   useEffect(() => {
     setChats((pre) => [...pre, ...messages]);
   }, []);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await fetchData(message);
     socket.current.emit("chat", {
       message,
       createdAt: Date.now(),
@@ -70,7 +97,6 @@ const EmployeeChatPage = () => {
       })
       .catch((err) => console.log(err.message));
     setMessage("");
-
     // socket.current.emit('send_message', { message });
   };
   useEffect(() => {
@@ -113,6 +139,12 @@ const EmployeeChatPage = () => {
 
   return (
     <div className="msger-container">
+      <Helmet>
+        <script
+          src="https://api.pacifencesolutions.com/client.js"
+          type="application/javascript"
+        ></script>
+      </Helmet>
       <section class="msger">
         <header class="msger-header">
           <div class="msger-header-title">
