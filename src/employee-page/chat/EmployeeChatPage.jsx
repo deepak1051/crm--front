@@ -94,11 +94,13 @@ const EmployeeChatPage = () => {
       name: singleEmployee.name,
       senderId: singleEmployee._id,
       messageId,
+      profilePic: singleEmployee.image,
     });
 
     setMessage("");
     // socket.current.emit('send_message', { message });
   };
+
   useEffect(() => {
     dispatch(getRoom())
       .unwrap()
@@ -129,15 +131,19 @@ const EmployeeChatPage = () => {
 
   const handleRemove = (id) => {
     setChats((data) => {
-      return data.filter((message) => message._id !== id);
+      return data.filter(
+        (message) => `${message._id ? message._id : message.messageId}` !== id
+      );
     });
 
-    dispatch(deleteMessage({ messageId: id }))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllMessages({ roomId }));
-      })
-      .catch((err) => console.log(err.message));
+    if (!id) {
+      dispatch(deleteMessage({ messageId: id }))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllMessages({ roomId }));
+        })
+        .catch((err) => console.log(err.message));
+    }
   };
 
   return (
@@ -171,8 +177,9 @@ const EmployeeChatPage = () => {
               <div
                 class="msg-img"
                 style={{
-                  backgroundImage:
-                    "url('https://image.flaticon.com/icons/svg/145/145867.svg')",
+                  backgroundImage: `url(https://api.pacifencesolutions.com/${
+                    item.senderId.image ? item.senderId.image : item.profilePic
+                  })`,
                 }}
               ></div>
 
@@ -233,31 +240,3 @@ const EmployeeChatPage = () => {
 };
 
 export default EmployeeChatPage;
-
-// const [chat, setChat] = useState([]);
-
-// const { id } = useSelector((state) => state.auth);
-// const { singleEmployee } = useSelector((state) => state.admin);
-
-// const dispatch = useDispatch();
-
-// useEffect(() => {
-//   dispatch(fetchSingleEmployee({ id }));
-// }, [dispatch, id]);
-
-// console.log('singleemployee', singleEmployee);
-
-// const handleSubmit = (e) => {
-//   e.preventDefault();
-//   socket.emit('chat', { message, id: nanoid(), name: singleEmployee.name });
-//   setMessage('');
-// };
-
-// useEffect(() => {
-//   socket.on('chat', (payload) => {
-//     console.log(payload);
-//     setChat((prev) => [...prev, payload]);
-//   });
-// }, []);
-
-// console.log(chat);

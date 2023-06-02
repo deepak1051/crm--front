@@ -120,7 +120,9 @@ const AdminChatPage = () => {
 
   const handleRemove = (id) => {
     setChats((data) => {
-      return data.filter((message) => message._id !== id);
+      return data.filter(
+        (message) => `${message._id ? message._id : message.messageId}` !== id
+      );
     });
 
     dispatch(deleteMessage({ messageId: id }))
