@@ -180,6 +180,7 @@ const EmployeeChatPage = () => {
                   style={{
                     backgroundImage: `url(${default_img_url}/${item.profilePic})`,
                   }}
+                  //
                 >
                   {/* <img src={`${default_img_url}/${item.profilePic}`} alt="" /> */}
                 </div>
