@@ -72,6 +72,7 @@ const EmployeeChatPage = () => {
       console.log("socket connected done");
     });
   }, []);
+
   useEffect(() => {
     socket.current.emit("addUser", singleEmployee._id);
     socket.current.on("getUser", (users) => {
@@ -137,8 +138,7 @@ const EmployeeChatPage = () => {
         (message) => `${message._id ? message._id : message.messageId}` !== id
       );
     });
-
-    if (!id) {
+    if (id) {
       dispatch(deleteMessage({ messageId: id }))
         .unwrap()
         .then(() => {
@@ -147,8 +147,6 @@ const EmployeeChatPage = () => {
         .catch((err) => console.log(err.message));
     }
   };
-
-  console.log(chats);
 
   return (
     <div className="msger-container">

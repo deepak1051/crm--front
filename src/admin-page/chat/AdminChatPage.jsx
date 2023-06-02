@@ -22,6 +22,7 @@ const AdminChatPage = () => {
   const [chats, setChats] = useState([]);
   const socket = useRef();
   const [onlineUser, setOnlineUser] = useState([]);
+  const [messageId, setMessageId] = useState("");
 
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
@@ -68,8 +69,15 @@ const AdminChatPage = () => {
     e.preventDefault();
 
     await fetchData(message);
+    console.log(messages[messages.length - 1]._id);
 
-    const messageId = messages[messages.length - 1]?._id;
+    dispatch(sendMessage({ roomId, message }))
+      .unwrap()
+      .then((data) => {
+        dispatch(getAllMessages({ roomId }));
+        setMessageId(data._id);
+      })
+      .catch((err) => console.log(err.message));
 
     socket.current.emit("chat", {
       message,
@@ -80,14 +88,9 @@ const AdminChatPage = () => {
       profilePic:
         "https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png",
     });
-    dispatch(sendMessage({ roomId, message }))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllMessages({ roomId }));
-      })
-      .catch((err) => console.log(err.message));
     setMessage("");
   };
+
   useEffect(() => {
     socket.current.emit("addUser", id);
 
@@ -111,7 +114,6 @@ const AdminChatPage = () => {
 
   useEffect(() => {
     socket.current.off("chat").on("chat", (payload) => {
-      console.log(payload);
       setChats((prev) => [...prev, payload]);
     });
   }, [chats]);
@@ -126,13 +128,14 @@ const AdminChatPage = () => {
         (message) => `${message._id ? message._id : message.messageId}` !== id
       );
     });
-
-    dispatch(deleteMessage({ messageId: id }))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllMessages({ roomId }));
-      })
-      .catch((err) => console.log(err.message));
+    if (id) {
+      dispatch(deleteMessage({ messageId: id }))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllMessages({ roomId }));
+        })
+        .catch((err) => console.log(err.message));
+    }
   };
 
   return (
@@ -189,11 +192,11 @@ const AdminChatPage = () => {
                       item.senderId._id ? item.senderId._id : item.senderId
                     }` === id && (
                       <AiFillDelete
-                        onClick={() =>
-                          handleRemove(
+                        onClick={() => {
+                          return handleRemove(
                             `${item._id ? item._id : item.messageId}`
-                          )
-                        }
+                          );
+                        }}
                         style={{
                           marginLeft: "10px",
                           color: "red",
