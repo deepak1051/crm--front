@@ -35,7 +35,6 @@ const EmployeeChatPage = () => {
         return registration.pushManager.getSubscription();
       }
     );
-    console.log(messageData);
     // Prepare the payload data for the push notification
     const payload = {
       title: singleEmployee.name,
@@ -62,14 +61,15 @@ const EmployeeChatPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
+    setChats((pre) => [...pre, ...messages]);
+  }, []);
+
+  useEffect(() => {
     socket.current = io("https://chat.pacifencesolutions.com/");
     socket.current.on("connect", () => {
       console.log("socket connected done");
     });
   }, []);
-  // console.log("helo");
-  // console.log(dispatch(getAllMessages({ roomId })));
-  // console.log(...messages);
   useEffect(() => {
     socket.current.emit("addUser", singleEmployee._id);
     socket.current.on("getUser", (users) => {
@@ -77,18 +77,9 @@ const EmployeeChatPage = () => {
     });
   }, [singleEmployee]);
 
-  useEffect(() => {
-    setChats((pre) => [...pre, ...messages]);
-  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     await fetchData(message);
-    socket.current.emit("chat", {
-      message,
-      createdAt: Date.now(),
-      name: singleEmployee.name,
-      senderId: singleEmployee._id,
-    });
 
     dispatch(sendMessage({ roomId, message }))
       .unwrap()
@@ -96,6 +87,15 @@ const EmployeeChatPage = () => {
         dispatch(getAllMessages({ roomId }));
       })
       .catch((err) => console.log(err.message));
+    const messageId = messages[messages.length - 1]._id;
+    socket.current.emit("chat", {
+      message,
+      createdAt: Date.now(),
+      name: singleEmployee.name,
+      senderId: singleEmployee._id,
+      messageId,
+    });
+
     setMessage("");
     // socket.current.emit('send_message', { message });
   };
@@ -118,7 +118,6 @@ const EmployeeChatPage = () => {
 
   useEffect(() => {
     socket.current.off("chat").on("chat", (payload) => {
-      console.log(payload);
       setChats((prev) => [...prev, payload]);
     });
     // return () => {
@@ -129,6 +128,10 @@ const EmployeeChatPage = () => {
   }, [chats]);
 
   const handleRemove = (id) => {
+    setChats((data) => {
+      return data.filter((message) => message._id !== id);
+    });
+
     dispatch(deleteMessage({ messageId: id }))
       .unwrap()
       .then(() => {
@@ -190,7 +193,11 @@ const EmployeeChatPage = () => {
                       item.senderId._id ? item.senderId._id : item.senderId
                     }` === id && (
                       <AiFillDelete
-                        onClick={() => handleRemove(item._id)}
+                        onClick={() =>
+                          handleRemove(
+                            `${item._id ? item._id : item.messageId}`
+                          )
+                        }
                         style={{
                           marginLeft: "10px",
                           color: "red",

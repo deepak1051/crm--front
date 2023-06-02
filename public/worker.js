@@ -8,7 +8,7 @@ self.addEventListener("push", function (e) {
       .then((clients) => {
         console.log(clients);
         clients.map((client) => {
-          if (client.visibilityState !== "visible") {
+          if (client.visibilityState === "visible") {
             // Do not show notification if page is visible
             return;
           }

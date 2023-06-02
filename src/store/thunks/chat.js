@@ -1,8 +1,8 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import instance from '../../utils/instance';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import instance from "../../utils/instance";
 
 const getRoom = createAsyncThunk(
-  'room/get',
+  "room/get",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
@@ -25,7 +25,7 @@ const getRoom = createAsyncThunk(
 );
 
 const addUserToRoom = createAsyncThunk(
-  'addUser/ToRoom',
+  "addUser/ToRoom",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
@@ -40,7 +40,7 @@ const addUserToRoom = createAsyncThunk(
         }
       );
 
-      console.log(data);
+      // console.log(data);
       return data?.data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
@@ -49,10 +49,10 @@ const addUserToRoom = createAsyncThunk(
 );
 
 const getAllMessages = createAsyncThunk(
-  'messages/getAll',
+  "messages/getAll",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
-    console.log(userData);
+    // console.log(userData);
     try {
       const { data } = await instance.post(
         `/chat/getAllMessage`,
@@ -64,17 +64,17 @@ const getAllMessages = createAsyncThunk(
         }
       );
 
-      console.log(data);
+      // console.log(data);
       return data?.data;
     } catch (err) {
-      console.log('err', err.response.data.message);
+      console.log("err", err.response.data.message);
       return rejectWithValue(err.response.data.message);
     }
   }
 );
 
 const sendMessage = createAsyncThunk(
-  'message/send',
+  "message/send",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 
@@ -89,7 +89,7 @@ const sendMessage = createAsyncThunk(
         }
       );
 
-      console.log(data);
+      // console.log(data);
       return data?.data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
@@ -98,7 +98,7 @@ const sendMessage = createAsyncThunk(
 );
 
 const deleteMessage = createAsyncThunk(
-  'message/delete',
+  "message/delete",
   async (userData, { rejectWithValue, getState }) => {
     const state = getState();
 

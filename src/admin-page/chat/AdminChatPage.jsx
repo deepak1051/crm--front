@@ -35,10 +35,9 @@ const AdminChatPage = () => {
         return registration.pushManager.getSubscription();
       }
     );
-    console.log(messageData);
     // Prepare the payload data for the push notification
     const payload = {
-      title: singleEmployee.name,
+      title: "Admin",
       message: messageData,
       // Include any additional data you want to send
     };
@@ -54,7 +53,7 @@ const AdminChatPage = () => {
         body: JSON.stringify({ subscription, payload }),
       }
     );
-    console.log("push sent...");
+    console.log("notification sent...");
   }
 
   useEffect(() => {
@@ -70,11 +69,14 @@ const AdminChatPage = () => {
 
     await fetchData(message);
 
+    const messageId = messages[messages.length - 1]?._id;
+
     socket.current.emit("chat", {
       message,
       name: "Admin",
       createdAt: Date.now(),
       senderId: id,
+      messageId,
     });
     dispatch(sendMessage({ roomId, message }))
       .unwrap()
@@ -89,7 +91,6 @@ const AdminChatPage = () => {
 
     socket.current.on("getUser", (users) => {
       setOnlineUser(users);
-      console.log(onlineUser);
     });
   }, [chats]);
 
@@ -118,6 +119,10 @@ const AdminChatPage = () => {
   });
 
   const handleRemove = (id) => {
+    setChats((data) => {
+      return data.filter((message) => message._id !== id);
+    });
+
     dispatch(deleteMessage({ messageId: id }))
       .unwrap()
       .then(() => {
@@ -179,7 +184,11 @@ const AdminChatPage = () => {
                       item.senderId._id ? item.senderId._id : item.senderId
                     }` === id && (
                       <AiFillDelete
-                        onClick={() => handleRemove(item._id)}
+                        onClick={() =>
+                          handleRemove(
+                            `${item._id ? item._id : item.messageId}`
+                          )
+                        }
                         style={{
                           marginLeft: "10px",
                           color: "red",
