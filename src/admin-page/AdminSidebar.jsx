@@ -77,7 +77,7 @@ const AdminSidebar = () => {
           >
             {/* <MoneyOffCsredRounded /> */}
             <RiTodoLine style={{ color: "#000", fill: "black" }} />
-            <span>Chat</span>
+            <span>Chat(beta*)</span>
           </NavLink>
 
           <NavLink

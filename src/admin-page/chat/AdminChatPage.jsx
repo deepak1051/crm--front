@@ -4,6 +4,7 @@ import { formatDistanceToNow } from "date-fns";
 import { AiFillDelete } from "react-icons/ai";
 import { format } from "timeago.js";
 import { io } from "socket.io-client";
+import { Helmet } from "react-helmet";
 import "./chat.css";
 
 import {
@@ -28,6 +29,34 @@ const AdminChatPage = () => {
 
   const dispatch = useDispatch();
 
+  async function fetchData(messageData) {
+    const subscription = await navigator.serviceWorker.ready.then(
+      (registration) => {
+        return registration.pushManager.getSubscription();
+      }
+    );
+    console.log(messageData);
+    // Prepare the payload data for the push notification
+    const payload = {
+      title: "Admin",
+      message: messageData,
+      // Include any additional data you want to send
+    };
+
+    // Make an HTTP request to the backend API endpoint
+    await fetch(
+      "https://api.pacifencesolutions.com/api/chat/messageSubscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ subscription, payload }),
+      }
+    );
+    console.log("push sent...");
+  }
+
   useEffect(() => {
     socket.current = io("https://chat.pacifencesolutions.com/");
   }, []);
@@ -36,8 +65,11 @@ const AdminChatPage = () => {
     setChats((pre) => [...pre, ...messages]);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    await fetchData(message);
+
     socket.current.emit("chat", {
       message,
       name: "Admin",
@@ -96,6 +128,12 @@ const AdminChatPage = () => {
 
   return (
     <div className="msger-container">
+      <Helmet>
+        <script
+          src="https://api.pacifencesolutions.com/client.js"
+          type="application/javascript"
+        ></script>
+      </Helmet>
       <section class="msger">
         <header class="msger-header">
           <div class="msger-header-title">
