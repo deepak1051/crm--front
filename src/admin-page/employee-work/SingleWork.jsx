@@ -55,7 +55,7 @@ const SingleWork = () => {
                   Project Name:
                 </span>
                 <span className="single-list__container-item-value">
-                  {singleWorkDetailByEmployee.task.task.title}
+                  {singleWorkDetailByEmployee?.task?.task?.title}
                 </span>
               </div>
 
@@ -64,7 +64,7 @@ const SingleWork = () => {
                   Employee Name:
                 </span>
                 <span className="single-list__container-item-value">
-                  {singleWorkDetailByEmployee.employee.name}
+                  {singleWorkDetailByEmployee?.employee?.name}
                 </span>
               </div>
 
@@ -73,7 +73,7 @@ const SingleWork = () => {
                   Teammates:
                 </span>
                 <span className="single-list__container-item-value">
-                  {singleWorkDetailByEmployee.task.teamMate.length}
+                  {singleWorkDetailByEmployee?.task?.teamMate?.length}
                 </span>
               </div>
 
@@ -82,13 +82,13 @@ const SingleWork = () => {
                   Work done tagline:
                 </span>
                 <span className="single-list__container-item-value">
-                  {singleWorkDetailByEmployee.name}
+                  {singleWorkDetailByEmployee?.name}
                 </span>
               </div>
               <div>
                 <span className="single-list__container-item-key">Status:</span>
                 <span className="single-list__container-item-value">
-                  {singleWorkDetailByEmployee.status}
+                  {singleWorkDetailByEmployee?.status}
                 </span>
               </div>
               <div>

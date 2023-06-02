@@ -17,9 +17,6 @@ import {
 
 import { AiFillDelete } from "react-icons/ai";
 
-// import { io } from 'socket.io-client';
-const default_img_url = "https://api.pacifencesolutions.com";
-
 const EmployeeChatPage = () => {
   const { singleEmployee } = useSelector((state) => state.admin);
   const [message, setMessage] = useState("");
@@ -30,6 +27,28 @@ const EmployeeChatPage = () => {
   const divRef = useRef(null);
   const socket = useRef();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRoom())
+      .unwrap()
+      .then(() => dispatch(addUserToRoom({ roomId })))
+      .catch((err) => console.log(err.message));
+  }, [dispatch, roomId]);
+
+  useEffect(() => {
+    if (roomId) {
+      dispatch(getAllMessages({ roomId }))
+        .unwrap()
+        .then((data) => {
+          setChats((pre) => [...pre, ...data]);
+        })
+        .catch((err) => console.log(err.message));
+    }
+  }, [dispatch, roomId]);
+
+  useEffect(() => {
+    divRef.current.scrollIntoView({ behavior: "smooth" });
+  });
 
   async function fetchData(messageData) {
     const subscription = await navigator.serviceWorker.ready.then(
@@ -61,10 +80,6 @@ const EmployeeChatPage = () => {
   useEffect(() => {
     dispatch(fetchSingleEmployee({ id }));
   }, [dispatch, id]);
-
-  useEffect(() => {
-    setChats((pre) => [...pre, ...messages]);
-  }, []);
 
   useEffect(() => {
     socket.current = io("https://chat.pacifencesolutions.com/");
@@ -105,23 +120,6 @@ const EmployeeChatPage = () => {
   };
 
   useEffect(() => {
-    dispatch(getRoom())
-      .unwrap()
-      .then(() => dispatch(addUserToRoom({ roomId })))
-      .catch((err) => console.log(err.message));
-  }, [dispatch, roomId]);
-
-  useEffect(() => {
-    if (roomId) {
-      dispatch(getAllMessages({ roomId }));
-    }
-  }, [dispatch, roomId]);
-
-  useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: "smooth" });
-  });
-
-  useEffect(() => {
     socket.current.off("chat").on("chat", (payload) => {
       setChats((prev) => [...prev, payload]);
     });
@@ -131,6 +129,8 @@ const EmployeeChatPage = () => {
     //   });
     // };
   }, [chats]);
+  console.log(messages);
+  console.log(chats);
 
   const handleRemove = (id) => {
     setChats((data) => {

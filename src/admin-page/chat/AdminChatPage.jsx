@@ -61,10 +61,6 @@ const AdminChatPage = () => {
     socket.current = io("https://chat.pacifencesolutions.com/");
   }, []);
 
-  useEffect(() => {
-    setChats((pre) => [...pre, ...messages]);
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -108,7 +104,12 @@ const AdminChatPage = () => {
 
   useEffect(() => {
     if (roomId) {
-      dispatch(getAllMessages({ roomId }));
+      dispatch(getAllMessages({ roomId }))
+        .unwrap()
+        .then((data) => {
+          setChats((pre) => [...pre, ...data]);
+        })
+        .catch((err) => console.log(err.message));
     }
   }, [dispatch, roomId]);
 
