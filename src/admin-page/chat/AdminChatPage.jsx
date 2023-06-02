@@ -22,6 +22,7 @@ const AdminChatPage = () => {
   const [chats, setChats] = useState([]);
   const socket = useRef();
   const [onlineUser, setOnlineUser] = useState([]);
+  const [messageId, setMessageId] = useState("");
 
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
@@ -35,7 +36,6 @@ const AdminChatPage = () => {
         return registration.pushManager.getSubscription();
       }
     );
-    console.log(messageData);
     // Prepare the payload data for the push notification
     const payload = {
       title: "Admin",
@@ -54,7 +54,7 @@ const AdminChatPage = () => {
         body: JSON.stringify({ subscription, payload }),
       }
     );
-    console.log("push sent...");
+    console.log("notification sent...");
   }
 
   useEffect(() => {
@@ -69,27 +69,33 @@ const AdminChatPage = () => {
     e.preventDefault();
 
     await fetchData(message);
+    console.log(messages[messages.length - 1]._id);
+
+    dispatch(sendMessage({ roomId, message }))
+      .unwrap()
+      .then((data) => {
+        dispatch(getAllMessages({ roomId }));
+        setMessageId(data._id);
+      })
+      .catch((err) => console.log(err.message));
 
     socket.current.emit("chat", {
       message,
       name: "Admin",
       createdAt: Date.now(),
       senderId: id,
+      messageId,
+      profilePic:
+        "https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png",
     });
-    dispatch(sendMessage({ roomId, message }))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllMessages({ roomId }));
-      })
-      .catch((err) => console.log(err.message));
     setMessage("");
   };
+
   useEffect(() => {
     socket.current.emit("addUser", id);
 
     socket.current.on("getUser", (users) => {
       setOnlineUser(users);
-      console.log(onlineUser);
     });
   }, [chats]);
 
@@ -108,7 +114,6 @@ const AdminChatPage = () => {
 
   useEffect(() => {
     socket.current.off("chat").on("chat", (payload) => {
-      console.log(payload);
       setChats((prev) => [...prev, payload]);
     });
   }, [chats]);
@@ -118,12 +123,19 @@ const AdminChatPage = () => {
   });
 
   const handleRemove = (id) => {
-    dispatch(deleteMessage({ messageId: id }))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllMessages({ roomId }));
-      })
-      .catch((err) => console.log(err.message));
+    setChats((data) => {
+      return data.filter(
+        (message) => `${message._id ? message._id : message.messageId}` !== id
+      );
+    });
+    if (id) {
+      dispatch(deleteMessage({ messageId: id }))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllMessages({ roomId }));
+        })
+        .catch((err) => console.log(err.message));
+    }
   };
 
   return (
@@ -158,8 +170,9 @@ const AdminChatPage = () => {
               <div
                 class="msg-img"
                 style={{
-                  backgroundImage:
-                    "url('https://image.flaticon.com/icons/svg/145/145867.svg')",
+                  backgroundImage: `url(https://api.pacifencesolutions.com/${
+                    item.senderId.image ? item.senderId.image : item.profilePic
+                  })`,
                 }}
               ></div>
 
@@ -179,7 +192,11 @@ const AdminChatPage = () => {
                       item.senderId._id ? item.senderId._id : item.senderId
                     }` === id && (
                       <AiFillDelete
-                        onClick={() => handleRemove(item._id)}
+                        onClick={() => {
+                          return handleRemove(
+                            `${item._id ? item._id : item.messageId}`
+                          );
+                        }}
                         style={{
                           marginLeft: "10px",
                           color: "red",

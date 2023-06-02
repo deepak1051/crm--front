@@ -3,6 +3,7 @@ import { RxDashboard } from "react-icons/rx";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { RiCustomerService2Line, RiTodoLine } from "react-icons/ri";
 import { GrWorkshop } from "react-icons/gr";
+import { BsChatDots } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../store";
@@ -76,7 +77,7 @@ const AdminSidebar = () => {
             }
           >
             {/* <MoneyOffCsredRounded /> */}
-            <RiTodoLine style={{ color: "#000", fill: "black" }} />
+            <BsChatDots style={{ color: "#000", fill: "black" }} />
             <span>Chat(beta*)</span>
           </NavLink>
 
@@ -87,7 +88,7 @@ const AdminSidebar = () => {
             }
           >
             <GrWorkshop style={{ color: "#000", fill: "black" }} />
-            <span>Employee Work List </span>
+            <span>Employee Work </span>
           </NavLink>
 
           <button
