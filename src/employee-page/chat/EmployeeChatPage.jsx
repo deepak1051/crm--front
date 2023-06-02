@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { formatDistanceToNow } from "date-fns";
-import { io } from "socket.io-client";
-import { format } from "timeago.js";
-import "./chat.css";
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { formatDistanceToNow } from 'date-fns';
+import { io } from 'socket.io-client';
+import { format } from 'timeago.js';
+import './chat.css';
+import { Helmet } from 'react-helmet';
 
 import {
   getRoom,
@@ -46,16 +47,16 @@ const EmployeeChatPage = () => {
 
     // Make an HTTP request to the backend API endpoint
     await fetch(
-      "https://api.pacifencesolutions.com/api/chat/messageSubscribe",
+      'https://api.pacifencesolutions.com/api/chat/messageSubscribe',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ subscription, payload }),
       }
     );
-    console.log("push sent...");
+    console.log('push sent...');
   }
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const EmployeeChatPage = () => {
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    socket.current.emit("chat", {
+    socket.current.emit('chat', {
       message,
       createdAt: Date.now(),
       name: singleEmployee.name,
@@ -97,7 +98,7 @@ const EmployeeChatPage = () => {
         dispatch(getAllMessages({ roomId }));
       })
       .catch((err) => console.log(err.message));
-    setMessage("");
+    setMessage('');
 
     // socket.current.emit('send_message', { message });
   };
