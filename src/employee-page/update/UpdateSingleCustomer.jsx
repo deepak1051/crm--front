@@ -46,6 +46,8 @@ const UpdateSingleCustomer = () => {
     country: 'India',
     address: '',
     status: 'Success',
+    businessName: '',
+    businessDescription: '',
   });
   const dispatch = useDispatch();
 
@@ -153,6 +155,30 @@ const UpdateSingleCustomer = () => {
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div className="formInput">
+              <label>Business Name</label>
+              <input
+                required
+                type="text"
+                placeholder="business name..."
+                name="businessName"
+                onChange={handleChange}
+                value={user.businessName}
+              />
+            </div>
+
+            <div className="formInput">
+              <label>Business Description</label>
+              <input
+                required
+                type="text"
+                placeholder="business description..."
+                name="businessDescription"
+                onChange={handleChange}
+                value={user.businessDescription}
+              />
             </div>
 
             <br />

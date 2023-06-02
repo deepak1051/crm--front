@@ -3,26 +3,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineEdit, AiOutlineUser } from 'react-icons/ai';
 import Chart from '../../extra/chart/Chart';
 import { fetchSingleEmployee } from '../../store';
+import instance from '../../utils/instance';
 
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
+// function convertToBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const fileReader = new FileReader();
+//     fileReader.readAsDataURL(file);
+//     fileReader.onload = () => {
+//       resolve(fileReader.result);
+//     };
+//     fileReader.onerror = (error) => {
+//       reject(error);
+//     };
+//   });
+// }
 
 const default_img =
   'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?w=740&t=st=1685609599~exp=1685610199~hmac=c8d8f239a28668434bbcd8177d2141a2495fa383861c41077b42e5f381ebedf8';
+
 const EmployeeProfile = () => {
-  const [postImage, setPostImage] = useState(() =>
-    localStorage.getItem('logo')
-  );
+  const [postImage, setPostImage] = useState('');
   const { singleEmployee } = useSelector((state) => state.admin);
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -31,15 +31,31 @@ const EmployeeProfile = () => {
     dispatch(fetchSingleEmployee({ id }));
   }, [dispatch, id]);
 
-  const handlePhoto = async (e) => {
+  const handleChange = async (e) => {
     const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-    // const base64 = await convertToBase64(file);
 
-    setPostImage(base64);
-
-    localStorage.setItem('logo', base64);
+    console.log('file', file);
+    setPostImage(file);
   };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    console.log(postImage);
+    const formData = new FormData();
+    formData.append('profilePic', postImage);
+
+    console.log(postImage);
+
+    await instance.patch('/employee/updateProfilePic', formData, {
+      headers: {
+        'content-type': 'multipart/form-data',
+        authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmIzNDgxZmY5YjE4YWZhNGY4NTM2OSIsInJvbGUiOiJBY2NvdW50IiwiaWF0IjoxNjg1NjE1MTY4LCJleHAiOjE2ODYyMTk5Njh9.R0WW8czaq0hKSx8hdkj6ZI2o2aYUQ1BioA1tINUzpCI',
+      },
+    });
+  };
+
+  console.log(singleEmployee);
 
   return (
     <div
@@ -50,13 +66,18 @@ const EmployeeProfile = () => {
         <div className="left">
           <h1 className="title">Information</h1>
 
-          <div style={{ position: 'relative' }}>
+          <form style={{ position: 'relative' }}>
             <img
-              src={postImage ? postImage : default_img}
+              // src={postImage ? postImage : default_img}
+              src={
+                singleEmployee.image
+                  ? `https://api.pacifencesolutions.com/${singleEmployee.image}`
+                  : default_img
+              }
               alt=""
               style={{ width: '125px', height: '125px' }}
             />
-            <label
+            {/* <label
               htmlFor="pic"
               style={{
                 cursor: 'pointer',
@@ -75,17 +96,18 @@ const EmployeeProfile = () => {
             >
               Edit
               <AiOutlineEdit />
-            </label>
+            </label> */}
             <input
               type="file"
-              label="Image"
               accept=".png, .jpg, .jpeg"
               name="profilePic"
               id="pic"
-              onChange={handlePhoto}
-              style={{ display: 'none' }}
+              onChange={handleChange}
+              // style={{ display: 'none' }}
             />
-          </div>
+
+            <button onClick={handleUpload}>upload</button>
+          </form>
 
           <div className="item">
             {/* <img

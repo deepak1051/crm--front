@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { io } from "socket.io-client";
-import { format } from "timeago.js";
-import { Helmet } from "react-helmet";
-import "./chat.css";
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { formatDistanceToNow } from 'date-fns';
+import { io } from 'socket.io-client';
+import { format } from 'timeago.js';
+import './chat.css';
+import { Helmet } from 'react-helmet';
 
 import {
   getRoom,
@@ -12,15 +13,16 @@ import {
   getAllMessages,
   deleteMessage,
   fetchSingleEmployee,
-} from "../../store";
+} from '../../store';
 
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete } from 'react-icons/ai';
 
 // import { io } from 'socket.io-client';
+const default_img_url = 'https://api.pacifencesolutions.com';
 
 const EmployeeChatPage = () => {
   const { singleEmployee } = useSelector((state) => state.admin);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [chats, setChats] = useState([]);
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
@@ -44,16 +46,16 @@ const EmployeeChatPage = () => {
 
     // Make an HTTP request to the backend API endpoint
     await fetch(
-      "https://api.pacifencesolutions.com/api/chat/messageSubscribe",
+      'https://api.pacifencesolutions.com/api/chat/messageSubscribe',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ subscription, payload }),
       }
     );
-    console.log("push sent...");
+    console.log('push sent...');
   }
 
   useEffect(() => {
@@ -71,8 +73,8 @@ const EmployeeChatPage = () => {
     });
   }, []);
   useEffect(() => {
-    socket.current.emit("addUser", singleEmployee._id);
-    socket.current.on("getUser", (users) => {
+    socket.current.emit('addUser', singleEmployee._id);
+    socket.current.on('getUser', (users) => {
       setOnlineUser(users);
     });
   }, [singleEmployee]);
@@ -115,7 +117,7 @@ const EmployeeChatPage = () => {
   }, [dispatch, roomId]);
 
   useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: "smooth" });
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
   });
 
   useEffect(() => {
@@ -145,6 +147,8 @@ const EmployeeChatPage = () => {
         .catch((err) => console.log(err.message));
     }
   };
+
+  console.log(chats);
 
   return (
     <div className="msger-container">
@@ -183,18 +187,18 @@ const EmployeeChatPage = () => {
                 }}
               ></div>
 
-              <div class="msg-bubble">
-                <div class="msg-info">
-                  <div class="msg-info-name">
-                    {item.senderId.name ? item.senderId.name : item.name}
-                  </div>
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">
+                      {item.senderId.name ? item.senderId.name : item.name}
+                    </div>
 
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    {item.createdAt && (
-                      <div class="msg-info-time">
-                        {format(new Date(item.createdAt))}
-                      </div>
-                    )}
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {item.createdAt && (
+                        <div class="msg-info-time">
+                          {format(new Date(item.createdAt))}
+                        </div>
+                      )}
 
                     {`${
                       item.senderId._id ? item.senderId._id : item.senderId
@@ -215,10 +219,11 @@ const EmployeeChatPage = () => {
                   </div>
                 </div>
 
-                <div class="msg-text">{item.message}</div>
+                  <div class="msg-text">{item.message}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           <div ref={divRef} />
         </main>
