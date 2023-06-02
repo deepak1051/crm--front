@@ -77,6 +77,8 @@ const AdminChatPage = () => {
       createdAt: Date.now(),
       senderId: id,
       messageId,
+      profilePic:
+        "https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png",
     });
     dispatch(sendMessage({ roomId, message }))
       .unwrap()
@@ -165,8 +167,9 @@ const AdminChatPage = () => {
               <div
                 class="msg-img"
                 style={{
-                  backgroundImage:
-                    "url('https://image.flaticon.com/icons/svg/145/145867.svg')",
+                  backgroundImage: `url(https://api.pacifencesolutions.com/${
+                    item.senderId.image ? item.senderId.image : item.profilePic
+                  })`,
                 }}
               ></div>
 
