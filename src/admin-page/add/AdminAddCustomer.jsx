@@ -45,6 +45,8 @@ const AdminAddCustomer = () => {
     country: 'India',
     address: '',
     status: 'Success',
+    businessName: '',
+    businessDescription: '',
   });
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -144,6 +146,29 @@ const AdminAddCustomer = () => {
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* business Name */}
+            <div className="formInput">
+              <label htmlFor="businessName">Business Name</label>
+              <input
+                id="businessName"
+                value={user.businessName}
+                onChange={handleChange}
+                name="businessName"
+                required
+              />
+            </div>
+            {/* business description */}
+            <div className="formInput">
+              <label htmlFor="businessDescription">Business Description</label>
+              <textarea
+                id="businessDescription"
+                value={user.businessDescription}
+                onChange={handleChange}
+                name="businessDescription"
+                required
+              />
             </div>
 
             <br />

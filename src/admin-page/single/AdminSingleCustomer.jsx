@@ -49,34 +49,67 @@ const AdminSingleCustomer = () => {
                 <h1 className="itemTitle" style={{ color: 'teal' }}>
                   {singleCustomer.name}
                 </h1>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '10px',
-                    marginTop: '10px',
-                    fontSize: '18px',
-                  }}
-                >
-                  <div>
-                    <span>Email:</span>
-                    <span>{singleCustomer.email}</span>
-                  </div>
-                  <div>
-                    <span>Phone:</span>
-                    <span>{singleCustomer.phone}</span>
-                  </div>
-                  <div>
-                    <span>Address:</span>
-                    <span>{singleCustomer.address}</span>
-                  </div>
-                  <div>
-                    <span>Country:</span>
-                    <span>{singleCustomer.country}</span>
-                  </div>
-                  <div>
-                    <span>Status:</span>
-                    <span>{singleCustomer.status}</span>
+                <div className="item">
+                  <div className="single-list__container">
+                    <h1 className="itemTitle">{singleCustomer.name}</h1>
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Email:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer.email}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Phone:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer.phone}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Address:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer.address}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Country:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer.country}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Status:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer.status}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Business Name:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer?.businessName}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="single-list__container-item-key">
+                        Business Description:
+                      </span>
+                      <span className="single-list__container-item-value">
+                        {singleCustomer?.businessDescription}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

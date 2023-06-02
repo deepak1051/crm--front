@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { formatDistanceToNow } from "date-fns";
-import { io } from "socket.io-client";
-import { format } from "timeago.js";
-import "./chat.css";
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { formatDistanceToNow } from 'date-fns';
+import { io } from 'socket.io-client';
+import { format } from 'timeago.js';
+import './chat.css';
 
 import {
   getRoom,
@@ -12,15 +12,16 @@ import {
   getAllMessages,
   deleteMessage,
   fetchSingleEmployee,
-} from "../../store";
+} from '../../store';
 
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete } from 'react-icons/ai';
 
 // import { io } from 'socket.io-client';
+const default_img_url = 'https://api.pacifencesolutions.com';
 
 const EmployeeChatPage = () => {
   const { singleEmployee } = useSelector((state) => state.admin);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [chats, setChats] = useState([]);
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
@@ -34,17 +35,17 @@ const EmployeeChatPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    socket.current = io("https://chat.pacifencesolutions.com/");
-    socket.current.on("connect", () => {
-      console.log("socket connected done");
+    socket.current = io('https://chat.pacifencesolutions.com/');
+    socket.current.on('connect', () => {
+      console.log('socket connected done');
     });
   }, []);
   // console.log("helo");
   // console.log(dispatch(getAllMessages({ roomId })));
   // console.log(...messages);
   useEffect(() => {
-    socket.current.emit("addUser", singleEmployee._id);
-    socket.current.on("getUser", (users) => {
+    socket.current.emit('addUser', singleEmployee._id);
+    socket.current.on('getUser', (users) => {
       setOnlineUser(users);
       console.log(onlineUser);
     });
@@ -56,11 +57,12 @@ const EmployeeChatPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.current.emit("chat", {
+    socket.current.emit('chat', {
       message,
       createdAt: Date.now(),
       name: singleEmployee.name,
       senderId: singleEmployee._id,
+      profilePic: singleEmployee.image,
     });
 
     dispatch(sendMessage({ roomId, message }))
@@ -69,7 +71,7 @@ const EmployeeChatPage = () => {
         dispatch(getAllMessages({ roomId }));
       })
       .catch((err) => console.log(err.message));
-    setMessage("");
+    setMessage('');
 
     // socket.current.emit('send_message', { message });
   };
@@ -87,11 +89,11 @@ const EmployeeChatPage = () => {
   }, [dispatch, roomId]);
 
   useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: "smooth" });
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
   });
 
   useEffect(() => {
-    socket.current.off("chat").on("chat", (payload) => {
+    socket.current.off('chat').on('chat', (payload) => {
       console.log(payload);
       setChats((prev) => [...prev, payload]);
     });
@@ -111,6 +113,8 @@ const EmployeeChatPage = () => {
       .catch((err) => console.log(err.message));
   };
 
+  console.log(chats);
+
   return (
     <div className="msger-container">
       <section class="msger">
@@ -123,56 +127,63 @@ const EmployeeChatPage = () => {
           </div>
         </header>
         <main class="msger-chat">
-          {chats.map((item) => (
-            <div
-              class={
-                `${item.senderId._id ? item.senderId._id : item.senderId}` ===
-                id
-                  ? "msg right-msg"
-                  : "msg left-msg"
-              }
-              key={item.createdAt}
-            >
+          {chats.map((item) => {
+            console.log(item);
+            const Image = item.profilePic
+              ? `${default_img_url}/${item.profilePic})`
+              : 'https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg';
+            return (
               <div
-                class="msg-img"
-                style={{
-                  backgroundImage:
-                    "url('https://image.flaticon.com/icons/svg/145/145867.svg')",
-                }}
-              ></div>
-
-              <div class="msg-bubble">
-                <div class="msg-info">
-                  <div class="msg-info-name">
-                    {item.senderId.name ? item.senderId.name : item.name}
-                  </div>
-
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    {item.createdAt && (
-                      <div class="msg-info-time">
-                        {format(new Date(item.createdAt))}
-                      </div>
-                    )}
-
-                    {`${
-                      item.senderId._id ? item.senderId._id : item.senderId
-                    }` === id && (
-                      <AiFillDelete
-                        onClick={() => handleRemove(item._id)}
-                        style={{
-                          marginLeft: "10px",
-                          color: "red",
-                          cursor: "pointer",
-                        }}
-                      />
-                    )}
-                  </div>
+                class={
+                  `${item.senderId._id ? item.senderId._id : item.senderId}` ===
+                  id
+                    ? 'msg right-msg'
+                    : 'msg left-msg'
+                }
+                key={item.createdAt}
+              >
+                <div
+                  class="msg-img"
+                  style={{
+                    backgroundImage: `url(${default_img_url}/${item.profilePic})`,
+                  }}
+                >
+                  {/* <img src={`${default_img_url}/${item.profilePic}`} alt="" /> */}
                 </div>
 
-                <div class="msg-text">{item.message}</div>
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">
+                      {item.senderId.name ? item.senderId.name : item.name}
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {item.createdAt && (
+                        <div class="msg-info-time">
+                          {format(new Date(item.createdAt))}
+                        </div>
+                      )}
+
+                      {`${
+                        item.senderId._id ? item.senderId._id : item.senderId
+                      }` === id && (
+                        <AiFillDelete
+                          onClick={() => handleRemove(item._id)}
+                          style={{
+                            marginLeft: '10px',
+                            color: 'red',
+                            cursor: 'pointer',
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  <div class="msg-text">{item.message}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           <div ref={divRef} />
         </main>

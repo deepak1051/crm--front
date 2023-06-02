@@ -5,11 +5,7 @@ import { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {
-  addNewCustomer,
-  fetchSingleCustomer,
-  updateCustomer,
-} from '../../store';
+import { fetchSingleCustomer, updateCustomer } from '../../store';
 
 const countryOptions = [
   {
@@ -50,6 +46,8 @@ const AdminSingleCustomerUpdate = () => {
     country: 'India',
     address: '',
     status: 'Success',
+    businessName: '',
+    businessDescription: '',
   });
   const dispatch = useDispatch();
 
@@ -157,6 +155,30 @@ const AdminSingleCustomerUpdate = () => {
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div className="formInput">
+              <label>Business Name</label>
+              <input
+                required
+                type="text"
+                placeholder="business name.."
+                name="businessName"
+                onChange={handleChange}
+                value={user.businessName}
+              />
+            </div>
+
+            <div className="formInput">
+              <label>Business Description</label>
+              <input
+                required
+                type="text"
+                placeholder="desc..."
+                name="businessDescription"
+                onChange={handleChange}
+                value={user.businessDescription}
+              />
             </div>
 
             <br />
