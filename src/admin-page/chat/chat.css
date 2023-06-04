@@ -143,8 +143,24 @@ html {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.23s;
-  height: 50px;
 }
+.msger-send-btn-disabled {
+  width: 91px;
+  height: auto;
+  padding: 10px;
+  margin: 0 10px 0 10px;
+  color: #fff;
+  background: rgba(0, 196, 65, 0.603);
+  opacity: 0.6;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: background 0.23s;
+}
+
+.msger-send-btn:hover,.msger-send-btn-disabled:hover {
+  background: rgb(0, 180, 50);
+}
+
 .msger-send-btn:hover {
   background: rgb(0, 180, 50);
 }

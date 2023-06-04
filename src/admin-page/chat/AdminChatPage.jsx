@@ -22,10 +22,9 @@ const AdminChatPage = () => {
   const [chats, setChats] = useState([]);
   const socket = useRef();
   const [onlineUser, setOnlineUser] = useState([]);
-  const [messageId, setMessageId] = useState("");
-
   const { roomId, messages } = useSelector((state) => state.chat);
   const { id } = useSelector((state) => state.auth);
+  const [show, setShow] = useState(false);
   const divRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -59,37 +58,38 @@ const AdminChatPage = () => {
 
   useEffect(() => {
     socket.current = io("https://chat.pacifencesolutions.com/");
+    socket.current.on("connect", () => {
+      console.log("connected");
+    });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await fetchData(message);
-    console.log(messages[messages.length - 1]._id);
-
     dispatch(sendMessage({ roomId, message }))
       .unwrap()
       .then((data) => {
         dispatch(getAllMessages({ roomId }));
-        setMessageId(data._id);
+        socket.current.emit("chat", {
+          message,
+          name: "Admin",
+          createdAt: Date.now(),
+          senderId: {
+            _id: singleEmployee._id,
+            image:
+              "https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png",
+            name: singleEmployee.name,
+          },
+          _id: data._id,
+        });
       })
       .catch((err) => console.log(err.message));
 
-    socket.current.emit("chat", {
-      message,
-      name: "Admin",
-      createdAt: Date.now(),
-      senderId: id,
-      messageId,
-      profilePic:
-        "https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png",
-    });
     setMessage("");
   };
 
   useEffect(() => {
     socket.current.emit("addUser", id);
-
     socket.current.on("getUser", (users) => {
       setOnlineUser(users);
     });
@@ -125,9 +125,7 @@ const AdminChatPage = () => {
 
   const handleRemove = (id) => {
     setChats((data) => {
-      return data.filter(
-        (message) => `${message._id ? message._id : message.messageId}` !== id
-      );
+      return data.filter((message) => message._id !== id);
     });
     if (id) {
       dispatch(deleteMessage({ messageId: id }))
@@ -161,27 +159,20 @@ const AdminChatPage = () => {
           {chats.map((item) => (
             <div
               class={
-                `${item.senderId._id ? item.senderId._id : item.senderId}` ===
-                id
-                  ? "msg right-msg"
-                  : "msg left-msg"
+                item.senderId._id === id ? "msg right-msg" : "msg left-msg"
               }
               key={item.createdAt}
             >
               <div
                 class="msg-img"
                 style={{
-                  backgroundImage: `url(https://api.pacifencesolutions.com/${
-                    item.senderId.image ? item.senderId.image : item.profilePic
-                  })`,
+                  backgroundImage: `url(https://api.pacifencesolutions.com/${item.senderId.image})`,
                 }}
               ></div>
 
               <div class="msg-bubble">
                 <div class="msg-info">
-                  <div class="msg-info-name">
-                    {item.senderId.name ? item.senderId.name : item.name}
-                  </div>
+                  <div class="msg-info-name">{item.senderId.name}</div>
 
                   <div style={{ display: "flex", alignItems: "center" }}>
                     {item.createdAt && (
@@ -189,14 +180,10 @@ const AdminChatPage = () => {
                         {format(new Date(item.createdAt))}
                       </div>
                     )}
-                    {`${
-                      item.senderId._id ? item.senderId._id : item.senderId
-                    }` === id && (
+                    {item.senderId._id === id && (
                       <AiFillDelete
                         onClick={() => {
-                          return handleRemove(
-                            `${item._id ? item._id : item.messageId}`
-                          );
+                          return handleRemove(item._id);
                         }}
                         style={{
                           marginLeft: "10px",
@@ -221,9 +208,23 @@ const AdminChatPage = () => {
             class="msger-input"
             placeholder="Enter your message..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length > 0) {
+                setShow(true);
+                return setMessage(e.target.value);
+              } else {
+                setShow(false);
+                return setMessage(e.target.value);
+              }
+            }}
           />
-          <button type="submit" class="msger-send-btn">
+          <button
+            type="submit"
+            class={show ? "msger-send-btn" : "msger-send-btn-disabled"}
+            onClick={() => {
+              setShow(false);
+            }}
+          >
             Send
           </button>
         </form>
