@@ -103,10 +103,12 @@ html {
 }
 
 .left-msg .msg-bubble {
+  transition: all 0.3s ease;
   border-bottom-left-radius: 0;
 }
 
 .right-msg {
+  transition: all 0.3s ease;
   flex-direction: row-reverse;
 }
 .right-msg .msg-bubble {
@@ -135,16 +137,34 @@ html {
   background: #ddd;
 }
 .msger-send-btn {
-  margin-left: 10px;
   background: rgb(0, 196, 65);
+  width: 91px;
   color: #fff;
+  margin: 0 10px 0 10px;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.23s;
+  height: auto;
 }
-.msger-send-btn:hover {
+
+.msger-send-btn-disabled {
+  width: 91px;
+  height: auto;
+  padding: 10px;
+  margin: 0 10px 0 10px;
+  color: #fff;
+  background: rgba(0, 196, 65, 0.603);
+  opacity: 0.6;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: background 0.23s;
+}
+
+.msger-send-btn:hover,.msger-send-btn-disabled:hover {
   background: rgb(0, 180, 50);
 }
+
+
 
 .msger-chat {
   background-color: #fcfcfe;

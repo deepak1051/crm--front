@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { formatDistanceToNow } from "date-fns";
 import { io } from "socket.io-client";
 import { format } from "timeago.js";
 import "./chat.css";
@@ -27,7 +26,9 @@ const EmployeeChatPage = () => {
   const divRef = useRef(null);
   const socket = useRef();
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
 
+  // add user to room
   useEffect(() => {
     dispatch(getRoom())
       .unwrap()
@@ -35,6 +36,7 @@ const EmployeeChatPage = () => {
       .catch((err) => console.log(err.message));
   }, [dispatch, roomId]);
 
+  // get all messages and set chats
   useEffect(() => {
     if (roomId) {
       dispatch(getAllMessages({ roomId }))
@@ -46,10 +48,12 @@ const EmployeeChatPage = () => {
     }
   }, [dispatch, roomId]);
 
+  // scroll to bottom
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
   });
 
+  // send push notification
   async function fetchData(messageData) {
     const subscription = await navigator.serviceWorker.ready.then(
       (registration) => {
@@ -77,10 +81,12 @@ const EmployeeChatPage = () => {
     console.log("push sent...");
   }
 
+  // fetch single employee
   useEffect(() => {
     dispatch(fetchSingleEmployee({ id }));
   }, [dispatch, id]);
 
+  // socket connection
   useEffect(() => {
     socket.current = io("https://chat.pacifencesolutions.com/");
     socket.current.on("connect", () => {
@@ -88,6 +94,7 @@ const EmployeeChatPage = () => {
     });
   }, []);
 
+  // add user to socket
   useEffect(() => {
     socket.current.emit("addUser", singleEmployee._id);
     socket.current.on("getUser", (users) => {
@@ -95,30 +102,33 @@ const EmployeeChatPage = () => {
     });
   }, [singleEmployee]);
 
+  // send message
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetchData(message);
-
-    dispatch(sendMessage({ roomId, message }))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllMessages({ roomId }));
-      })
-      .catch((err) => console.log(err.message));
-    const messageId = messages[messages.length - 1]._id;
-    socket.current.emit("chat", {
-      message,
-      createdAt: Date.now(),
-      name: singleEmployee.name,
-      senderId: singleEmployee._id,
-      messageId,
-      profilePic: singleEmployee.image,
-    });
-
+    if (message.trim().length > 0) {
+      await fetchData(message);
+      dispatch(sendMessage({ roomId, message }))
+        .unwrap()
+        .then((data) => {
+          dispatch(getAllMessages({ roomId }));
+          socket.current.emit("chat", {
+            message,
+            createdAt: Date.now(),
+            senderId: {
+              _id: singleEmployee._id,
+              image: singleEmployee.image,
+              name: singleEmployee.name,
+            },
+            _id: data._id,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
     setMessage("");
     // socket.current.emit('send_message', { message });
   };
 
+  // receive message
   useEffect(() => {
     socket.current.off("chat").on("chat", (payload) => {
       setChats((prev) => [...prev, payload]);
@@ -129,23 +139,19 @@ const EmployeeChatPage = () => {
     //   });
     // };
   }, [chats]);
-  console.log(messages);
-  console.log(chats);
 
+  // delete message
   const handleRemove = (id) => {
     setChats((data) => {
-      return data.filter(
-        (message) => `${message._id ? message._id : message.messageId}` !== id
-      );
+      return data.filter((message) => message._id !== id);
     });
-    if (id) {
-      dispatch(deleteMessage({ messageId: id }))
-        .unwrap()
-        .then(() => {
-          dispatch(getAllMessages({ roomId }));
-        })
-        .catch((err) => console.log(err.message));
-    }
+
+    dispatch(deleteMessage({ messageId: id }))
+      .unwrap()
+      .then(() => {
+        dispatch(getAllMessages({ roomId }));
+      })
+      .catch((err) => console.log(err.message));
   };
 
   return (
@@ -169,27 +175,20 @@ const EmployeeChatPage = () => {
           {chats.map((item) => (
             <div
               class={
-                `${item.senderId._id ? item.senderId._id : item.senderId}` ===
-                id
-                  ? "msg right-msg"
-                  : "msg left-msg"
+                item.senderId._id === id ? "msg right-msg" : "msg left-msg"
               }
-              key={item.createdAt}
+              key={item._id}
             >
               <div
                 class="msg-img"
                 style={{
-                  backgroundImage: `url(https://api.pacifencesolutions.com/${
-                    item.senderId.image ? item.senderId.image : item.profilePic
-                  })`,
+                  backgroundImage: `url(https://api.pacifencesolutions.com/${item.senderId.image})`,
                 }}
               ></div>
 
               <div class="msg-bubble">
                 <div class="msg-info">
-                  <div class="msg-info-name">
-                    {item.senderId.name ? item.senderId.name : item.name}
-                  </div>
+                  <div class="msg-info-name">{item.senderId.name}</div>
 
                   <div style={{ display: "flex", alignItems: "center" }}>
                     {item.createdAt && (
@@ -198,17 +197,13 @@ const EmployeeChatPage = () => {
                       </div>
                     )}
 
-                    {`${
-                      item.senderId._id ? item.senderId._id : item.senderId
-                    }` === id && (
+                    {item.senderId._id === id && (
                       <AiFillDelete
-                        onClick={() =>
-                          handleRemove(
-                            `${item._id ? item._id : item.messageId}`
-                          )
-                        }
+                        onClick={() => handleRemove(item._id)}
                         style={{
-                          marginLeft: "10px",
+                          opacity: "1",
+                          transition: "all 1s ease-in-out",
+                          marginleft: "10px",
                           color: "red",
                           cursor: "pointer",
                         }}
@@ -228,11 +223,26 @@ const EmployeeChatPage = () => {
           <input
             type="text"
             class="msger-input"
-            placeholder="Enter your message..."
+            placeholder="Message..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length > 0) {
+                setShow(true);
+                return setMessage(e.target.value);
+              } else {
+                setShow(false);
+                return setMessage(e.target.value);
+              }
+            }}
           />
-          <button type="submit" class="msger-send-btn">
+
+          <button
+            type="submit"
+            class={show ? "msger-send-btn" : "msger-send-btn-disabled"}
+            onClick={() => {
+              setShow(false);
+            }}
+          >
             Send
           </button>
         </form>
