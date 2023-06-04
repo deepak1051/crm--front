@@ -75,10 +75,10 @@ const AdminChatPage = () => {
           name: "Admin",
           createdAt: Date.now(),
           senderId: {
-            _id: singleEmployee._id,
+            _id: id,
             image:
               "https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png",
-            name: singleEmployee.name,
+            name: "Admin",
           },
           _id: data._id,
         });
