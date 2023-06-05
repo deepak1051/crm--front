@@ -29,8 +29,6 @@ const AddNewTask = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(user);
-
     dispatch(addNewTask(user))
       .unwrap()
       .then(() => navigate(`/admin/projects`))
@@ -46,7 +44,7 @@ const AddNewTask = () => {
         <div className="right">
           <form onSubmit={handleSubmit}>
             <div className="formInput">
-              <label>Title</label>
+              <label>Project Name</label>
               <input
                 type="text"
                 placeholder="title..."
@@ -57,7 +55,7 @@ const AddNewTask = () => {
               />
             </div>
             <div className="formInput">
-              <label>Description</label>
+              <label>Project Description</label>
               <textarea
                 type="text"
                 placeholder="description..."
@@ -68,7 +66,7 @@ const AddNewTask = () => {
               ></textarea>
             </div>
             <div className="formInput">
-              <label>Assigned Date</label>
+              <label>Project Assigned Date</label>
               <input
                 type="date"
                 name="assignedDate"
@@ -78,7 +76,7 @@ const AddNewTask = () => {
             </div>
 
             <div className="formInput">
-              <label>Deadline</label>
+              <label>Project Deadline</label>
               <input
                 type="date"
                 name="deadline"

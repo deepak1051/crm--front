@@ -76,7 +76,7 @@ const EmployeeAddCustomer = () => {
         <div className="right">
           <form onSubmit={handleSubmit}>
             <div className="formInput">
-              <label>Name and surname</label>
+              <label>Customer FullName</label>
               <input
                 type="text"
                 placeholder="john doe"
@@ -87,7 +87,7 @@ const EmployeeAddCustomer = () => {
               />
             </div>
             <div className="formInput">
-              <label>Email</label>
+              <label>Customer Email</label>
               <input
                 type="email"
                 placeholder="johndoe@gmail.com"
@@ -99,7 +99,7 @@ const EmployeeAddCustomer = () => {
             </div>
 
             <div className="formInput">
-              <label>Country</label>
+              <label>Customer Country</label>
               <select
                 id="favColor"
                 value={user.country}
@@ -115,7 +115,7 @@ const EmployeeAddCustomer = () => {
               </select>
             </div>
             <div className="formInput">
-              <label>Address</label>
+              <label>Customer Address</label>
               <input
                 required
                 type="text"
@@ -126,7 +126,7 @@ const EmployeeAddCustomer = () => {
               />
             </div>
             <div className="formInput">
-              <label>Phone No.</label>
+              <label>Customer Phone No.</label>
               <input
                 required
                 type="text"
@@ -138,7 +138,7 @@ const EmployeeAddCustomer = () => {
             </div>
 
             <div className="formInput">
-              <label htmlFor="role">Status</label>
+              <label htmlFor="role">Customer Status</label>
               <select
                 id="role"
                 value={user.status}
@@ -178,7 +178,7 @@ const EmployeeAddCustomer = () => {
             </div>
             <br />
             <button disabled={isLoading}>
-              {isLoading ? <Spinner /> : "Save"}
+              {isLoading ? <Spinner /> : "Save Customer"}
             </button>
             {error && <div className="error">error</div>}
           </form>

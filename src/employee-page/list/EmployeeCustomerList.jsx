@@ -1,22 +1,22 @@
-import { Fragment } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { Fragment } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import {
   fetchAllCustomersRelatedToEmployee,
   deleteSingleCustomer,
-} from '../../store';
-import Skeleton from 'react-loading-skeleton';
-import '../styles/list.scss';
-import useThunk from '../../hooks/useThunk';
-import CustomerIllustration from '../../utils/CustomerIllustration';
+} from "../../store";
+import Skeleton from "react-loading-skeleton";
+import "../styles/list.scss";
+import useThunk from "../../hooks/useThunk";
+import CustomerIllustration from "../../utils/CustomerIllustration";
 
 const EmployeeCustomerList = () => {
   const { employeeCustomerList } = useSelector((state) => state.employee);
@@ -32,7 +32,7 @@ const EmployeeCustomerList = () => {
   }, [fetchCustomers]);
 
   const handleDelete = (id) => {
-    if (window.confirm('Do you really want to remove this customer.')) {
+    if (window.confirm("Do you really want to remove this customer.")) {
       dispatch(deleteSingleCustomer({ id }))
         .unwrap()
         .then(() => dispatch(fetchAllCustomersRelatedToEmployee()))
@@ -53,11 +53,11 @@ const EmployeeCustomerList = () => {
         <>
           <TableHead>
             <TableRow>
-              <TableCell className="tableCell x">Employee Name</TableCell>
-              <TableCell className="tableCell x">Email</TableCell>
-              <TableCell className="tableCell x">Status</TableCell>
+              <TableCell className="tableCell x">Customer Name</TableCell>
+              <TableCell className="tableCell x">Customer Email</TableCell>
+              <TableCell className="tableCell x">Customer Status</TableCell>
 
-              <TableCell className="tableCell x">Country</TableCell>
+              <TableCell className="tableCell x">Customer Country</TableCell>
               <TableCell className="tableCell x">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -74,7 +74,7 @@ const EmployeeCustomerList = () => {
                   <TableCell className="tableCell">{row.country}</TableCell>
                   <TableCell className="tableCell">
                     <Link to={`/employee/customer/${row._id}`}>
-                      <button className="view">View</button>
+                      <button className="view">View Customer</button>
                     </Link>
 
                     <Fragment>
@@ -82,7 +82,7 @@ const EmployeeCustomerList = () => {
                         onClick={() => handleDelete(row._id)}
                         className="delete"
                       >
-                        Delete
+                        Delete Customer
                       </button>
                     </Fragment>
                   </TableCell>
@@ -98,7 +98,7 @@ const EmployeeCustomerList = () => {
     <>
       <div className="addNew">
         <Link to="/employee/add-customer">
-          <button>Add New</button>
+          <button>Add New Customer</button>
         </Link>
       </div>
       <TableContainer component={Paper} className="table">

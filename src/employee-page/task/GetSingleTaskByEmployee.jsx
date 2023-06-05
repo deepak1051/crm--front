@@ -52,7 +52,7 @@ const GetSingleTaskByEmployee = () => {
                 <h1 className="itemTitle">{singleTask.employeeId?.name}</h1>
                 <div>
                   <span className="single-list__container-item-key">
-                    Task Title:{" "}
+                    Project Title:{" "}
                   </span>
                   <span className="single-list__container-item-value">
                     {singleTask?.task?.title}
@@ -60,7 +60,7 @@ const GetSingleTaskByEmployee = () => {
                 </div>
                 <div>
                   <span className="single-list__container-item-key">
-                    Status:
+                    Project Status:
                   </span>
                   <span className="single-list__container-item-value">
                     {singleTask?.status}
@@ -68,7 +68,7 @@ const GetSingleTaskByEmployee = () => {
                 </div>
                 <div>
                   <span className="single-list__container-item-key">
-                    Assigned Date:
+                    Project Assigned Date:
                   </span>
                   {singleTask?.task?.assignedDate && (
                     <span className="single-list__container-item-value">
@@ -81,7 +81,7 @@ const GetSingleTaskByEmployee = () => {
                 </div>
                 <div>
                   <span className="single-list__container-item-key">
-                    Deadline:
+                    Project Deadline:
                   </span>
                   {singleTask?.task?.deadline && (
                     <span className="single-list__container-item-value">
@@ -94,7 +94,7 @@ const GetSingleTaskByEmployee = () => {
                 </div>
                 <div>
                   <span className="single-list__container-item-key">
-                    Description:
+                    Project Description:
                   </span>
                   <span className="single-list__container-item-value">
                     {singleTask?.task?.description}
@@ -119,7 +119,7 @@ const GetSingleTaskByEmployee = () => {
                       className="tableCell x"
                       style={{ fontSize: "18px" }}
                     >
-                      Role
+                      Employee Role
                     </TableCell>
                   </TableRow>
                 </TableHead>

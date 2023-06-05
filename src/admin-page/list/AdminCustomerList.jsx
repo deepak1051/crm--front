@@ -1,20 +1,20 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
-import { deleteCustomer, fetchAllCustomers } from '../../store';
-import FilterViaName from '../../utils/filter/FilterViaName';
-import useFilter from '../../hooks/useFilter';
-import Skeleton from 'react-loading-skeleton';
-import useThunk from '../../hooks/useThunk';
-import CustomerIllustration from '../../utils/CustomerIllustration';
+import { deleteCustomer, fetchAllCustomers } from "../../store";
+import FilterViaName from "../../utils/filter/FilterViaName";
+import useFilter from "../../hooks/useFilter";
+import Skeleton from "react-loading-skeleton";
+import useThunk from "../../hooks/useThunk";
+import CustomerIllustration from "../../utils/CustomerIllustration";
 
 const AdminCustomerList = () => {
   const { customerList } = useSelector((state) => state.admin);
@@ -25,7 +25,7 @@ const AdminCustomerList = () => {
 
   const handleDelete = (id) => {
     if (
-      window.confirm('Do you really want to delete this customer permanently?')
+      window.confirm("Do you really want to delete this customer permanently?")
     ) {
       dispatch(deleteCustomer({ id }))
         .unwrap()
@@ -51,10 +51,10 @@ const AdminCustomerList = () => {
           <TableHead>
             <TableRow>
               <TableCell className="tableCell x">Customer Name</TableCell>
-              <TableCell className="tableCell x">Email</TableCell>
-              <TableCell className="tableCell x">Status</TableCell>
+              <TableCell className="tableCell x">Customer Email</TableCell>
+              <TableCell className="tableCell x">Customer Status</TableCell>
 
-              <TableCell className="tableCell x">Country</TableCell>
+              <TableCell className="tableCell x">Customer Country</TableCell>
               <TableCell className="tableCell x">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -71,13 +71,13 @@ const AdminCustomerList = () => {
                   <TableCell className="tableCell">{row.country}</TableCell>
                   <TableCell className="tableCell">
                     <Link to={`/admin/customers/${row._id}`}>
-                      <button className="view">View</button>
+                      <button className="view">View Customer</button>
                     </Link>
                     <button
                       onClick={() => handleDelete(row._id)}
                       className="delete"
                     >
-                      Delete
+                      Delete Customer
                     </button>
                   </TableCell>
                 </TableRow>
@@ -92,7 +92,7 @@ const AdminCustomerList = () => {
     <>
       <div className="addNew">
         <Link to="/admin/add-customer">
-          <button>Add New</button>
+          <button>Add New Customer</button>
         </Link>
       </div>
 

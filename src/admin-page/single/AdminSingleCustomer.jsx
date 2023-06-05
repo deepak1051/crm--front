@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { fetchSingleCustomer } from '../../store';
-import '../styles/single.scss';
-import Skeleton from 'react-loading-skeleton';
-import useThunk from '../../hooks/useThunk';
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { fetchSingleCustomer } from "../../store";
+import "../styles/single.scss";
+import Skeleton from "react-loading-skeleton";
+import useThunk from "../../hooks/useThunk";
 
 const AdminSingleCustomer = () => {
   const { singleCustomer } = useSelector((state) => state.admin);
@@ -31,12 +31,12 @@ const AdminSingleCustomer = () => {
     content = (
       <div
         className="single"
-        style={{ display: 'flex', flexDirection: 'column' }}
+        style={{ display: "flex", flexDirection: "column" }}
       >
         <div className="top">
           <div className="left-side">
             <Link to={`/admin/customers/${id}/update`}>
-              <button className="edit">Edit</button>
+              <button className="edit">Edit Customer</button>
             </Link>
             <h1 className="title">Information</h1>
             <div className="item">
@@ -46,11 +46,11 @@ const AdminSingleCustomer = () => {
                 className="itemImg"
               />
               <div className="details">
-                <h1 className="itemTitle" style={{ color: 'teal' }}>
-                  {singleCustomer.name}
-                </h1>
                 <div className="item">
                   <div className="single-list__container">
+                    <span className="single-list__container-item-key">
+                      Customer Name:
+                    </span>
                     <h1 className="itemTitle">{singleCustomer.name}</h1>
                     <div>
                       <span className="single-list__container-item-key">
