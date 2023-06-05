@@ -43,9 +43,9 @@ const GetAllTaskByEmployee = () => {
         <>
           <TableHead>
             <TableRow>
-              <TableCell className="tableCell x">Task Name</TableCell>
-              <TableCell className="tableCell x">Status</TableCell>
-              <TableCell className="tableCell x">Deadline</TableCell>
+              <TableCell className="tableCell x">Project Name</TableCell>
+              <TableCell className="tableCell x">Project Status</TableCell>
+              <TableCell className="tableCell x">Project Deadline</TableCell>
               <TableCell className="tableCell x">Actions</TableCell>
             </TableRow>
           </TableHead>

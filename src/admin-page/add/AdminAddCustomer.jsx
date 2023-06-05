@@ -1,52 +1,52 @@
-import React from 'react';
-import '../styles/add.scss';
+import React from "react";
+import "../styles/add.scss";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addNewCustomer } from '../../store';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addNewCustomer } from "../../store";
 
 const countryOptions = [
   {
-    label: 'India',
-    value: 'India',
+    label: "India",
+    value: "India",
   },
   {
-    label: 'USA',
-    value: 'USA',
+    label: "USA",
+    value: "USA",
   },
   {
-    label: 'UK',
-    value: 'UK',
+    label: "UK",
+    value: "UK",
   },
   {
-    label: 'Dubai',
-    value: 'Dubai',
+    label: "Dubai",
+    value: "Dubai",
   },
   {
-    label: 'Germany',
-    value: 'Germany',
+    label: "Germany",
+    value: "Germany",
   },
 ];
 const statusOptions = [
-  { value: 'Success' },
-  { value: 'Pending' },
-  { value: 'Rejected' },
+  { value: "Success" },
+  { value: "Pending" },
+  { value: "Rejected" },
 ];
 
 const AdminAddCustomer = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    country: 'India',
-    address: '',
-    status: 'Success',
-    businessName: '',
-    businessDescription: '',
+    name: "",
+    email: "",
+    phone: "",
+    country: "India",
+    address: "",
+    status: "Success",
+    businessName: "",
+    businessDescription: "",
   });
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -57,7 +57,7 @@ const AdminAddCustomer = () => {
     e.preventDefault();
     dispatch(addNewCustomer(user))
       .unwrap()
-      .then(() => navigate('/admin/customers-list'))
+      .then(() => navigate("/admin/customers-list"))
       .catch((err) => setError(err));
   };
 
@@ -70,7 +70,7 @@ const AdminAddCustomer = () => {
         <div className="right">
           <form onSubmit={handleSubmit}>
             <div className="formInput">
-              <label>Name and surname</label>
+              <label>Customer Full Name </label>
               <input
                 type="text"
                 placeholder="john doe"
@@ -81,7 +81,7 @@ const AdminAddCustomer = () => {
               />
             </div>
             <div className="formInput">
-              <label>Email</label>
+              <label>Customer Email</label>
               <input
                 type="email"
                 placeholder="johndoe@gmail.com"
@@ -93,7 +93,7 @@ const AdminAddCustomer = () => {
             </div>
 
             <div className="formInput">
-              <label>Country</label>
+              <label>Customer Country</label>
               <select
                 id="favColor"
                 value={user.country}
@@ -109,7 +109,7 @@ const AdminAddCustomer = () => {
               </select>
             </div>
             <div className="formInput">
-              <label>Address</label>
+              <label>Customer Full Address</label>
               <input
                 required
                 type="text"
@@ -120,7 +120,7 @@ const AdminAddCustomer = () => {
               />
             </div>
             <div className="formInput">
-              <label>Phone No.</label>
+              <label>Customer Phone No.</label>
               <input
                 required
                 type="text"
@@ -150,7 +150,7 @@ const AdminAddCustomer = () => {
 
             {/* business Name */}
             <div className="formInput">
-              <label htmlFor="businessName">Business Name</label>
+              <label htmlFor="businessName">Customer Business Name</label>
               <input
                 id="businessName"
                 value={user.businessName}
@@ -161,7 +161,9 @@ const AdminAddCustomer = () => {
             </div>
             {/* business description */}
             <div className="formInput">
-              <label htmlFor="businessDescription">Business Description</label>
+              <label htmlFor="businessDescription">
+                Customer Business Detail
+              </label>
               <textarea
                 id="businessDescription"
                 value={user.businessDescription}
@@ -172,7 +174,7 @@ const AdminAddCustomer = () => {
             </div>
 
             <br />
-            <button>Save</button>
+            <button>Save Customer</button>
             {error && <div className="error">error</div>}
           </form>
         </div>

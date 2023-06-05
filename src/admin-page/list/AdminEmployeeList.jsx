@@ -1,21 +1,21 @@
-import { Fragment } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { fetchAllEmployees, deleteEmployee } from '../../store';
-import Skeleton from 'react-loading-skeleton';
-import Model from '../../utils/Model';
-import '../styles/list.scss';
-import FilterViaName from '../../utils/filter/FilterViaName';
-import useFilter from '../../hooks/useFilter';
-import useThunk from '../../hooks/useThunk';
+import { Fragment } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchAllEmployees, deleteEmployee } from "../../store";
+import Skeleton from "react-loading-skeleton";
+import Model from "../../utils/Model";
+import "../styles/list.scss";
+import FilterViaName from "../../utils/filter/FilterViaName";
+import useFilter from "../../hooks/useFilter";
+import useThunk from "../../hooks/useThunk";
 
 const AdminEmployeeList = () => {
   const [showModel, setShowModel] = useState(false);
@@ -55,10 +55,10 @@ const AdminEmployeeList = () => {
         <TableHead>
           <TableRow>
             <TableCell className="tableCell x">Employee Name</TableCell>
-            <TableCell className="tableCell x">Email</TableCell>
-            <TableCell className="tableCell x">Role</TableCell>
+            <TableCell className="tableCell x">Employee Email</TableCell>
+            <TableCell className="tableCell x">Employee Role</TableCell>
 
-            <TableCell className="tableCell x">Country</TableCell>
+            <TableCell className="tableCell x">Employee Country</TableCell>
             <TableCell className="tableCell x">Action</TableCell>
           </TableRow>
         </TableHead>
@@ -75,7 +75,7 @@ const AdminEmployeeList = () => {
                 <TableCell className="tableCell">{row.country}</TableCell>
                 <TableCell className="tableCell">
                   <Link to={`/admin/employees/${row._id}`}>
-                    <button className="view">View</button>
+                    <button className="view"> View Employee</button>
                   </Link>
 
                   <Fragment>
@@ -83,7 +83,7 @@ const AdminEmployeeList = () => {
                       onClick={() => setShowModel(true)}
                       className="delete"
                     >
-                      Delete
+                      Delete Employee
                     </button>
                     {showModel && (
                       <Model
@@ -91,10 +91,10 @@ const AdminEmployeeList = () => {
                         ActionBar={
                           <>
                             <button onClick={() => handleDelete(row._id)}>
-                              I Accept
+                              Delete
                             </button>
                             <button onClick={onClose} className="remove">
-                              Cancel
+                              Reject
                             </button>
                           </>
                         }
@@ -116,7 +116,7 @@ const AdminEmployeeList = () => {
     <>
       <div className="addNew">
         <Link to="/admin/add-employee">
-          <button>Add New</button>
+          <button>Add New Employee</button>
         </Link>
       </div>
       <TableContainer component={Paper} className="table">
